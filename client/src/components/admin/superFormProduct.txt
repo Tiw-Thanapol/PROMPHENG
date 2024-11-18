@@ -1,0 +1,264 @@
+import React, { useEffect, useState, useMemo, useCallback } from 'react';
+import useEcomStore from '../../store/ecom-store';
+import { createProduct } from '../../api/product';
+import { toast } from 'react-toastify';
+import { Link } from 'react-router-dom';
+import { ChevronLeft, ChevronRight, Pencil, Trash, Search } from "lucide-react";
+import UploadFile from './UploadFiles';
+import debounce from 'lodash/debounce';
+
+const ITEMS_PER_PAGE = 10;
+
+const initialState = {
+    title: "AMD AM5 Ryzen9 7950x3d",
+    description: "1234",
+    price: 18900,
+    quantity: 10,
+    categoryId: '',
+    images: []
+};
+
+const searchFields = [
+    { id: 'title', label: 'ชื่อสินค้า' },
+    { id: 'description', label: 'รายละเอียด' },
+    { id: 'price', label: 'ราคา' },
+];
+
+const Pagination = ({ currentPage, totalPages, onPageChange }) => {
+    return (
+        <div className='flex items-center justify-center gap-2 mt-4 mb-4'>
+            <button
+                onClick={() => onPageChange(currentPage - 1)}
+                disabled={currentPage === 1}
+                className="p-2 rounded-md bg-gray-100 hover:bg-gray-200 disabled:opacity-50 disabled:cursor-not-allowed"
+            >
+                <ChevronLeft size={20} />
+            </button>
+
+            <span className='px-4 py-2'>
+                Page {currentPage} of {totalPages}
+            </span>
+
+            <button 
+                onClick={() => onPageChange(currentPage + 1)}
+                disabled={currentPage === totalPages}
+                className="p-2 rounded-md bg-gray-100 hover:bg-gray-200 disabled:opacity-50 disabled:cursor-not-allowed"
+            >
+                <ChevronRight size={20} />
+            </button>
+        </div>
+    );
+};
+
+const SearchBar = ({ onSearch }) => {
+    const [searchTerm, setSearchTerm] = useState('');
+    const [selectedField, setSelectedField] = useState('all');
+    const [priceRange, setPriceRange] = useState({ min: '', max: '' });
+
+    // Debounce the search function
+    const debouncedSearch = useCallback(
+        debounce((term, field, prices) => {
+            onSearch({ term, field, prices });
+        }, 300),
+        []
+    );
+
+    const handleSearchChange = (e) => {
+        const value = e.target.value;
+        setSearchTerm(value);
+        debouncedSearch(value, selectedField, priceRange);
+    };
+
+    const handleFieldChange = (e) => {
+        const value = e.target.value;
+        setSelectedField(value);
+        debouncedSearch(searchTerm, value, priceRange);
+    };
+
+    const handlePriceChange = (e) => {
+        const { name, value } = e.target;
+        const newPriceRange = { ...priceRange, [name]: value };
+        setPriceRange(newPriceRange);
+        debouncedSearch(searchTerm, selectedField, newPriceRange);
+    };
+
+    return (
+        <div className="flex flex-col md:flex-row gap-4 items-center w-full">
+            <div className="relative flex-1">
+                <input
+                    type="text"
+                    placeholder="ค้นหา..."
+                    value={searchTerm}
+                    onChange={handleSearchChange}
+                    className="w-full pl-10 pr-4 py-2 border rounded-md"
+                />
+                <Search className="absolute left-3 top-2.5 h-5 w-5 text-gray-400" />
+            </div>
+
+            <select
+                value={selectedField}
+                onChange={handleFieldChange}
+                className="border rounded-md px-4 py-2"
+            >
+                <option value="all">ทั้งหมด</option>
+                {searchFields.map(field => (
+                    <option key={field.id} value={field.id}>
+                        {field.label}
+                    </option>
+                ))}
+            </select>
+
+            <div className="flex gap-2 items-center">
+                <input
+                    type="number"
+                    name="min"
+                    placeholder="ราคาต่ำสุด"
+                    value={priceRange.min}
+                    onChange={handlePriceChange}
+                    className="w-24 border rounded-md px-2 py-2"
+                />
+                <span>-</span>
+                <input
+                    type="number"
+                    name="max"
+                    placeholder="ราคาสูงสุด"
+                    value={priceRange.max}
+                    onChange={handlePriceChange}
+                    className="w-24 border rounded-md px-2 py-2"
+                />
+            </div>
+        </div>
+    );
+};
+
+const FormProduct = () => {
+    const {
+        token,
+        getCategory,
+        categories,
+        getProduct,
+        products,
+    } = useEcomStore();
+
+    const [currentPage, setCurrentPage] = useState(1);
+    const [form, setForm] = useState(initialState);
+    const [searchParams, setSearchParams] = useState({
+        term: '',
+        field: 'all',
+        prices: { min: '', max: '' }
+    });
+
+    useEffect(() => {
+        getCategory(token);
+        getProduct(token, 120);
+    }, [getCategory, getProduct, token]);
+
+    useEffect(() => {
+        setCurrentPage(1);
+    }, [searchParams]);
+
+    const handleOnChange = (e) => {
+        const { name, value } = e.target;
+        setForm(prev => ({
+            ...prev,
+            [name]: value
+        }));
+    };
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        try {
+            const res = await createProduct(token, form);
+            toast.success(`เพิ่มสินค้า ${res.data.title} สำเร็จ!`);
+            setForm(initialState);
+            getProduct(token, 120);
+        } catch (err) {
+            toast.error('เพิ่มสินค้าไม่สำเร็จ!');
+            console.error(err);
+        }
+    };
+
+    const handleDelete = async (id) => {
+        if (window.confirm('คุณแน่ใจที่จะลบสินค้านี้?')) {
+            try {
+                // Add your delete API call here
+                toast.success('ลบสินค้าสำเร็จ!');
+                getProduct(token, 120);
+            } catch (err) {
+                toast.error('ลบสินค้าไม่สำเร็จ!');
+                console.error(err);
+            }
+        }
+    };
+
+    const filteredProducts = useMemo(() => {
+        return products.filter(product => {
+            // Check if the product matches the search term
+            const matchesTerm = searchParams.term === '' || (
+                searchParams.field === 'all' ? (
+                    product.title.toLowerCase().includes(searchParams.term.toLowerCase()) ||
+                    product.description.toLowerCase().includes(searchParams.term.toLowerCase())
+                ) : (
+                    String(product[searchParams.field])
+                        .toLowerCase()
+                        .includes(searchParams.term.toLowerCase())
+                )
+            );
+
+            // Check if the product price is within the specified range
+            const { min, max } = searchParams.prices;
+            const matchesPrice = (
+                (min === '' || product.price >= Number(min)) &&
+                (max === '' || product.price <= Number(max))
+            );
+
+            return matchesTerm && matchesPrice;
+        });
+    }, [products, searchParams]);
+
+    const totalPages = Math.ceil(filteredProducts.length / ITEMS_PER_PAGE);
+    const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
+    const paginatedProducts = filteredProducts.slice(startIndex, startIndex + ITEMS_PER_PAGE);
+
+    const handlePageChange = (newPage) => {
+        if (newPage >= 1 && newPage <= totalPages) {
+            setCurrentPage(newPage);
+        }
+    };
+
+    const handleSearch = (searchConfig) => {
+        setSearchParams(searchConfig);
+    };
+
+    // ... Rest of the JSX remains the same until the search section
+
+    return (
+        <div className='container mx-auto p-4 bg-white shadow-md'>
+            {/* Form section remains the same */}
+            
+            <div className='bg-white shadow-md rounded-lg overflow-hidden'>
+                <div className='p-4 border-b'>
+                    <div className='flex flex-col gap-4'>
+                        <h2 className='text-xl font-semibold'>รายการสินค้า</h2>
+                        <SearchBar onSearch={handleSearch} />
+                        <div className='text-gray-500 text-sm'>
+                            แสดง {startIndex + 1}-{Math.min(startIndex + ITEMS_PER_PAGE, filteredProducts.length)} จากทั้งหมด {filteredProducts.length} รายการ
+                        </div>
+                    </div>
+                </div>
+
+                {/* Table section remains the same */}
+                
+                {totalPages > 1 && (
+                    <Pagination
+                        currentPage={currentPage}
+                        totalPages={totalPages}
+                        onPageChange={handlePageChange}
+                    />
+                )}
+            </div>
+        </div>
+    );
+};
+
+export default FormProduct;

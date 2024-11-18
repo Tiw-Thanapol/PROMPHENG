@@ -1,0 +1,545 @@
+import React, { useEffect, useState } from 'react'
+import useEcomStore from '../../store/ecom-store'
+import { createProduct } from '../../api/product'
+import { toast } from 'react-toastify'
+import {Link} from 'react-router-dom'
+import { Pencil, Trash } from "lucide-react";
+import  Uploadfile from './Uploadfiles'
+
+//  import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
+
+
+
+// import {numberFormat} from "../../utils/number"
+
+const initialState = {
+
+    title: "AMD AM5 Ryzen9 7950x3d",
+    description: "1234",
+    price: 18900,
+    quantity: 10,
+    categoryId: '',
+    images: []
+
+}
+const FormProduct = () => {
+    const token = useEcomStore((state) => state.token)
+    const getCategory = useEcomStore((state) => state.getCategory)
+    const categories = useEcomStore((state) => state.categories)
+    const getProduct = useEcomStore((state) => state.getProduct)
+    const products = useEcomStore((state) => state.products)
+    //console.log(products)
+    
+    const [form, setForm] = useState(initialState)
+    useEffect(() => {
+        getCategory(token)
+        getProduct(token, 120)
+    }, [])
+
+    const handleOnChange = (e) => {
+        //console.log(e.target.name, e.target.value)
+        setForm({
+            ...form,
+            [e.target.name]: e.target.value
+        })
+    }
+
+    const handleSubmit = async (e) => {
+        e.preventDefault()
+        try {
+            const res = await createProduct(token, form)
+            console.log(res)
+            toast.success(`Add data ${res.data.title} complete!!`)
+
+        } catch (err) {
+            console.log(err)
+        }
+    }
+
+    return (
+        <div className='container mx-auto p-4 bg-white shadow-md'>
+            <form onSubmit={handleSubmit}>
+                <h1>เพิ่มข้อมูลสินค้า</h1>
+                <input
+                    className='border'
+                    value={form.title}
+                    onChange={handleOnChange}
+                    placeholder='Title'
+                    name='title'
+                />
+                <input
+                    className='border'
+                    value={form.description}
+                    onChange={handleOnChange}
+                    placeholder='Description'
+                    name='description'
+                />
+                <input
+                    type='number'
+                    className='border'
+                    value={form.price}
+                    onChange={handleOnChange}
+                    placeholder='Price'
+                    name='price'
+                />
+                <input
+                    type='number'
+                    className='border'
+                    value={form.quantity}
+                    onChange={handleOnChange}
+                    placeholder='Quantity'
+                    name='quantity'
+                />
+                <select
+                    className='border'
+                    name='categoryId'
+                    onChange={handleOnChange}
+                    required
+                    value={form.categoryId}
+                >
+                    <option value="" disabled>Please Select</option>
+
+                    {categories.map((item, index) =>
+                        <option
+                            key={index} value={item.id}>{item.name}
+                        </option>)}
+
+                </select>
+                <hr />
+                {/* Up load file */}
+                <Uploadfile form={form} setForm={setForm} />
+                
+
+                <button className='bg-blue-500 rounded-md text-white p-1 m-1 mt-2'>
+                    Add Product
+                </button>
+
+<div className="p-6 bg-gray-100 min-h-screen">
+    <div className="max-w-7xl mx-auto bg-white rounded-lg shadow-md overflow-hidden">
+        <div className="px-6 py-4 border-b">
+            <h2 className="text-xl font-semibold">The Sol Trading</h2>
+        </div>
+        <div className="p-4 flex items-center justify-between">
+            <button className="flex items-center bg-red-500 text-white px-4 py-2 rounded mr-2">
+                <svg className="h-5 w-5 mr-1" fill="currentColor" viewBox="0 0 20 20"><path d="M6 8a1 1 0 000 2h8a1 1 0 100-2H6z"/></svg>
+                Delete
+            </button>
+            <input id="search-input" type="text" placeholder="Search by project name or owner" className="border border-gray-300 rounded px-4 py-2 w-1/3" />
+            {/* <button className="bg-purple-600 text-white px-4 py-2 rounded" 
+            onClick="addProject()">Create New</button> */}
+        </div>
+        <table className="min-w-full bg-white" id="project-table">
+            <thead>
+                <tr className="text-left text-gray-600 bg-gray-100 uppercase text-sm leading-normal">
+                    <th className="py-3 px-6">No.</th>
+                    <th className="py-3 px-6">Product</th>
+                    <th className="py-3 px-6">Description</th>
+                    <th className="py-3 px-6">Price</th>
+                    <th className="py-3 px-6">Quantity</th>
+                    <th className="py-3 px-6">Sold</th>
+                    <th className="py-3 px-6">Updated on</th>
+                    <th className="py-3 px-6">Actions</th>
+                </tr>
+            </thead>
+            <tbody id="project-body" className="text-gray-700 text-sm">
+            {products.map((item,index)=>{
+                return(
+            
+                <tr className="border-b hover:bg-gray-50" key={index}>
+                    <th scope='roe'>{index+1}</th>
+
+                    {/* //ใส่รูป */}
+                    {/* <td>
+                    {item.images.length > 0 ? (
+                      <img
+                        className="w-24 h-24 rounded-lg shadow-md"
+                        src={item.images[0].url}
+                      />
+                    ) : (
+                      <div
+                        className="w-24 h-24 bg-gray-200 rounded-md 
+                                                    flex items-center justify-center shadow-sm"
+                      >
+                        No Image
+                      </div>
+                    )}
+                  </td> */}
+
+                    <td className="py-3 px-6">{item.title}</td>
+                    <td className="py-3 px-6">{item.description}</td>
+                    <td className="py-3 px-6">{item.price}</td>
+                    <td className="py-3 px-6">{item.quantity}</td>
+                    <td className="py-3 px-6">{item.sold}</td>
+                    <td className="py-3 px-6">{item.updatedAt}</td>
+                    {/* <td className="py-3 px-6"><span className="status bg-blue-200 text-blue-800 px-2 py-1 rounded-full text-xs">Assigned</span></td> */}
+                    {/* <td className="py-3 px-6"><button className="text-purple-600" onClick="editProject(this)">Edit Project</button></td> */}
+                    <td className="flex gap-2">
+                    <p
+                      className="bg-yellow-500 rounded-md p-1 
+                                            hover:scale-105 hover:-translate-y-1 hover:duration-200
+                                            shadow-md"
+                    >
+                      <Link to={"/admin/product/" + item.id}>
+                        <Pencil />
+                      </Link>
+                    </p>
+
+                    <p
+                      className="bg-red-500 rounded-md p-1 shadow-md
+                                                hover:scale-105 hover:-translate-y-1 hover:duration-200
+                                                "
+                      onClick={() => handleDelete(item.id)}
+                    >
+                        <Trash />
+                      {/* <DeleteOutlineIcon /> */}
+                    </p>
+                  </td>
+                </tr>
+                )})}
+                {/* <!-- เพิ่มแถวข้อมูลตามต้องการ --> */}
+                <script>
+    <div>
+    {/* // ค้นหาข้อมูลในตาราง */}
+    document.getElementById('search-input').addEventListener('keyup', function() {
+        const searchValue = this.value.toLowerCase();
+        const rows = document.querySelectorAll('#project-body tr');
+
+        rows.forEach(row => {
+            const projectName = row.cells[0].textContent.toLowerCase();
+            const ownerName = row.cells[4].textContent.toLowerCase();
+
+            if (projectName.includes(searchValue) || ownerName.includes(searchValue)) {
+                row.style.display = '';
+            } else {
+                row.style.display = 'none';
+            }
+        });
+    });
+
+    // เปลี่ยนสถานะของโครงการ
+    function editProject(button) {
+        const statusSpan = button.closest('tr').querySelector('.status');
+        if (statusSpan.textContent === 'Assigned') {
+            statusSpan.textContent = 'Pending';
+            statusSpan.classList.remove('bg-blue-200', 'text-blue-800');
+            statusSpan.classList.add('bg-red-200', 'text-red-800');
+        } else {
+            statusSpan.textContent = 'Assigned';
+            statusSpan.classList.remove('bg-red-200', 'text-red-800');
+            statusSpan.classList.add('bg-blue-200', 'text-blue-800');
+        }
+    }
+
+    // ฟังก์ชันสำหรับเพิ่มโครงการใหม่
+    function addProject() {
+        const tableBody = document.getElementById('project-body');
+        const newRow = document.createElement('tr');
+        newRow.className = 'border-b hover:bg-gray-50';
+        
+        newRow.innerHTML = `
+            <td className="py-3 px-6">New Project</td>
+            <td className="py-3 px-6">Development</td>
+            <td className="py-3 px-6"><span className="status bg-blue-200 text-blue-800 px-2 py-1 rounded-full text-xs">Assigned</span></td>
+            <td className="py-3 px-6">Medium</td>
+            <td className="py-3 px-6">New Owner</td>
+            <td className="py-3 px-6">${new Date().toLocaleDateString()}</td>
+            <td className="py-3 px-6">${new Date(new Date().setMonth(new Date().getMonth() + 3)).toLocaleDateString()}</td>
+            <td className="py-3 px-6"><button className="text-purple-600" onClick="editProject(this)">Edit Project</button></td>
+        `;
+        
+        tableBody.appendChild(newRow);
+    }
+    </div>
+</script>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+
+
+
+
+
+            </form>
+        </div>
+    )
+}
+
+export default FormProduct
+
+
+
+import React, { useEffect, useState } from 'react';
+import useEcomStore from '../../store/ecom-store';
+import { createProduct } from '../../api/product';
+import { toast } from 'react-toastify';
+import { Link } from 'react-router-dom';
+import { ChevronLeft, ChevronRight, Pencil, Trash } from "lucide-react";
+import UploadFile from './UploadFiles';
+
+const ITEMS_PER_PAGE = 10;
+
+const initialState = {
+    title: "AMD AM5 Ryzen9 7950x3d",
+    description: "1234",
+    price: 18900,
+    quantity: 10,
+    categoryId: '',
+    images: []
+};
+
+const Pagination = ({ currentPage, totalPages, onPageChange }) => {
+    return (
+        <div className='flex items-center justify-center gap-2 mt-4 mb-4'>
+            <button
+                onClick={() => onPageChange(currentPage - 1)}
+                disabled={currentPage === 1}
+                className="p-2 rounded-md bg-gray-100 hover:bg-gray-200 disabled:opacity-50 disabled:cursor-not-allowed"
+            >
+                <ChevronLeft size={20} />
+            </button>
+
+            <span className='px-4 py-2'>
+                Page {currentPage} of {totalPages}
+            </span>
+
+            <button 
+                onClick={() => onPageChange(currentPage + 1)}
+                disabled={currentPage === totalPages}
+                className="p-2 rounded-md bg-gray-100 hover:bg-gray-200 disabled:opacity-50 disabled:cursor-not-allowed"
+            >
+                <ChevronRight size={20} />
+            </button>
+        </div>
+    );
+};
+
+const FormProduct = () => {
+    const {
+        token,
+        getCategory,
+        categories,
+        getProduct,
+        products,
+    } = useEcomStore();
+
+    const [searchTerm, setSearchTerm] = useState('');
+    const [currentPage, setCurrentPage] = useState(1);
+    const [form, setForm] = useState(initialState);
+
+    useEffect(() => {
+        getCategory(token);
+        getProduct(token, 120);
+    }, [getCategory, getProduct, token]);
+
+    useEffect(() => {
+        setCurrentPage(1);
+    }, [searchTerm]);
+
+    const handleOnChange = (e) => {
+        const { name, value } = e.target;
+        setForm(prev => ({
+            ...prev,
+            [name]: value
+        }));
+    };
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        try {
+            const res = await createProduct(token, form);
+            toast.success(`Add Product ${res.data.title} complete!!`);
+            setForm(initialState);
+            getProduct(token, 120);
+        } catch (err) {
+            toast.error('Add product failed!');
+            console.error(err);
+        }
+    };
+
+    const handleDelete = async (id) => {
+        if (window.confirm('Are you sure to Delete?')) {
+            try {
+                // Add your delete API call here
+                toast.success('Product has been deleted!');
+                getProduct(token, 120);
+            } catch (err) {
+                toast.error('Delete failed!');
+                console.error(err);
+            }
+        }
+    };
+
+    const filteredProducts = products.filter(product =>
+        product.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        product.description.toLowerCase().includes(searchTerm.toLowerCase())
+    );
+
+    const totalPages = Math.ceil(filteredProducts.length / ITEMS_PER_PAGE);
+    const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
+    const paginatedProducts = filteredProducts.slice(startIndex, startIndex + ITEMS_PER_PAGE);
+
+    const handlePageChange = (newPage) => {
+        if (newPage >= 1 && newPage <= totalPages) {
+            setCurrentPage(newPage);
+        }
+    };
+
+    return (
+        <div className='container mx-auto p-4 bg-white shadow-md'>
+            <div className='bg-white shadow-md rounded-lg p-6 mb-6'>
+                <form onSubmit={handleSubmit} className='space-y-4'>
+                    <h1 className='text-2xl font-bold mb-4'>Add Product</h1>
+                    <div className='grid grid-cols-1 md:grid-cols-2 gap-4'>
+                        <input
+                            className='border rounded-md p-2'
+                            value={form.title}
+                            onChange={handleOnChange}
+                            placeholder='Title'
+                            name='title'
+                            required
+                        />
+                        <input
+                            className='border rounded-md p-2'
+                            value={form.description}
+                            onChange={handleOnChange}
+                            placeholder='Description'
+                            name='description'
+                            required
+                        />
+                        <input
+                            type='number'
+                            className='border rounded-md p-2'
+                            value={form.price}
+                            onChange={handleOnChange}
+                            placeholder='Price'
+                            name='price'
+                            required
+                        />
+                        <input
+                            type='number'
+                            className='border rounded-md p-2'
+                            value={form.quantity}
+                            onChange={handleOnChange}
+                            placeholder='Quantity'
+                            name='quantity'
+                            required
+                        />
+                        <select
+                            className='border rounded-md p-2'
+                            name='categoryId'
+                            onChange={handleOnChange}
+                            value={form.categoryId}
+                            required
+                        >
+                            <option value="">Please Select</option>
+                            {categories.map((item) => (
+                                <option key={item.id} value={item.id}>
+                                    {item.name}
+                                </option>
+                            ))}
+                        </select>
+                    </div>
+                    <hr />
+                    <UploadFile form={form} setForm={setForm} />
+                    <button className='bg-blue-500 hover:bg-blue-600 rounded-md text-white px-4 py-2 transition-colors'>
+                        Add Product
+                    </button>
+                </form>
+            </div>
+
+            <div className='bg-white shadow-md rounded-lg overflow-hidden'>
+                <div className='p-4 border-b'>
+                    <div className='flex flex-col md:flex-row justify-between items-center gap-4'>
+                        <h2 className='text-xl font-semibold'>Products List</h2>
+                        <div className='flex gap-4 items-center'>
+                            <input
+                                type="text"
+                                placeholder="Search..."
+                                className="border border-gray-300 rounded px-4 py-2 w-full md:w-auto"
+                                value={searchTerm}
+                                onChange={(e) => setSearchTerm(e.target.value)}
+                            />
+                            <span className='text-gray-500 whitespace-nowrap'>
+                                Showing {startIndex + 1}-{Math.min(startIndex + ITEMS_PER_PAGE, filteredProducts.length)} of {filteredProducts.length}
+                            </span>
+                        </div>
+                    </div>
+                </div>
+
+                <div className='overflow-x-auto'>
+                    <table className="min-w-full bg-white">
+                        <thead className='bg-gray-50'>
+                            <tr className="text-left text-gray-600 uppercase text-sm leading-normal">
+                                <th className="py-3 px-6">No.</th>
+                                <th className="py-3 px-6">Image</th>
+                                <th className="py-3 px-6">Product</th>
+                                <th className="py-3 px-6">Description</th>
+                                <th className="py-3 px-6">Price</th>
+                                <th className="py-3 px-6">Quantity</th>
+                                <th className="py-3 px-6">Sold</th>
+                                <th className="py-3 px-6">Updated on</th>
+                                <th className="py-3 px-6">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody className="text-gray-700 text-sm">
+                            {paginatedProducts.map((item, index) => (
+                                <tr key={item.id} className='border-b hover:bg-gray-50'>
+                                    <td className='p-4'>{startIndex + index + 1}</td>
+                                    <td className='p-4'>
+                                        {item.images?.length > 0 ? (
+                                            <img
+                                                className="w-24 h-24 rounded-lg shadow-md object-cover"
+                                                src={item.images[0].url}
+                                                alt={item.title}
+                                            />
+                                        ) : (
+                                            <div className="w-24 h-24 bg-gray-200 rounded-md flex items-center justify-center shadow-sm">
+                                                No Image
+                                            </div>
+                                        )}
+                                    </td>
+                                    <td className='p-4'>{item.title}</td>
+                                    <td className='p-4'>{item.description}</td>
+                                    <td className='p-4'>{item.price.toLocaleString()} บาท</td>
+                                    <td className='p-4'>{item.quantity}</td>
+                                    <td className='p-4'>{item.sold || 0}</td>
+                                    <td className='p-4'>
+                                        {new Date(item.updatedAt).toLocaleDateString('th-TH')}
+                                    </td>
+                                    <td className='p-4'>
+                                        <div className='flex gap-2'>
+                                            <Link
+                                                to={`/admin/product/${item.id}`}
+                                                className='p-2 bg-yellow-500 text-white rounded-md hover:bg-yellow-600 transition-colors'
+                                            >
+                                                <Pencil size={16} />
+                                            </Link>
+                                            <button
+                                                onClick={() => handleDelete(item.id)}
+                                                className='p-2 bg-red-500 text-white rounded-md hover:bg-red-600 transition-colors'
+                                            >
+                                                <Trash size={16} />
+                                            </button>
+                                        </div>
+                                    </td>
+                                </tr>
+                            ))}
+                        </tbody>
+                    </table>
+                </div>
+
+                {totalPages > 1 && (
+                    <Pagination
+                        currentPage={currentPage}
+                        totalPages={totalPages}
+                        onPageChange={handlePageChange}
+                    />
+                )}
+            </div>
+        </div>
+    );
+};
+
+export default FormProduct;
