@@ -1,5 +1,11 @@
 Project Demo : https://full-stack-ecom-my-sql-fd.vercel.app/
 
+Amin Role : q@q.com
+Password  : 1234
+
+User Role : q@t.com
+Password  : 1234
+
 
 ![image](https://github.com/user-attachments/assets/1376c827-6d7c-4c92-9b20-3d15922fa8b9)
 
