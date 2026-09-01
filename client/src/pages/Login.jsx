@@ -7,7 +7,8 @@ import {
     EyeOff,
     Rocket
 } from "lucide-react"
-import axios from "axios"
+
+import useAuthStore from "../store/auth-store"
 
 import "../styles/Login.css"
 
@@ -403,6 +404,19 @@ export default function Login() {
 
     const navigate = useNavigate()
 
+    // ======================================================
+    // ZUSTAND AUTH
+    // ======================================================
+
+    const login = useAuthStore(
+        (state) => state.login
+    )
+
+
+    // ======================================================
+    // FORM STATE
+    // ======================================================
+
     const [email, setEmail] =
         useState("")
 
@@ -410,9 +424,6 @@ export default function Login() {
         useState("")
 
     const [showPassword, setShowPassword] =
-        useState(false)
-
-    const [loading, setLoading] =
         useState(false)
 
     const [error, setError] =
@@ -423,12 +434,21 @@ export default function Login() {
     // LOGIN
     // ======================================================
 
+    const loading = useAuthStore(
+        (state) => state.loading
+    )
+
+
     const handleSubmit = async (e) => {
 
         e.preventDefault()
 
         setError("")
 
+
+        // --------------------------------------------------
+        // VALIDATE EMAIL
+        // --------------------------------------------------
 
         if (!email.trim()) {
 
@@ -440,6 +460,10 @@ export default function Login() {
 
         }
 
+
+        // --------------------------------------------------
+        // VALIDATE PASSWORD
+        // --------------------------------------------------
 
         if (!password) {
 
@@ -454,49 +478,19 @@ export default function Login() {
 
         try {
 
-            setLoading(true)
+            // ------------------------------------------------
+            // LOGIN THROUGH ZUSTAND
+            // ------------------------------------------------
 
-
-            const API =
-                import.meta.env.VITE_API_URL ||
-                "http://localhost:5000/api"
-
-
-            const response =
-                await axios.post(
-
-                    `${API}/login`,
-
-                    {
-                        email:
-                            email.trim(),
-
-                        password
-                    },
-
-                    {
-                        withCredentials:
-                            true
-                    }
-
-                )
-
-
-            console.log(
-                "LOGIN SUCCESS:",
-                response.data
+            await login(
+                email.trim(),
+                password
             )
 
 
-            // ==================================================
-            // SESSION AUTH
-            // ==================================================
-            //
-            // Backend ใช้ HttpOnly Cookie
-            // ไม่ต้องเก็บ token ใน localStorage
-            //
-            // ==================================================
-
+            // ------------------------------------------------
+            // LOGIN SUCCESS
+            // ------------------------------------------------
 
             navigate(
                 "/dashboard",
@@ -504,7 +498,6 @@ export default function Login() {
                     replace: true
                 }
             )
-
 
         }
         catch (err) {
@@ -522,11 +515,6 @@ export default function Login() {
 
 
             setError(message)
-
-        }
-        finally {
-
-            setLoading(false)
 
         }
 
