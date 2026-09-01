@@ -59,9 +59,9 @@ function parseId(value) {
 // CUSTOMER CODE FORMAT
 //
 // C + เลข 5 หลัก เช่น C00001, C00002 ...
-// ไม่รีเซ็ตรายเดือน/รายปี เพราะรหัสลูกค้าควรเป็น identity
-// ถาวรตลอดอายุการเป็นลูกค้า (ต่างจาก orderNo ที่รีเซ็ต
-// รายเดือนได้ เพราะอ้างอิงรอบบัญชี ไม่ใช่ตัวตน)
+//
+// เลขลำดับมาจาก AccountCounter แยกตาม account
+// ไม่ใช้ Customer.id เพราะ id เป็น global primary key
 // ======================================================
 
 function generateCustomerCode(customerNumber) {
@@ -71,15 +71,44 @@ function generateCustomerCode(customerNumber) {
 }
 
 
+// ======================================================
+// DERIVE CUSTOMER NUMBER
+//
+// Prisma Customer model ปัจจุบันไม่มี customerNumber
+// จึง derive จาก customerCode แทน
+//
+// C00001 -> 1
+// C00125 -> 125
+// ======================================================
+
+function getCustomerNumber(customerCode) {
+
+    if (!customerCode) {
+        return null
+    }
+
+    const match =
+        String(customerCode).match(/^C(\d+)$/i)
+
+    if (!match) {
+        return null
+    }
+
+    const number =
+        Number(match[1])
+
+    return Number.isFinite(number)
+        ? number
+        : null
+}
+
+
 // ------------------------------------------------------
 // Require Account
 // ------------------------------------------------------
 //
 // ทุก endpoint ในไฟล์นี้ต้องมี req.user.accountId
-// ถ้าไม่มี ให้ปฏิเสธทันที เพื่อไม่ให้ query
-// หลุดไปดึง/แก้ข้อมูลข้าม account โดยไม่ตั้งใจ
-// (เช่นกรณี accountId เป็น undefined แล้ว Prisma
-// เพิกเฉยต่อ filter นั้นไปเลย)
+// เพื่อป้องกันข้อมูลข้าม account
 //
 // ------------------------------------------------------
 
@@ -113,41 +142,52 @@ function requireAccountId(req, res) {
 
 // ======================================================
 // ACCOUNT COUNTER HELPER
+// ======================================================
 //
 // ดึงเลขลำดับถัดไปแบบ atomic ต่อ account/ต่อ type
-// (เช่น "CUSTOMER") โดยใช้ upsert + increment ภายใน
-// transaction เดียวกับที่สร้าง record จริง เพื่อกัน
-// race condition เวลามีการสร้างลูกค้าพร้อมกันในบัญชีเดียวกัน
 //
-// ต้องเรียกภายใน prisma.$transaction เท่านั้น (รับ tx เข้ามา)
+// เช่น
+// account 1 + CUSTOMER -> 1, 2, 3...
+// account 2 + CUSTOMER -> 1, 2, 3...
 //
-// ⚠️ FIX: เดิมทีไฟล์นี้ generate customerCode จาก
-// created.id (primary key ของตาราง Customer ทั้งตาราง
-// ข้ามทุก account) และไม่เคยเซ็ต customerNumber เลยทั้งที่
-// schema เตรียม field + AccountCounter (type "CUSTOMER")
-// ไว้ให้แล้ว ทำให้เลขลูกค้าของ account ใหม่ไม่เริ่มที่ 1
-// แต่ "รันต่อ" จาก id ของลูกค้า account อื่นที่มีอยู่ก่อน
+// ต้องเรียกภายใน prisma.$transaction เท่านั้น
 // ======================================================
 
-async function getNextAccountSequence(tx, accountId, type) {
+async function getNextAccountSequence(
+    tx,
+    accountId,
+    type
+) {
 
-    const counter = await tx.accountCounter.upsert({
+    const counter =
+        await tx.accountCounter.upsert({
 
-        where: {
-            accountId_type: { accountId, type }
-        },
+            where: {
 
-        create: {
-            accountId,
-            type,
-            value: 1
-        },
+                accountId_type: {
+                    accountId,
+                    type
+                }
 
-        update: {
-            value: { increment: 1 }
-        }
+            },
 
-    })
+            create: {
+
+                accountId,
+                type,
+                value: 1
+
+            },
+
+            update: {
+
+                value: {
+                    increment: 1
+                }
+
+            }
+
+        })
 
 
     return counter.value
@@ -158,18 +198,61 @@ async function getNextAccountSequence(tx, accountId, type) {
 // ======================================================
 // CUSTOMER SELECT
 // ======================================================
+//
+// IMPORTANT:
+// Customer model ใน Prisma ปัจจุบันไม่มี customerNumber
+// ดังนั้นห้าม select customerNumber
+//
+// customerNumber จะ derive จาก customerCode ตอน response
+// หาก frontend ต้องการ field นี้
+// ======================================================
 
 const customerSelect = {
 
     id: true,
+
     customerCode: true,
-    customerNumber: true,
+
     name: true,
+
     phone: true,
+
     address: true,
+
     note: true,
+
     createdAt: true,
+
     updatedAt: true
+
+}
+
+
+// ======================================================
+// ADD CUSTOMER NUMBER TO RESPONSE
+// ======================================================
+//
+// รักษา API contract เดิมโดยเติม customerNumber
+// จาก customerCode เช่น C00015 -> 15
+// ======================================================
+
+function formatCustomer(customer) {
+
+    if (!customer) {
+        return customer
+    }
+
+
+    return {
+
+        ...customer,
+
+        customerNumber:
+            getCustomerNumber(
+                customer.customerCode
+            )
+
+    }
 
 }
 
@@ -225,7 +308,7 @@ exports.create = async (req, res) => {
 
 
         // ==================================================
-        // DUPLICATE CHECK (scoped to this account only)
+        // DUPLICATE CHECK
         // ==================================================
 
         const existing =
@@ -257,7 +340,7 @@ exports.create = async (req, res) => {
                     "Customer already exists",
 
                 customer:
-                    existing
+                    formatCustomer(existing)
 
             })
 
@@ -266,10 +349,6 @@ exports.create = async (req, res) => {
 
         // ==================================================
         // CREATE + NUMBER + CODE + AUDIT
-        //
-        // customerNumber มาจาก AccountCounter (type "CUSTOMER")
-        // เริ่มที่ 1 เสมอในแต่ละ account, ทำภายใน transaction
-        // เดียวกับการสร้าง customer เพื่อความ atomic
         // ==================================================
 
         const customer =
@@ -309,9 +388,6 @@ exports.create = async (req, res) => {
                                 note:
                                     cleanNote,
 
-                                customerNumber:
-                                    nextCustomerNumber,
-
                                 customerCode
 
                             },
@@ -348,7 +424,7 @@ exports.create = async (req, res) => {
                                     JSON.stringify({
 
                                         customerNumber:
-                                            created.customerNumber,
+                                            nextCustomerNumber,
 
                                         customerCode:
                                             created.customerCode,
@@ -392,7 +468,8 @@ exports.create = async (req, res) => {
             message:
                 "Customer created successfully",
 
-            customer
+            customer:
+                formatCustomer(customer)
 
         })
 
@@ -448,6 +525,7 @@ exports.list = async (req, res) => {
                             name: {
                                 contains:
                                     search,
+
                                 mode:
                                     "insensitive"
                             }
@@ -457,6 +535,7 @@ exports.list = async (req, res) => {
                             phone: {
                                 contains:
                                     search,
+
                                 mode:
                                     "insensitive"
                             }
@@ -466,6 +545,7 @@ exports.list = async (req, res) => {
                             customerCode: {
                                 contains:
                                     search,
+
                                 mode:
                                     "insensitive"
                             }
@@ -501,7 +581,10 @@ exports.list = async (req, res) => {
             count:
                 customers.length,
 
-            customers
+            customers:
+                customers.map(
+                    formatCustomer
+                )
 
         })
 
@@ -563,8 +646,10 @@ exports.read = async (req, res) => {
             await prisma.customer.findFirst({
 
                 where: {
+
                     id,
                     accountId
+
                 },
 
                 select:
@@ -587,7 +672,8 @@ exports.read = async (req, res) => {
 
         return res.json({
 
-            customer,
+            customer:
+                formatCustomer(customer),
 
             sales: []
 
@@ -651,8 +737,10 @@ exports.update = async (req, res) => {
             await prisma.customer.findFirst({
 
                 where: {
+
                     id,
                     accountId
+
                 }
 
             })
@@ -715,7 +803,7 @@ exports.update = async (req, res) => {
 
 
         // ==================================================
-        // DUPLICATE CHECK (scoped to this account only)
+        // DUPLICATE CHECK
         // ==================================================
 
         const duplicate =
@@ -753,7 +841,7 @@ exports.update = async (req, res) => {
                     "Customer already exists",
 
                 customer:
-                    duplicate
+                    formatCustomer(duplicate)
 
             })
 
@@ -761,11 +849,7 @@ exports.update = async (req, res) => {
 
 
         // ==================================================
-        // UPDATE (still scoped by accountId to be safe
-        // against race conditions / stale ownership)
-        //
-        // หมายเหตุ: customerNumber / customerCode ไม่ถูกแก้ไข
-        // ในนี้ เพราะเป็นเลขอ้างอิงถาวรที่ตั้งไว้ตอนสร้างเท่านั้น
+        // UPDATE
         // ==================================================
 
         const updateResult =
@@ -774,7 +858,6 @@ exports.update = async (req, res) => {
                 where: {
 
                     id,
-
                     accountId
 
                 },
@@ -814,8 +897,10 @@ exports.update = async (req, res) => {
             await prisma.customer.findFirst({
 
                 where: {
+
                     id,
                     accountId
+
                 },
 
                 select:
@@ -912,7 +997,8 @@ exports.update = async (req, res) => {
             message:
                 "Customer updated successfully",
 
-            customer
+            customer:
+                formatCustomer(customer)
 
         })
 
@@ -976,7 +1062,6 @@ exports.remove = async (req, res) => {
                 where: {
 
                     id,
-
                     accountId
 
                 },
@@ -1034,8 +1119,10 @@ exports.remove = async (req, res) => {
                 await tx.customer.deleteMany({
 
                     where: {
+
                         id,
                         accountId
+
                     }
 
                 })
@@ -1116,6 +1203,7 @@ exports.remove = async (req, res) => {
         console.error(
             "DELETE CUSTOMER ERROR:",
             error
+
         )
 
         return res.status(500).json({
@@ -1176,7 +1264,6 @@ async (req, res) => {
                 where: {
 
                     id,
-
                     accountId
 
                 },
@@ -1187,9 +1274,6 @@ async (req, res) => {
                         true,
 
                     customerCode:
-                        true,
-
-                    customerNumber:
                         true,
 
                     name:
@@ -1221,8 +1305,12 @@ async (req, res) => {
         }
 
 
+        const formattedCustomer =
+            formatCustomer(customer)
+
+
         // ==================================================
-        // SALES HISTORY (scoped to this account only)
+        // SALES HISTORY
         // ==================================================
 
         const sales =
@@ -1589,7 +1677,6 @@ async (req, res) => {
                         total +
                         sale.shippingCost,
 
-
                     0
 
                 )
@@ -1670,7 +1757,8 @@ async (req, res) => {
 
         return res.json({
 
-            customer,
+            customer:
+                formattedCustomer,
 
             summary: {
 
