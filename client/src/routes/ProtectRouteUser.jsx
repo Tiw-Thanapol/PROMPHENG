@@ -2,7 +2,6 @@ import React, { useEffect } from "react"
 import { Navigate, Outlet } from "react-router-dom"
 
 import useAuthStore from "../store/auth-store"
-import LoadingToRedirect from "./LoadingToRedirect"
 
 
 const ProtectRouteUser = () => {
@@ -50,13 +49,20 @@ const ProtectRouteUser = () => {
     // WAIT FOR AUTH INITIALIZATION
     // ==================================================
 
-    if (
-        loading ||
-        !initialized
-    ) {
+    if (!initialized || loading) {
 
         return (
-            <LoadingToRedirect />
+            <div
+                style={{
+                    minHeight: "100vh",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    fontSize: "16px"
+                }}
+            >
+                Loading...
+            </div>
         )
 
     }
