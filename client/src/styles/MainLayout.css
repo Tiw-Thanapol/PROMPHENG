@@ -1,0 +1,1364 @@
+/* =========================================================
+   MainLayout.css
+   Main Layout / Navbar / Sidebar / Page Content
+   Compatible with:
+   - Navbar
+   - Sidebar
+   - FinancialOverview
+   ========================================================= */
+
+
+/* =========================================================
+   ROOT VARIABLES
+   ========================================================= */
+
+:root {
+    --layout-bg: #f8f7fb;
+    --layout-surface: #ffffff;
+
+    --layout-primary: #7662a8;
+    --layout-primary-dark: #5d4a8d;
+    --layout-primary-soft: #eee9f8;
+
+    --layout-text: #383244;
+    --layout-text-dark: #2d2737;
+    --layout-text-soft: #756e80;
+    --layout-text-muted: #9992a4;
+
+    --layout-border: #e9e4ef;
+    --layout-border-soft: #f0edf4;
+
+    --layout-navbar-height: 68px;
+    --layout-sidebar-width: 248px;
+    --layout-sidebar-collapsed-width: 78px;
+
+    --layout-shadow-sm:
+        0 2px 8px rgba(70, 52, 90, 0.05);
+
+    --layout-shadow:
+        0 8px 25px rgba(70, 52, 90, 0.07);
+
+    --layout-shadow-lg:
+        0 18px 45px rgba(70, 52, 90, 0.12);
+
+    --layout-radius: 12px;
+    --layout-radius-lg: 16px;
+}
+
+
+/* =========================================================
+   GLOBAL LAYOUT
+   ========================================================= */
+
+.main-layout {
+    position: relative;
+    width: 100%;
+    min-height: 100vh;
+    background:
+        linear-gradient(
+            180deg,
+            #fbfaff 0%,
+            #f8f7fb 45%,
+            #f7f6fa 100%
+        );
+    color: var(--layout-text);
+}
+
+.main-layout *,
+.main-layout *::before,
+.main-layout *::after {
+    box-sizing: border-box;
+}
+
+.main-layout button,
+.main-layout input,
+.main-layout select,
+.main-layout textarea {
+    font: inherit;
+}
+
+.main-layout button {
+    -webkit-tap-highlight-color: transparent;
+}
+
+.main-layout button:focus-visible,
+.main-layout input:focus-visible,
+.main-layout select:focus-visible,
+.main-layout textarea:focus-visible {
+    outline: 3px solid rgba(118, 98, 168, 0.18);
+    outline-offset: 2px;
+}
+
+
+/* =========================================================
+   NAVBAR
+   ========================================================= */
+
+.main-navbar {
+    position: fixed;
+    top: 0;
+    right: 0;
+    left: 0;
+    z-index: 900;
+
+    width: 100%;
+    height: var(--layout-navbar-height);
+
+    display: flex;
+    align-items: center;
+
+    padding: 0 22px;
+
+    border-bottom: 1px solid var(--layout-border);
+    background:
+        rgba(255, 255, 255, 0.94);
+
+    box-shadow:
+        0 2px 12px rgba(70, 52, 90, 0.045);
+
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+}
+
+
+/* =========================================================
+   NAVBAR INNER
+   ========================================================= */
+
+.main-navbar-inner {
+    width: 100%;
+    height: 100%;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 20px;
+}
+
+
+/* =========================================================
+   NAVBAR LEFT
+   ========================================================= */
+
+.navbar-left {
+    min-width: 0;
+
+    display: flex;
+    align-items: center;
+
+    gap: 12px;
+}
+
+
+/* =========================================================
+   NAVBAR BRAND
+   ========================================================= */
+
+.navbar-brand {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+
+    min-width: 0;
+
+    color: var(--layout-text-dark);
+    text-decoration: none;
+}
+
+.navbar-brand-icon {
+    width: 38px;
+    height: 38px;
+
+    flex: 0 0 38px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 11px;
+
+    color: var(--layout-primary);
+
+    background:
+        linear-gradient(
+            135deg,
+            #f0ebfa,
+            #e8e1f6
+        );
+
+    border: 1px solid #ded5ee;
+
+    box-shadow:
+        0 5px 14px rgba(118, 98, 168, 0.09);
+}
+
+.navbar-brand-icon svg {
+    width: 19px;
+    height: 19px;
+}
+
+.navbar-brand-text {
+    min-width: 0;
+
+    display: flex;
+    flex-direction: column;
+
+    gap: 1px;
+}
+
+.navbar-brand-text strong {
+    overflow: hidden;
+
+    color: var(--layout-text-dark);
+
+    font-size: 15px;
+    font-weight: 750;
+
+    line-height: 1.2;
+
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.navbar-brand-text span {
+    overflow: hidden;
+
+    color: var(--layout-text-muted);
+
+    font-size: 9px;
+
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+
+/* =========================================================
+   NAVBAR MENU TOGGLE
+   ========================================================= */
+
+.navbar-menu-button,
+.navbar-toggle {
+    width: 38px;
+    height: 38px;
+
+    flex: 0 0 38px;
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    border: 1px solid var(--layout-border);
+    border-radius: 10px;
+
+    background: #fff;
+    color: var(--layout-text-soft);
+
+    cursor: pointer;
+
+    transition:
+        background 0.18s ease,
+        border-color 0.18s ease,
+        color 0.18s ease,
+        transform 0.18s ease;
+}
+
+.navbar-menu-button:hover,
+.navbar-toggle:hover {
+    background: #faf8fd;
+    border-color: #d8cee8;
+    color: var(--layout-primary);
+
+    transform: translateY(-1px);
+}
+
+.navbar-menu-button svg,
+.navbar-toggle svg {
+    width: 18px;
+    height: 18px;
+}
+
+
+/* =========================================================
+   NAVBAR RIGHT
+   ========================================================= */
+
+.navbar-right {
+    min-width: 0;
+
+    display: flex;
+    align-items: center;
+
+    gap: 8px;
+}
+
+
+/* =========================================================
+   NAVBAR ACTION
+   ========================================================= */
+
+.navbar-action {
+    position: relative;
+
+    width: 38px;
+    height: 38px;
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    border: 1px solid transparent;
+    border-radius: 10px;
+
+    background: transparent;
+    color: var(--layout-text-soft);
+
+    cursor: pointer;
+
+    transition:
+        background 0.18s ease,
+        border-color 0.18s ease,
+        color 0.18s ease;
+}
+
+.navbar-action:hover {
+    background: #f7f4fb;
+    border-color: var(--layout-border);
+    color: var(--layout-primary);
+}
+
+.navbar-action svg {
+    width: 18px;
+    height: 18px;
+}
+
+
+/* =========================================================
+   NAVBAR NOTIFICATION BADGE
+   ========================================================= */
+
+.navbar-notification-badge {
+    position: absolute;
+
+    top: 5px;
+    right: 5px;
+
+    min-width: 15px;
+    height: 15px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 0 4px;
+
+    border: 2px solid #fff;
+    border-radius: 99px;
+
+    background: #d85c68;
+    color: #fff;
+
+    font-size: 8px;
+    font-weight: 750;
+
+    line-height: 1;
+}
+
+
+/* =========================================================
+   NAVBAR USER
+   ========================================================= */
+
+.navbar-user {
+    display: flex;
+    align-items: center;
+
+    gap: 9px;
+
+    padding: 4px 7px 4px 4px;
+
+    border: 1px solid transparent;
+    border-radius: 11px;
+
+    background: transparent;
+
+    cursor: pointer;
+
+    transition:
+        background 0.18s ease,
+        border-color 0.18s ease;
+}
+
+.navbar-user:hover {
+    background: #faf8fd;
+    border-color: var(--layout-border);
+}
+
+.navbar-user-avatar {
+    width: 34px;
+    height: 34px;
+
+    flex: 0 0 34px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    overflow: hidden;
+
+    border-radius: 10px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #eee9f8,
+            #e3dbf2
+        );
+
+    color: var(--layout-primary);
+
+    font-size: 12px;
+    font-weight: 750;
+}
+
+.navbar-user-avatar img {
+    width: 100%;
+    height: 100%;
+
+    display: block;
+
+    object-fit: cover;
+}
+
+.navbar-user-info {
+    min-width: 0;
+
+    display: flex;
+    flex-direction: column;
+
+    gap: 2px;
+
+    text-align: left;
+}
+
+.navbar-user-info strong {
+    overflow: hidden;
+
+    color: var(--layout-text-dark);
+
+    font-size: 11px;
+    font-weight: 700;
+
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.navbar-user-info span {
+    overflow: hidden;
+
+    color: var(--layout-text-muted);
+
+    font-size: 9px;
+
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.navbar-user-chevron {
+    color: #aaa2b0;
+}
+
+
+/* =========================================================
+   SIDEBAR
+   ========================================================= */
+
+.main-sidebar {
+    position: fixed;
+
+    top: var(--layout-navbar-height);
+    bottom: 0;
+    left: 0;
+
+    z-index: 850;
+
+    width: var(--layout-sidebar-width);
+
+    display: flex;
+    flex-direction: column;
+
+    padding: 16px 12px;
+
+    border-right: 1px solid var(--layout-border);
+
+    background:
+        rgba(255, 255, 255, 0.96);
+
+    box-shadow:
+        3px 0 15px rgba(70, 52, 90, 0.035);
+
+    overflow-x: hidden;
+    overflow-y: auto;
+
+    transition:
+        width 0.22s ease,
+        transform 0.22s ease;
+}
+
+
+/* =========================================================
+   SIDEBAR COLLAPSED
+   ========================================================= */
+
+.main-layout.sidebar-collapsed {
+    --layout-sidebar-current-width:
+        var(--layout-sidebar-collapsed-width);
+}
+
+.main-layout:not(.sidebar-collapsed) {
+    --layout-sidebar-current-width:
+        var(--layout-sidebar-width);
+}
+
+.main-sidebar.collapsed,
+.sidebar-collapsed .main-sidebar {
+    width: var(--layout-sidebar-collapsed-width);
+}
+
+
+/* =========================================================
+   SIDEBAR BRAND / TOP
+   ========================================================= */
+
+.sidebar-header {
+    min-height: 42px;
+
+    display: flex;
+    align-items: center;
+
+    margin-bottom: 14px;
+}
+
+.sidebar-header-content {
+    min-width: 0;
+
+    display: flex;
+    align-items: center;
+
+    gap: 9px;
+}
+
+.sidebar-header-icon {
+    width: 34px;
+    height: 34px;
+
+    flex: 0 0 34px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 10px;
+
+    background: var(--layout-primary-soft);
+    color: var(--layout-primary);
+}
+
+.sidebar-header-icon svg {
+    width: 17px;
+    height: 17px;
+}
+
+.sidebar-header-text {
+    min-width: 0;
+
+    display: flex;
+    flex-direction: column;
+
+    gap: 1px;
+}
+
+.sidebar-header-text strong {
+    color: var(--layout-text-dark);
+
+    font-size: 12px;
+    font-weight: 750;
+
+    white-space: nowrap;
+}
+
+.sidebar-header-text span {
+    color: var(--layout-text-muted);
+
+    font-size: 9px;
+
+    white-space: nowrap;
+}
+
+
+/* =========================================================
+   SIDEBAR SECTION
+   ========================================================= */
+
+.sidebar-section {
+    margin-bottom: 18px;
+}
+
+.sidebar-section-title {
+    display: block;
+
+    margin: 0 8px 7px;
+
+    color: #aaa3b0;
+
+    font-size: 9px;
+    font-weight: 750;
+
+    letter-spacing: 0.7px;
+    text-transform: uppercase;
+}
+
+
+/* =========================================================
+   SIDEBAR NAV
+   ========================================================= */
+
+.sidebar-nav {
+    display: flex;
+    flex-direction: column;
+
+    gap: 3px;
+}
+
+.sidebar-nav-item {
+    position: relative;
+
+    width: 100%;
+    min-height: 42px;
+
+    display: flex;
+    align-items: center;
+
+    gap: 11px;
+
+    padding: 0 10px;
+
+    border: 1px solid transparent;
+    border-radius: 10px;
+
+    background: transparent;
+
+    color: var(--layout-text-soft);
+
+    text-decoration: none;
+
+    cursor: pointer;
+
+    transition:
+        background 0.17s ease,
+        border-color 0.17s ease,
+        color 0.17s ease,
+        transform 0.17s ease;
+}
+
+.sidebar-nav-item:hover {
+    background: #faf8fd;
+    border-color: #eee9f4;
+    color: var(--layout-primary);
+
+    transform: translateX(1px);
+}
+
+.sidebar-nav-item.active {
+    background:
+        linear-gradient(
+            135deg,
+            #f1ecfa,
+            #ece6f7
+        );
+
+    border-color: #dfd5ef;
+
+    color: var(--layout-primary-dark);
+
+    box-shadow:
+        0 3px 9px rgba(118, 98, 168, 0.06);
+}
+
+.sidebar-nav-item.active::before {
+    content: "";
+
+    position: absolute;
+
+    top: 8px;
+    bottom: 8px;
+    left: -12px;
+
+    width: 3px;
+
+    border-radius: 0 5px 5px 0;
+
+    background: var(--layout-primary);
+}
+
+.sidebar-nav-icon {
+    width: 20px;
+    height: 20px;
+
+    flex: 0 0 20px;
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.sidebar-nav-icon svg {
+    width: 17px;
+    height: 17px;
+}
+
+.sidebar-nav-label {
+    min-width: 0;
+
+    overflow: hidden;
+
+    flex: 1;
+
+    color: inherit;
+
+    font-size: 11px;
+    font-weight: 650;
+
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.sidebar-nav-badge {
+    min-width: 19px;
+    height: 19px;
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 0 5px;
+
+    border-radius: 99px;
+
+    background: #f3eef9;
+
+    color: var(--layout-primary);
+
+    font-size: 8px;
+    font-weight: 750;
+}
+
+
+/* =========================================================
+   SIDEBAR DIVIDER
+   ========================================================= */
+
+.sidebar-divider {
+    width: 100%;
+    height: 1px;
+
+    margin: 4px 0 15px;
+
+    background: var(--layout-border-soft);
+}
+
+
+/* =========================================================
+   SIDEBAR BOTTOM
+   ========================================================= */
+
+.sidebar-bottom {
+    margin-top: auto;
+
+    padding-top: 12px;
+}
+
+.sidebar-bottom-card {
+    padding: 12px;
+
+    border: 1px solid var(--layout-border);
+    border-radius: 11px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #fbfaff,
+            #f8f5fc
+        );
+}
+
+.sidebar-bottom-card strong {
+    display: block;
+
+    margin-bottom: 3px;
+
+    color: var(--layout-text-dark);
+
+    font-size: 10px;
+    font-weight: 700;
+}
+
+.sidebar-bottom-card span {
+    display: block;
+
+    color: var(--layout-text-muted);
+
+    font-size: 9px;
+    line-height: 1.5;
+}
+
+
+/* =========================================================
+   COLLAPSED SIDEBAR
+   ========================================================= */
+
+.sidebar-collapsed .sidebar-header {
+    justify-content: center;
+}
+
+.sidebar-collapsed .sidebar-header-content {
+    justify-content: center;
+}
+
+.sidebar-collapsed .sidebar-header-text,
+.sidebar-collapsed .sidebar-section-title,
+.sidebar-collapsed .sidebar-nav-label,
+.sidebar-collapsed .sidebar-nav-badge,
+.sidebar-collapsed .sidebar-bottom {
+    display: none;
+}
+
+.sidebar-collapsed .sidebar-nav-item {
+    justify-content: center;
+
+    padding: 0;
+}
+
+.sidebar-collapsed .sidebar-nav-item.active::before {
+    left: -12px;
+}
+
+.sidebar-collapsed .sidebar-nav-icon {
+    margin: 0;
+}
+
+
+/* =========================================================
+   MAIN CONTENT
+   ========================================================= */
+
+.main-content {
+    position: relative;
+
+    min-height: 100vh;
+
+    margin-left: var(--layout-sidebar-current-width);
+    padding-top: var(--layout-navbar-height);
+
+    transition:
+        margin-left 0.22s ease;
+}
+
+
+/* =========================================================
+   CONTENT INNER
+   ========================================================= */
+
+.main-content-inner {
+    width: 100%;
+    min-height: calc(100vh - var(--layout-navbar-height));
+
+    padding: 0;
+}
+
+
+/* =========================================================
+   PAGE CONTAINER
+   ========================================================= */
+
+.page-container {
+    width: 100%;
+    min-height: calc(100vh - var(--layout-navbar-height));
+
+    padding: 0;
+}
+
+
+/*
+   FinancialOverview already owns:
+
+   .financial-overview-page {
+       padding: 28px 32px 60px;
+   }
+
+   Therefore MainLayout does NOT add horizontal padding here.
+*/
+
+
+/* =========================================================
+   CONTENT OVERLAY
+   ========================================================= */
+
+.main-layout-overlay {
+    position: fixed;
+
+    inset: 0;
+
+    z-index: 800;
+
+    display: none;
+
+    background:
+        rgba(38, 30, 48, 0.32);
+
+    backdrop-filter: blur(2px);
+    -webkit-backdrop-filter: blur(2px);
+}
+
+
+/* =========================================================
+   DROPDOWN / POPOVER COMMON
+   ========================================================= */
+
+.layout-dropdown {
+    position: absolute;
+
+    z-index: 1200;
+
+    min-width: 190px;
+
+    padding: 7px;
+
+    border: 1px solid var(--layout-border);
+    border-radius: 12px;
+
+    background: #fff;
+
+    box-shadow: var(--layout-shadow-lg);
+
+    animation:
+        layoutDropdownIn
+        0.16s ease-out;
+}
+
+.layout-dropdown-item {
+    width: 100%;
+
+    display: flex;
+    align-items: center;
+
+    gap: 9px;
+
+    padding: 10px;
+
+    border: 0;
+    border-radius: 8px;
+
+    background: transparent;
+
+    color: var(--layout-text);
+
+    text-align: left;
+
+    cursor: pointer;
+
+    font-size: 11px;
+
+    transition:
+        background 0.16s ease,
+        color 0.16s ease;
+}
+
+.layout-dropdown-item:hover {
+    background: #f7f4fb;
+    color: var(--layout-primary);
+}
+
+.layout-dropdown-item svg {
+    width: 16px;
+    height: 16px;
+
+    flex: 0 0 auto;
+}
+
+
+/* =========================================================
+   RESPONSIVE — LARGE TABLET
+   ========================================================= */
+
+@media (max-width: 1200px) {
+
+    :root {
+        --layout-sidebar-width: 225px;
+    }
+
+    .main-navbar {
+        padding: 0 18px;
+    }
+
+    .financial-overview-page {
+        padding-left: 24px;
+        padding-right: 24px;
+    }
+}
+
+
+/* =========================================================
+   RESPONSIVE — TABLET
+   ========================================================= */
+
+@media (max-width: 900px) {
+
+    :root {
+        --layout-sidebar-width: 248px;
+    }
+
+    .main-sidebar {
+        transform: translateX(-100%);
+
+        box-shadow:
+            10px 0 30px rgba(70, 52, 90, 0.12);
+    }
+
+    .main-layout.sidebar-open .main-sidebar {
+        transform: translateX(0);
+    }
+
+    .main-layout.sidebar-open .main-layout-overlay {
+        display: block;
+    }
+
+    .main-content {
+        margin-left: 0;
+    }
+
+    .sidebar-collapsed .main-sidebar {
+        width: var(--layout-sidebar-width);
+    }
+
+    .sidebar-collapsed .sidebar-header-text,
+    .sidebar-collapsed .sidebar-section-title,
+    .sidebar-collapsed .sidebar-nav-label,
+    .sidebar-collapsed .sidebar-nav-badge,
+    .sidebar-collapsed .sidebar-bottom {
+        display: block;
+    }
+
+    .sidebar-collapsed .sidebar-header {
+        justify-content: flex-start;
+    }
+
+    .sidebar-collapsed .sidebar-header-content {
+        justify-content: flex-start;
+    }
+
+    .sidebar-collapsed .sidebar-nav-item {
+        justify-content: flex-start;
+        padding: 0 10px;
+    }
+
+    .sidebar-collapsed .sidebar-nav-icon {
+        margin: 0;
+    }
+
+    .sidebar-collapsed .sidebar-nav-item.active::before {
+        left: -12px;
+    }
+
+    .financial-overview-page {
+        padding-left: 24px;
+        padding-right: 24px;
+    }
+}
+
+
+/* =========================================================
+   RESPONSIVE — SMALL TABLET / LARGE MOBILE
+   ========================================================= */
+
+@media (max-width: 640px) {
+
+    :root {
+        --layout-navbar-height: 60px;
+    }
+
+    .main-navbar {
+        height: var(--layout-navbar-height);
+
+        padding:
+            0
+            12px;
+    }
+
+    .navbar-left {
+        gap: 8px;
+    }
+
+    .navbar-menu-button,
+    .navbar-toggle {
+        width: 35px;
+        height: 35px;
+
+        flex-basis: 35px;
+    }
+
+    .navbar-brand-icon {
+        width: 35px;
+        height: 35px;
+
+        flex-basis: 35px;
+    }
+
+    .navbar-brand-text span {
+        display: none;
+    }
+
+    .navbar-brand-text strong {
+        font-size: 13px;
+    }
+
+    .navbar-right {
+        gap: 2px;
+    }
+
+    .navbar-action {
+        width: 34px;
+        height: 34px;
+    }
+
+    .navbar-user {
+        padding-right: 3px;
+    }
+
+    .navbar-user-avatar {
+        width: 32px;
+        height: 32px;
+
+        flex-basis: 32px;
+    }
+
+    .navbar-user-info,
+    .navbar-user-chevron {
+        display: none;
+    }
+
+    .main-sidebar {
+        top: var(--layout-navbar-height);
+
+        width:
+            min(
+                280px,
+                calc(100vw - 52px)
+            );
+
+        padding: 14px 11px;
+    }
+
+    .sidebar-collapsed .main-sidebar {
+        width:
+            min(
+                280px,
+                calc(100vw - 52px)
+            );
+    }
+
+    .main-content {
+        padding-top: var(--layout-navbar-height);
+    }
+
+    .main-content-inner,
+    .page-container {
+        min-height:
+            calc(
+                100vh -
+                var(--layout-navbar-height)
+            );
+    }
+
+    .financial-overview-page {
+        padding:
+            16px
+            14px
+            40px;
+    }
+}
+
+
+/* =========================================================
+   RESPONSIVE — VERY SMALL MOBILE
+   ========================================================= */
+
+@media (max-width: 400px) {
+
+    .main-navbar {
+        padding:
+            0
+            9px;
+    }
+
+    .navbar-brand-text strong {
+        max-width: 110px;
+
+        font-size: 12px;
+    }
+
+    .navbar-action {
+        width: 32px;
+        height: 32px;
+    }
+
+    .navbar-user-avatar {
+        width: 30px;
+        height: 30px;
+
+        flex-basis: 30px;
+    }
+
+    .main-sidebar {
+        width:
+            calc(100vw - 35px);
+    }
+
+    .sidebar-collapsed .main-sidebar {
+        width:
+            calc(100vw - 35px);
+    }
+
+    .financial-overview-page {
+        padding:
+            12px
+            10px
+            30px;
+    }
+}
+
+
+/* =========================================================
+   PRINT
+   ========================================================= */
+
+@media print {
+
+    .main-navbar,
+    .main-sidebar,
+    .main-layout-overlay {
+        display: none !important;
+    }
+
+    .main-content {
+        margin-left: 0 !important;
+        padding-top: 0 !important;
+    }
+
+    .main-layout,
+    .main-content,
+    .main-content-inner,
+    .page-container {
+        min-height: auto !important;
+        background: #fff !important;
+    }
+
+    .financial-overview-page {
+        padding: 0 !important;
+        background: #fff !important;
+    }
+}
+
+
+/* =========================================================
+   REDUCED MOTION
+   ========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+
+    .main-layout *,
+    .main-layout *::before,
+    .main-layout *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+
+        transition-duration: 0.01ms !important;
+
+        scroll-behavior: auto !important;
+    }
+}
+
+
+/* =========================================================
+   SCROLLBAR
+   ========================================================= */
+
+.main-layout ::-webkit-scrollbar {
+    width: 7px;
+    height: 7px;
+}
+
+.main-layout ::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.main-layout ::-webkit-scrollbar-thumb {
+    border-radius: 99px;
+    background: #d9d3df;
+}
+
+.main-layout ::-webkit-scrollbar-thumb:hover {
+    background: #c4bbcf;
+}
+
+.main-sidebar {
+    scrollbar-width: thin;
+    scrollbar-color:
+        #d9d3df
+        transparent;
+}
+
+
+/* =========================================================
+   ANIMATIONS
+   ========================================================= */
+
+@keyframes layoutDropdownIn {
+
+    from {
+        opacity: 0;
+
+        transform:
+            translateY(-5px)
+            scale(0.98);
+    }
+
+    to {
+        opacity: 1;
+
+        transform:
+            translateY(0)
+            scale(1);
+    }
+}
+
+
+/* =========================================================
+   SAFETY — PREVENT HORIZONTAL OVERFLOW
+   ========================================================= */
+
+.main-layout {
+    overflow-x: hidden;
+}
+
+.main-content {
+    min-width: 0;
+}
+
+.main-content-inner {
+    min-width: 0;
+}
+
+.page-container {
+    min-width: 0;
+}

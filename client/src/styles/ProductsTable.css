@@ -1,0 +1,1620 @@
+/* =========================================================
+   PRODUCTS TABLE
+   PRODUCTS-TABLE.CSS
+   =========================================================
+   ใช้ร่วมกับ:
+   - StockProducts.jsx
+   - SoldProducts.jsx
+   - Products.jsx
+
+   STYLE:
+   Soft 3D / Clay / Toy / Pastel
+========================================================= */
+
+
+/* =========================================================
+   TABLE WRAPPER
+========================================================= */
+
+.products-table-wrapper {
+
+    width: 100%;
+
+    overflow-x: auto;
+
+    border: 1px solid #eee6f1;
+
+    border-radius: 18px;
+
+    background: #fff;
+
+    -webkit-overflow-scrolling: touch;
+
+}
+
+
+/* =========================================================
+   TABLE
+========================================================= */
+
+.products-table {
+
+    width: 100%;
+
+    min-width: 850px;
+
+    border-collapse: collapse;
+
+}
+
+
+.products-table thead {
+
+    background: #faf7fc;
+
+}
+
+
+.products-table th {
+
+    padding: 14px 15px;
+
+    border-bottom: 1px solid #eee7f1;
+
+    color: #938799;
+
+    font-size: 11px;
+
+    font-weight: 800;
+
+    text-align: left;
+
+    white-space: nowrap;
+
+}
+
+
+.products-table td {
+
+    padding: 14px 15px;
+
+    border-bottom: 1px solid #f2edf4;
+
+    color: #655b6c;
+
+    font-size: 13px;
+
+    vertical-align: middle;
+
+}
+
+
+.products-table tbody tr {
+
+    transition:
+        background .15s ease;
+
+}
+
+
+.products-table tbody tr:hover {
+
+    background: #fcf9fd;
+
+}
+
+
+.products-table tbody tr:last-child td {
+
+    border-bottom: none;
+
+}
+
+
+/* =========================================================
+   CHECKBOX
+========================================================= */
+
+.checkbox-col {
+
+    width: 42px !important;
+
+    text-align: center !important;
+
+}
+
+
+.checkbox-col input {
+
+    width: 16px;
+
+    height: 16px;
+
+    accent-color: #a982c4;
+
+    cursor: pointer;
+
+}
+
+
+/* =========================================================
+   PRODUCT NAME
+========================================================= */
+
+.product-name {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 11px;
+
+    min-width: 190px;
+
+}
+
+
+.product-mini-icon {
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    flex-shrink: 0;
+
+    width: 38px;
+
+    height: 38px;
+
+    border-radius: 12px;
+
+    background:
+        linear-gradient(
+            145deg,
+            #fff1f7,
+            #eee5ff
+        );
+
+    box-shadow:
+        inset 0 1px 2px
+        rgba(255,255,255,.8);
+
+}
+
+
+.product-name-content {
+
+    min-width: 0;
+
+}
+
+
+.product-name strong {
+
+    display: block;
+
+    overflow: hidden;
+
+    color: #5b5064;
+
+    font-size: 13px;
+
+    font-weight: 750;
+
+    text-overflow: ellipsis;
+
+    white-space: nowrap;
+
+}
+
+
+.product-name small {
+
+    display: block;
+
+    max-width: 240px;
+
+    margin-top: 3px;
+
+    overflow: hidden;
+
+    color: #a197a9;
+
+    font-size: 11px;
+
+    text-overflow: ellipsis;
+
+    white-space: nowrap;
+
+}
+
+
+.product-note {
+
+    color: #a197a9;
+
+}
+
+
+/* =========================================================
+   MONEY
+========================================================= */
+
+.money-cost {
+
+    color: #766d7d;
+
+    font-weight: 700;
+
+}
+
+
+.money-sale {
+
+    color: #8b68a7;
+
+    font-weight: 800;
+
+}
+
+
+.money-total-cost {
+
+    color: #766d7d;
+
+    font-weight: 750;
+
+}
+
+
+.not-sold-price {
+
+    color: #b4a9b8;
+
+    font-size: 12px;
+
+}
+
+
+/* =========================================================
+   PROFIT
+========================================================= */
+
+.profit-positive {
+
+    color: #4c9a68;
+
+    font-weight: 800;
+
+}
+
+
+.profit-negative {
+
+    color: #d56e78;
+
+    font-weight: 800;
+
+}
+
+
+.profit-empty {
+
+    color: #b9afbd;
+
+}
+
+
+.sold-footer-profit {
+
+    color: #4c9a68 !important;
+
+    font-weight: 800;
+
+}
+
+
+/* =========================================================
+   DATE
+========================================================= */
+
+.date-cell {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 6px;
+
+    color: #94899b;
+
+    white-space: nowrap;
+
+}
+
+
+.date-cell svg {
+
+    flex-shrink: 0;
+
+    color: #b29ac0;
+
+}
+
+
+/* =========================================================
+   STATUS
+========================================================= */
+
+.status-badge {
+
+    display: inline-flex;
+
+    align-items: center;
+
+    gap: 6px;
+
+    padding: 6px 9px;
+
+    border-radius: 10px;
+
+    font-size: 10px;
+
+    font-weight: 800;
+
+    white-space: nowrap;
+
+}
+
+
+.status-badge span {
+
+    width: 6px;
+
+    height: 6px;
+
+    border-radius: 50%;
+
+}
+
+
+/* ---------------------------------------------------------
+   AVAILABLE
+--------------------------------------------------------- */
+
+.status-available {
+
+    color: #57906a;
+
+    background: #e9f8ed;
+
+}
+
+
+.status-available span {
+
+    background: #65b77b;
+
+}
+
+
+/* ---------------------------------------------------------
+   SOLD
+--------------------------------------------------------- */
+
+.status-sold {
+
+    color: #85629d;
+
+    background: #f0e6f8;
+
+}
+
+
+.status-sold span {
+
+    background: #a879c1;
+
+}
+
+
+/* ---------------------------------------------------------
+   CANCELLED
+--------------------------------------------------------- */
+
+.status-cancelled {
+
+    color: #a46b75;
+
+    background: #ffeaed;
+
+}
+
+
+.status-cancelled span {
+
+    background: #d98791;
+
+}
+
+
+/* =========================================================
+   ACTIONS
+========================================================= */
+
+.product-actions {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 5px;
+
+}
+
+
+.product-actions button {
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    flex-shrink: 0;
+
+    width: 32px;
+
+    height: 32px;
+
+    border: none;
+
+    border-radius: 10px;
+
+    cursor: pointer;
+
+    transition:
+        transform .15s ease,
+        box-shadow .15s ease;
+
+}
+
+
+.product-actions button:hover {
+
+    transform:
+        translateY(-1px);
+
+}
+
+
+.product-actions button:active {
+
+    transform:
+        translateY(0);
+
+}
+
+
+/* ---------------------------------------------------------
+   EDIT
+--------------------------------------------------------- */
+
+.action-edit {
+
+    color: #8565a0;
+
+    background: #f0e6f7;
+
+}
+
+
+.action-edit:hover {
+
+    background: #e9dcf2;
+
+}
+
+
+/* ---------------------------------------------------------
+   SELL
+--------------------------------------------------------- */
+
+.action-sell {
+
+    color: #b27b38;
+
+    background: #fff0d2;
+
+}
+
+
+.action-sell:hover {
+
+    background: #ffe8bf;
+
+}
+
+
+/* ---------------------------------------------------------
+   DELETE
+--------------------------------------------------------- */
+
+.action-delete {
+
+    color: #bb6574;
+
+    background: #ffe8ec;
+
+}
+
+
+.action-delete:hover {
+
+    background: #ffdde3;
+
+}
+
+
+/* =========================================================
+   SORT BUTTON
+   SOLD PRODUCTS
+========================================================= */
+
+.products-listby {
+
+    display: inline-flex;
+
+    align-items: center;
+
+    gap: 5px;
+
+    padding: 5px 7px;
+
+    margin: -5px -7px;
+
+    border: none;
+
+    border-radius: 8px;
+
+    color: #938799;
+
+    background: transparent;
+
+    font: inherit;
+
+    font-size: 11px;
+
+    font-weight: 800;
+
+    cursor: pointer;
+
+    white-space: nowrap;
+
+    transition: .15s ease;
+
+}
+
+
+.products-listby:hover {
+
+    color: #85629d;
+
+    background: #f4edf8;
+
+}
+
+
+.products-listby-active {
+
+    color: #85629d;
+
+    background: #f0e6f8;
+
+}
+
+
+.products-listby svg {
+
+    flex-shrink: 0;
+
+}
+
+
+/* =========================================================
+   QUANTITY CELL
+========================================================= */
+
+.quantity-cell {
+
+    display: inline-flex;
+
+    align-items: center;
+
+    gap: 5px;
+
+    white-space: nowrap;
+
+}
+
+
+.quantity-cell strong {
+
+    color: #6e6374;
+
+    font-weight: 800;
+
+}
+
+
+.quantity-cell small {
+
+    color: #a197a9;
+
+    font-size: 10px;
+
+}
+
+
+.quantity-icon {
+
+    display: inline-flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    color: #a98bbb;
+
+}
+
+
+/* =========================================================
+   EMPTY STATE
+========================================================= */
+
+.products-empty {
+
+    padding: 55px 20px !important;
+
+}
+
+
+.empty-state {
+
+    display: flex;
+
+    align-items: center;
+
+    flex-direction: column;
+
+    text-align: center;
+
+}
+
+
+.empty-bubble {
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    width: 68px;
+
+    height: 68px;
+
+    margin-bottom: 12px;
+
+    border-radius: 23px;
+
+    background:
+        linear-gradient(
+            145deg,
+            #f5eaff,
+            #fff0f6
+        );
+
+    font-size: 32px;
+
+    box-shadow:
+        inset 0 2px 3px
+        rgba(255,255,255,.8);
+
+}
+
+
+.empty-state h3 {
+
+    margin: 0;
+
+    color: #685c70;
+
+    font-size: 17px;
+
+}
+
+
+.empty-state p {
+
+    margin: 6px 0 15px;
+
+    color: #a298a8;
+
+    font-size: 12px;
+
+}
+
+
+.empty-state button {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 6px;
+
+    padding: 9px 15px;
+
+    border: none;
+
+    border-radius: 12px;
+
+    color: #fff;
+
+    background: #a980c3;
+
+    font-family: inherit;
+
+    font-weight: 700;
+
+    cursor: pointer;
+
+    transition: .18s ease;
+
+}
+
+
+.empty-state button:hover {
+
+    transform:
+        translateY(-1px);
+
+    background: #9972b5;
+
+}
+
+
+/* =========================================================
+   LOADING
+========================================================= */
+
+.products-loading {
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    flex-direction: column;
+
+    gap: 7px;
+
+    min-height: 380px;
+
+}
+
+
+.loading-bear {
+
+    margin-bottom: 6px;
+
+    font-size: 43px;
+
+    animation:
+        floatBear 1.5s ease-in-out infinite;
+
+}
+
+
+.products-loading strong {
+
+    color: #76687d;
+
+    font-size: 14px;
+
+}
+
+
+.products-loading span {
+
+    color: #aaa0af;
+
+    font-size: 12px;
+
+}
+
+
+@keyframes floatBear {
+
+    0%,
+    100% {
+
+        transform:
+            translateY(0);
+
+    }
+
+    50% {
+
+        transform:
+            translateY(-7px);
+
+    }
+
+}
+
+
+/* =========================================================
+   FOOTER
+========================================================= */
+
+.products-footer {
+
+    display: flex;
+
+    justify-content: space-between;
+
+    gap: 15px;
+
+    margin-top: 12px;
+
+    padding: 0 4px;
+
+    color: #9c91a2;
+
+    font-size: 11px;
+
+}
+
+
+.products-footer strong {
+
+    color: #776583;
+
+}
+
+
+/* =========================================================
+   SOLD HISTORY BUTTON
+========================================================= */
+
+.sold-history-button {
+
+    display: inline-flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    gap: 7px;
+
+    min-width: 92px;
+
+    padding: 8px 11px;
+
+    border: 1px solid #eadcf2;
+
+    border-radius: 12px;
+
+    background:
+        linear-gradient(
+            145deg,
+            #fff,
+            #f8effd
+        );
+
+    color: #8c68a9;
+
+    font-family: inherit;
+
+    font-size: 12px;
+
+    font-weight: 700;
+
+    cursor: pointer;
+
+    box-shadow:
+
+        0 4px 10px
+        rgba(140, 104, 169, .10),
+
+        inset 0 1px 1px
+        rgba(255,255,255,.9);
+
+    transition:
+
+        transform .18s ease,
+
+        box-shadow .18s ease,
+
+        background .18s ease;
+
+}
+
+
+.sold-history-button:hover {
+
+    transform:
+        translateY(-1px);
+
+    background:
+        linear-gradient(
+            145deg,
+            #fff,
+            #f3e7fb
+        );
+
+    box-shadow:
+
+        0 7px 15px
+        rgba(140, 104, 169, .15),
+
+        inset 0 1px 1px
+        rgba(255,255,255,.9);
+
+}
+
+
+.sold-history-button:active {
+
+    transform:
+        translateY(1px);
+
+}
+
+
+.sold-history-button small {
+
+    display: inline-flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    min-width: 19px;
+
+    height: 19px;
+
+    padding: 0 5px;
+
+    border-radius: 999px;
+
+    background: #eadcf4;
+
+    color: #805e9d;
+
+    font-size: 10px;
+
+}
+
+
+/* =========================================================
+   RESPONSIVE — TABLET
+========================================================= */
+
+@media (max-width: 1100px) {
+
+    .products-table {
+
+        min-width: 820px;
+
+    }
+
+}
+
+
+/* =========================================================
+   RESPONSIVE — MOBILE
+========================================================= */
+
+@media (max-width: 760px) {
+
+    .products-table-wrapper {
+
+        border-radius: 15px;
+
+    }
+
+
+    .products-table {
+
+        min-width: 820px;
+
+    }
+
+
+    .products-table th {
+
+        padding:
+            12px 13px;
+
+    }
+
+
+    .products-table td {
+
+        padding:
+            12px 13px;
+
+    }
+
+
+    .product-name {
+
+        min-width: 175px;
+
+    }
+
+
+    .product-name small {
+
+        max-width: 210px;
+
+    }
+
+
+    .products-footer {
+
+        align-items: flex-start;
+
+        flex-direction: column;
+
+        gap: 5px;
+
+    }
+
+}
+
+
+/* =========================================================
+   RESPONSIVE — SMALL MOBILE
+========================================================= */
+
+@media (max-width: 480px) {
+
+    .products-table {
+
+        min-width: 780px;
+
+    }
+
+
+    .products-table th {
+
+        padding:
+            11px 12px;
+
+        font-size: 10px;
+
+    }
+
+
+    .products-table td {
+
+        padding:
+            11px 12px;
+
+        font-size: 12px;
+
+    }
+
+
+    .product-mini-icon {
+
+        width: 35px;
+
+        height: 35px;
+
+        border-radius: 11px;
+
+    }
+
+
+    .product-name {
+
+        gap: 9px;
+
+        min-width: 165px;
+
+    }
+
+
+    .product-name strong {
+
+        font-size: 12px;
+
+    }
+
+
+    .product-name small {
+
+        max-width: 190px;
+
+        font-size: 10px;
+
+    }
+
+
+    .product-actions button {
+
+        width: 30px;
+
+        height: 30px;
+
+    }
+
+
+    .sold-history-button {
+
+        min-width: 85px;
+
+        padding:
+            7px 9px;
+
+        font-size: 11px;
+
+    }
+
+}
+
+
+/* =========================================================
+   REDUCED MOTION
+========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+
+    .products-table *,
+    .products-empty *,
+    .products-loading *,
+    .sold-history-button {
+
+        scroll-behavior: auto !important;
+
+        animation-duration: .01ms !important;
+
+        animation-iteration-count: 1 !important;
+
+        transition-duration: .01ms !important;
+
+    }
+
+}
+
+
+/* =========================================================
+   SOLD HISTORY MODAL
+========================================================= */
+
+.sold-history-overlay {
+
+    position: fixed;
+
+    inset: 0;
+
+    z-index: 1000;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    padding: 25px;
+
+    background: rgba(76, 59, 84, .3);
+
+    backdrop-filter: blur(7px);
+
+}
+
+
+.sold-history-modal {
+
+    position: relative;
+
+    width: min(720px, 100%);
+
+    max-height: calc(100vh - 45px);
+
+    overflow: hidden;
+
+    display: flex;
+
+    flex-direction: column;
+
+    border: 1px solid rgba(255,255,255,.8);
+
+    border-radius: 24px;
+
+    background:
+        linear-gradient(
+            145deg,
+            #fff,
+            #fcf7ff
+        );
+
+    box-shadow:
+        0 28px 70px rgba(79, 56, 88, .25),
+        inset 0 2px 3px rgba(255,255,255,.95);
+
+}
+
+
+/* =========================================================
+   HEADER
+========================================================= */
+
+.sold-history-header {
+
+    display: flex;
+
+    align-items: flex-start;
+
+    justify-content: space-between;
+
+    gap: 15px;
+
+    padding: 22px 24px 16px;
+
+    border-bottom: 1px solid #f1eaf4;
+
+}
+
+
+.sold-history-title {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 9px;
+
+    color: #85629d;
+
+}
+
+
+.sold-history-title h3 {
+
+    margin: 0;
+
+    color: #5c5063;
+
+    font-size: 18px;
+
+    font-weight: 800;
+
+}
+
+
+.sold-history-header p {
+
+    margin: 6px 0 0;
+
+    color: #a096a8;
+
+    font-size: 12px;
+
+}
+
+
+.sold-history-header p strong {
+
+    color: #76588b;
+
+}
+
+
+.sold-history-close {
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    flex-shrink: 0;
+
+    width: 35px;
+
+    height: 35px;
+
+    border: none;
+
+    border-radius: 12px;
+
+    background: #f3edf6;
+
+    color: #8d8192;
+
+    cursor: pointer;
+
+    transition: .15s ease;
+
+}
+
+
+.sold-history-close:hover {
+
+    background: #ece2f0;
+
+    transform: rotate(3deg);
+
+}
+
+
+/* =========================================================
+   SUMMARY
+========================================================= */
+
+.sold-history-summary {
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(3, minmax(0, 1fr));
+
+    gap: 10px;
+
+    padding: 16px 24px;
+
+    border-bottom: 1px solid #f1eaf4;
+
+}
+
+
+.sold-history-summary > div {
+
+    padding: 11px 13px;
+
+    border-radius: 13px;
+
+    background: #faf5fc;
+
+}
+
+
+.sold-history-summary span {
+
+    display: block;
+
+    margin-bottom: 4px;
+
+    color: #9c91a2;
+
+    font-size: 10px;
+
+}
+
+
+.sold-history-summary strong {
+
+    display: block;
+
+    color: #685a70;
+
+    font-size: 15px;
+
+}
+
+
+/* =========================================================
+   TABLE
+========================================================= */
+
+.sold-history-table-wrap {
+
+    overflow: auto;
+
+    flex: 1;
+
+    padding: 0 24px;
+
+}
+
+
+.sold-history-table {
+
+    width: 100%;
+
+    min-width: 620px;
+
+    border-collapse: collapse;
+
+}
+
+
+.sold-history-table thead {
+
+    position: sticky;
+
+    top: 0;
+
+    background: #fff;
+
+}
+
+
+.sold-history-table th {
+
+    padding: 10px 10px;
+
+    border-bottom: 1px solid #eee7f1;
+
+    color: #938799;
+
+    font-size: 10px;
+
+    font-weight: 800;
+
+    text-align: left;
+
+    white-space: nowrap;
+
+}
+
+
+.sold-history-table td {
+
+    padding: 10px 10px;
+
+    border-bottom: 1px solid #f2edf4;
+
+    color: #655b6c;
+
+    font-size: 12px;
+
+    vertical-align: middle;
+
+    white-space: nowrap;
+
+}
+
+
+.sold-history-table tbody tr:last-child td {
+
+    border-bottom: none;
+
+}
+
+
+/* =========================================================
+   FOOTER
+========================================================= */
+
+.sold-history-footer {
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    gap: 12px;
+
+    padding: 16px 24px;
+
+    border-top: 1px solid #f1eaf4;
+
+    color: #9c91a2;
+
+    font-size: 11px;
+
+}
+
+
+.sold-history-footer strong {
+
+    color: #776583;
+
+}
+
+
+.sold-history-footer button {
+
+    padding: 9px 16px;
+
+    border: none;
+
+    border-radius: 12px;
+
+    color: #786c7e;
+
+    background: #eee9f1;
+
+    font-family: inherit;
+
+    font-size: 12px;
+
+    font-weight: 750;
+
+    cursor: pointer;
+
+    transition: background .15s ease;
+
+}
+
+
+.sold-history-footer button:hover {
+
+    background: #e8e1eb;
+
+}
+
+
+/* =========================================================
+   RESPONSIVE — MOBILE
+========================================================= */
+
+@media (max-width: 760px) {
+
+    .sold-history-overlay {
+
+        align-items: flex-start;
+
+        padding: 12px;
+
+        overflow-y: auto;
+
+    }
+
+
+    .sold-history-modal {
+
+        max-height: none;
+
+        border-radius: 20px;
+
+    }
+
+
+    .sold-history-summary {
+
+        grid-template-columns: 1fr 1fr;
+
+    }
+
+}
+
+
+@media (max-width: 480px) {
+
+    .sold-history-summary {
+
+        grid-template-columns: 1fr;
+
+    }
+
+
+    .sold-history-footer {
+
+        flex-direction: column-reverse;
+
+        align-items: stretch;
+
+    }
+
+
+    .sold-history-footer button {
+
+        width: 100%;
+
+    }
+
+}

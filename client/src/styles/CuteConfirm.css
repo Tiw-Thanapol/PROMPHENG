@@ -1,0 +1,249 @@
+.cute-confirm-overlay{
+
+    position:fixed;
+
+    inset:0;
+
+    background:rgba(155,126,219,0.25);
+
+    backdrop-filter:blur(8px);
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    z-index:9999;
+
+}
+
+
+
+.cute-confirm-box{
+
+
+    width:360px;
+
+    background:#FFF9F5;
+
+    border-radius:28px;
+
+    padding:30px;
+
+    text-align:center;
+
+
+    box-shadow:
+
+    0 20px 50px rgba(80,60,120,.18);
+
+
+    border:3px solid #E8DDF7;
+
+
+    animation:
+
+    popupBounce .25s ease;
+
+    position:relative;
+
+}
+
+
+
+
+@keyframes popupBounce{
+
+
+    from{
+
+        transform:scale(.8);
+
+        opacity:0;
+
+    }
+
+
+    to{
+
+        transform:scale(1);
+
+        opacity:1;
+
+    }
+
+
+}
+
+
+
+.cute-confirm-close{
+
+
+    position:absolute;
+
+    right:15px;
+
+    top:15px;
+
+
+    width:32px;
+
+    height:32px;
+
+
+    border-radius:50%;
+
+
+    border:none;
+
+
+    background:#F3A7B8;
+
+
+    color:white;
+
+
+    cursor:pointer;
+
+}
+
+
+
+.cute-confirm-character{
+
+
+    width:90px;
+
+    height:90px;
+
+
+    margin:auto;
+
+
+    border-radius:30px;
+
+
+    background:#E8DDF7;
+
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+
+    font-size:48px;
+
+
+    position:relative;
+
+
+}
+
+
+
+.cute-confirm-character span{
+
+
+    position:absolute;
+
+    right:0;
+
+    top:0;
+
+}
+
+
+
+.cute-confirm-box h2{
+
+
+    margin-top:20px;
+
+    color:#6B4FA1;
+
+    font-size:24px;
+
+}
+
+
+
+.cute-confirm-box p{
+
+
+    color:#777;
+
+    margin:10px 0 25px;
+
+}
+
+
+
+
+.cute-confirm-actions{
+
+
+    display:flex;
+
+    gap:12px;
+
+}
+
+
+
+
+.cute-confirm-actions button{
+
+
+    flex:1;
+
+    height:45px;
+
+    border-radius:16px;
+
+    border:none;
+
+    cursor:pointer;
+
+    font-weight:700;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    gap:6px;
+
+}
+
+
+
+
+.cute-confirm-cancel{
+
+
+    background:#E8DDF7;
+
+    color:#6B4FA1;
+
+}
+
+
+
+.cute-confirm-ok{
+
+
+    background:#A98BE8;
+
+    color:white;
+
+
+    box-shadow:
+
+    0 6px 15px rgba(169,139,232,.35);
+
+}

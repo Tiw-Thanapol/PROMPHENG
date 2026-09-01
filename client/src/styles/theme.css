@@ -1,0 +1,302 @@
+/* ==========================================================
+   SALE RECORD — GLOBAL DESIGN SYSTEM
+   3D SOFT CLAY / TOY STYLE
+========================================================== */
+
+:root {
+
+    /* ======================================================
+       COLORS
+    ====================================================== */
+
+    --sr-primary: #9B7EDB;
+    --sr-primary-light: #A98BE8;
+    --sr-primary-dark: #7655AD;
+
+    --sr-background: #E8DDF7;
+    --sr-background-dark: #D9C8F0;
+
+    --sr-card: #FFF9F5;
+    --sr-card-light: #FFFDFC;
+
+    --sr-text: #665B78;
+    --sr-text-light: #95889D;
+    --sr-text-muted: #A59AAA;
+
+    --sr-yellow: #F6C96D;
+    --sr-pink: #F3A7B8;
+
+    --sr-green: #9FBA76;
+    --sr-green-dark: #718D52;
+
+    --sr-danger: #D98296;
+
+    /* ======================================================
+       GRADIENTS
+    ====================================================== */
+
+    --sr-gradient-primary:
+        linear-gradient(
+            145deg,
+            #B79BEA,
+            #9671D5
+        );
+
+    --sr-gradient-primary-soft:
+        linear-gradient(
+            145deg,
+            #C0A4F0,
+            #9875D7
+        );
+
+    --sr-gradient-card:
+        linear-gradient(
+            145deg,
+            #FFFDFB,
+            #F9F0EB
+        );
+
+    --sr-gradient-input:
+        linear-gradient(
+            145deg,
+            #FFFDFC,
+            #F3E9E5
+        );
+
+    --sr-gradient-background:
+        linear-gradient(
+            135deg,
+            #D9C8F0 0%,
+            #CDB8EB 50%,
+            #DFC9F2 100%
+        );
+
+    /* ======================================================
+       BORDER RADIUS
+    ====================================================== */
+
+    --sr-radius-sm: 14px;
+    --sr-radius-md: 20px;
+    --sr-radius-lg: 28px;
+    --sr-radius-xl: 36px;
+    --sr-radius-2xl: 42px;
+
+    --sr-radius-pill: 999px;
+
+    /* ======================================================
+       SOFT SHADOWS
+    ====================================================== */
+
+    --sr-shadow-soft:
+        0 10px 25px rgba(100, 74, 130, .10);
+
+    --sr-shadow-card:
+        0 20px 40px rgba(100, 74, 130, .13),
+        0 7px 16px rgba(100, 74, 130, .08),
+        inset 0 2px 2px rgba(255, 255, 255, .95),
+        inset 0 -4px 8px rgba(185, 150, 200, .10);
+
+    --sr-shadow-button:
+        0 10px 18px rgba(126, 88, 185, .30),
+        inset 0 3px 3px rgba(255, 255, 255, .40),
+        inset 0 -5px 7px rgba(79, 48, 130, .16);
+
+    --sr-shadow-button-hover:
+        0 14px 24px rgba(126, 88, 185, .34),
+        inset 0 3px 3px rgba(255, 255, 255, .45),
+        inset 0 -5px 7px rgba(79, 48, 130, .16);
+
+    --sr-shadow-inner:
+        inset 0 2px 3px rgba(255, 255, 255, .95),
+        inset 0 -3px 7px rgba(165, 135, 170, .12);
+
+    /* ======================================================
+       TRANSITIONS
+    ====================================================== */
+
+    --sr-transition:
+        .18s ease;
+
+    /* ======================================================
+       FONT
+    ====================================================== */
+
+    --sr-font:
+        "Playpen Sans Thai",
+        "Nunito",
+        sans-serif;
+}
+
+
+/* ==========================================================
+   GLOBAL RESET
+========================================================== */
+
+* {
+    box-sizing: border-box;
+}
+
+
+html,
+body,
+#root {
+    margin: 0;
+    min-height: 100%;
+    width: 100%;
+}
+
+
+body {
+
+    font-family:
+        var(--sr-font);
+
+    color:
+        var(--sr-text);
+
+    background:
+        var(--sr-background);
+}
+
+
+/* ==========================================================
+   COMMON 3D BUTTON
+========================================================== */
+
+.sr-button {
+
+    border: none;
+
+    border-radius:
+        var(--sr-radius-pill);
+
+    background:
+        var(--sr-gradient-primary);
+
+    color: white;
+
+    font-family:
+        var(--sr-font);
+
+    font-weight: 800;
+
+    cursor: pointer;
+
+    box-shadow:
+        var(--sr-shadow-button);
+
+    transition:
+        var(--sr-transition);
+
+}
+
+
+.sr-button:hover {
+
+    transform:
+        translateY(-2px);
+
+    box-shadow:
+        var(--sr-shadow-button-hover);
+
+}
+
+
+.sr-button:active {
+
+    transform:
+        translateY(2px);
+
+    box-shadow:
+        0 5px 10px
+        rgba(126, 88, 185, .25),
+
+        inset 0 4px 7px
+        rgba(70, 40, 110, .18);
+
+}
+
+
+/* ==========================================================
+   COMMON CLAY CARD
+========================================================== */
+
+.sr-clay-card {
+
+    background:
+        var(--sr-gradient-card);
+
+    border:
+        1px solid
+        rgba(255,255,255,.85);
+
+    border-radius:
+        var(--sr-radius-xl);
+
+    box-shadow:
+        var(--sr-shadow-card);
+
+}
+
+
+/* ==========================================================
+   COMMON SOFT ICON
+========================================================== */
+
+.sr-icon {
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    border-radius: 50%;
+
+    color: white;
+
+    background:
+        var(--sr-gradient-primary-soft);
+
+    box-shadow:
+
+        0 7px 13px
+        rgba(123,88,179,.22),
+
+        inset 0 3px 3px
+        rgba(255,255,255,.45),
+
+        inset 0 -3px 4px
+        rgba(85,53,130,.15);
+
+}
+
+
+/* ==========================================================
+   DECORATION
+========================================================== */
+
+.sr-sparkle {
+
+    color:
+        var(--sr-yellow);
+
+    text-shadow:
+        0 5px 10px
+        rgba(210,160,70,.25);
+
+}
+
+
+.sr-heart {
+
+    color:
+        var(--sr-pink);
+
+    filter:
+        drop-shadow(
+            0 6px 8px
+            rgba(190,100,125,.25)
+        );
+
+}

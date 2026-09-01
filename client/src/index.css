@@ -1,3 +1,345 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import url('https://fonts.googleapis.com/css2?family=Itim&family=Nunito:wght@400;500;600;700;800&display=swap');
+
+
+/* ==========================================================
+   GLOBAL RESET
+   ========================================================== */
+
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+
+html {
+    width: 100%;
+    min-height: 100%;
+
+    margin: 0;
+    padding: 0;
+
+    scroll-behavior: smooth;
+}
+
+
+body {
+    width: 100%;
+    min-height: 100vh;
+
+    margin: 0;
+    padding: 0;
+
+    font-family:
+        "Playpen Sans Thai",
+        "Nunito",
+        sans-serif;
+
+    font-size: 16px;
+    font-weight: 500;
+
+    color: #665b78;
+
+    background: #f8f3f8;
+
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+
+#root {
+    width: 100%;
+    min-height: 100vh;
+
+    margin: 0;
+    padding: 0;
+}
+
+
+/* ==========================================================
+   ELEMENT RESET
+   ========================================================== */
+
+button,
+input,
+textarea,
+select {
+    margin: 0;
+
+    font: inherit;
+
+    color: inherit;
+}
+
+
+button {
+    border: 0;
+
+    cursor: pointer;
+
+    background: none;
+}
+
+
+/* ==========================================================
+   FORM ELEMENTS
+   ========================================================== */
+
+input,
+textarea,
+select {
+    outline: none;
+}
+
+
+textarea {
+    resize: vertical;
+}
+
+
+/* ==========================================================
+   LINKS
+   ========================================================== */
+
+a {
+    color: inherit;
+
+    text-decoration: none;
+}
+
+
+/* ==========================================================
+   MEDIA
+   ========================================================== */
+
+img,
+svg,
+video,
+canvas {
+    max-width: 100%;
+}
+
+
+img {
+    height: auto;
+}
+
+
+/* ==========================================================
+   TABLE
+   ========================================================== */
+
+table {
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+
+
+/* ==========================================================
+   LIST
+   ========================================================== */
+
+ul,
+ol {
+    margin: 0;
+    padding: 0;
+
+    list-style: none;
+}
+
+
+/* ==========================================================
+   HEADINGS / PARAGRAPH
+   ========================================================== */
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p {
+    margin-top: 0;
+}
+
+
+/* ==========================================================
+   FORM PLACEHOLDER
+   ========================================================== */
+
+input::placeholder,
+textarea::placeholder {
+    color: #a59aaa;
+
+    opacity: 1;
+}
+
+
+/* ==========================================================
+   SCROLLBAR
+   ========================================================== */
+
+::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+
+::-webkit-scrollbar-track {
+    background: rgba(230, 220, 234, .45);
+
+    border-radius: 999px;
+}
+
+
+::-webkit-scrollbar-thumb {
+    background:
+        linear-gradient(
+            180deg,
+            #b89cdc,
+            #9675c7
+        );
+
+    border-radius: 999px;
+
+    border: 2px solid transparent;
+
+    background-clip: padding-box;
+}
+
+
+/* ==========================================================
+   TEXT SELECTION
+   ========================================================== */
+
+::selection {
+    color: #5e4d73;
+
+    background:
+        rgba(183, 155, 234, .30);
+}
+
+
+/* ==========================================================
+   FOCUS
+   ========================================================== */
+
+/*
+   แสดง outline เฉพาะตอน element ถูก Focus
+   ไม่แสดงกรอบตลอดเวลา
+*/
+
+button:focus-visible,
+input:focus-visible,
+textarea:focus-visible,
+select:focus-visible,
+a:focus-visible {
+    outline:
+        3px solid
+        rgba(169, 139, 232, .30);
+
+    outline-offset: 2px;
+}
+
+
+/* ==========================================================
+   DISABLED
+   ========================================================== */
+
+/*
+   สำคัญมาก:
+   ไม่ควรเขียนแบบนี้
+
+   button,
+   input,
+   textarea,
+   select {
+       cursor: not-allowed;
+       opacity: .65;
+   }
+
+   เพราะจะทำให้ทุก element ดูเหมือน Disabled
+*/
+
+
+button:disabled,
+input:disabled,
+textarea:disabled,
+select:disabled {
+    cursor: not-allowed;
+
+    opacity: .65;
+}
+
+
+/* ==========================================================
+   COMMON UTILITY
+   ========================================================== */
+
+.hidden {
+    display: none !important;
+}
+
+
+.no-scroll {
+    overflow: hidden !important;
+}
+
+
+.text-center {
+    text-align: center;
+}
+
+
+.text-left {
+    text-align: left;
+}
+
+
+.text-right {
+    text-align: right;
+}
+
+
+/* ==========================================================
+   GLOBAL RESPONSIVE
+   ========================================================== */
+
+@media (max-width: 600px) {
+
+    html {
+        font-size: 15px;
+    }
+
+
+    body {
+        min-width: 0;
+    }
+
+
+    #root {
+        min-width: 0;
+    }
+
+}
+
+
+/* ==========================================================
+   REDUCED MOTION
+   ========================================================== */
+
+@media (prefers-reduced-motion: reduce) {
+
+    *,
+    *::before,
+    *::after {
+        scroll-behavior: auto !important;
+
+        animation-duration: .01ms !important;
+
+        animation-iteration-count: 1 !important;
+
+        transition-duration: .01ms !important;
+    }
+
+}

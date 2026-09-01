@@ -1,0 +1,421 @@
+/* ==========================================================
+   REGISTRATION PENDING
+========================================================== */
+
+.registration-pending-page {
+
+    min-height: 100vh;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    padding: 32px 20px;
+
+    position: relative;
+
+    overflow: hidden;
+
+    background:
+        radial-gradient(
+            circle at 20% 20%,
+            rgba(255, 210, 122, .25),
+            transparent 35%
+        ),
+        radial-gradient(
+            circle at 80% 80%,
+            rgba(255, 158, 203, .22),
+            transparent 35%
+        ),
+        linear-gradient(
+            135deg,
+            #fff8ef,
+            #f6efff
+        );
+
+}
+
+
+/* ==========================================================
+   DECORATION
+========================================================== */
+
+.registration-pending-stars {
+
+    position: absolute;
+
+    top: 12%;
+
+    right: 15%;
+
+    font-size: 34px;
+
+    color: #ffd37a;
+
+    animation: pendingFloat 4s ease-in-out infinite;
+
+}
+
+
+@keyframes pendingFloat {
+
+    0%,
+    100% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(-10px);
+    }
+
+}
+
+
+/* ==========================================================
+   CARD
+========================================================== */
+
+.registration-pending-card {
+
+    width: 100%;
+
+    max-width: 520px;
+
+    padding: 48px 42px;
+
+    text-align: center;
+
+    position: relative;
+
+    border-radius: 28px;
+
+    background: rgba(255, 255, 255, .94);
+
+    border: 1px solid rgba(255, 255, 255, .8);
+
+    box-shadow:
+        0 24px 70px rgba(83, 65, 120, .15);
+
+    backdrop-filter: blur(12px);
+
+}
+
+
+/* ==========================================================
+   ICON
+========================================================== */
+
+.registration-pending-icon {
+
+    width: 92px;
+
+    height: 92px;
+
+    margin: 0 auto 22px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    border-radius: 50%;
+
+    color: #9b70df;
+
+    background:
+        linear-gradient(
+            135deg,
+            #f0e6ff,
+            #fff0f7
+        );
+
+    box-shadow:
+        0 12px 30px rgba(155, 112, 223, .18);
+
+}
+
+
+.registration-pending-check {
+
+    position: absolute;
+
+    top: 108px;
+
+    right: calc(50% - 62px);
+
+    width: 28px;
+
+    height: 28px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    border-radius: 50%;
+
+    color: #fff;
+
+    background: #76c893;
+
+    border: 3px solid #fff;
+
+}
+
+
+/* ==========================================================
+   TEXT
+========================================================== */
+
+.registration-pending-card h1 {
+
+    margin: 0 0 10px;
+
+    color: #4b3f6b;
+
+    font-size: 28px;
+
+    font-weight: 800;
+
+}
+
+
+.registration-pending-main {
+
+    margin: 0 0 24px;
+
+    color: #756c86;
+
+    font-size: 16px;
+
+}
+
+
+.registration-pending-email-box {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 14px;
+
+    padding: 17px 18px;
+
+    margin-bottom: 22px;
+
+    text-align: left;
+
+    border-radius: 16px;
+
+    background: #faf5ff;
+
+    border: 1px solid #eadcff;
+
+    color: #9b70df;
+
+}
+
+
+.registration-pending-email-box div {
+
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 3px;
+
+}
+
+
+.registration-pending-email-box span {
+
+    font-size: 13px;
+
+    color: #8b829b;
+
+}
+
+
+.registration-pending-email-box strong {
+
+    color: #4b3f6b;
+
+    font-size: 15px;
+
+    word-break: break-word;
+
+}
+
+
+.registration-pending-description {
+
+    margin: 0 auto 20px;
+
+    max-width: 420px;
+
+    line-height: 1.8;
+
+    color: #71687f;
+
+}
+
+
+.registration-pending-warning {
+
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 3px;
+
+    margin-bottom: 26px;
+
+    padding: 14px;
+
+    border-radius: 14px;
+
+    background: #fff8e8;
+
+    color: #856b35;
+
+    font-size: 13px;
+
+}
+
+
+.registration-pending-warning strong {
+
+    font-size: 14px;
+
+}
+
+
+/* ==========================================================
+   BUTTONS
+========================================================== */
+
+.registration-pending-login {
+
+    width: 100%;
+
+    border: 0;
+
+    border-radius: 14px;
+
+    padding: 14px 18px;
+
+    color: #fff;
+
+    background:
+        linear-gradient(
+            135deg,
+            #9b70df,
+            #c18be9
+        );
+
+    font-size: 16px;
+
+    font-weight: 700;
+
+    cursor: pointer;
+
+    box-shadow:
+        0 10px 24px rgba(155, 112, 223, .24);
+
+    transition: .2s ease;
+
+}
+
+
+.registration-pending-login:hover {
+
+    transform: translateY(-2px);
+
+    box-shadow:
+        0 14px 28px rgba(155, 112, 223, .30);
+
+}
+
+
+.registration-pending-resend {
+
+    margin-top: 14px;
+
+    border: 0;
+
+    background: transparent;
+
+    color: #9b70df;
+
+    display: inline-flex;
+
+    align-items: center;
+
+    gap: 7px;
+
+    font-size: 14px;
+
+    cursor: pointer;
+
+}
+
+
+.registration-pending-resend:hover {
+
+    text-decoration: underline;
+
+}
+
+
+.registration-pending-footer {
+
+    margin-top: 26px;
+
+}
+
+
+.registration-pending-footer a {
+
+    display: inline-flex;
+
+    align-items: center;
+
+    gap: 6px;
+
+    color: #91889e;
+
+    text-decoration: none;
+
+    font-size: 13px;
+
+}
+
+
+.registration-pending-footer a:hover {
+
+    color: #9b70df;
+
+}
+
+
+@media (max-width: 600px) {
+
+    .registration-pending-card {
+
+        padding: 38px 24px;
+
+        border-radius: 22px;
+
+    }
+
+    .registration-pending-card h1 {
+
+        font-size: 24px;
+
+    }
+
+}

@@ -1,0 +1,309 @@
+
+.email-pending-page {
+
+    min-height: 100vh;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    padding: 24px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #fff8ef 0%,
+            #f8f1ff 50%,
+            #eef8ff 100%
+        );
+
+    box-sizing: border-box;
+
+}
+
+
+.email-pending-card {
+
+    width: 100%;
+
+    max-width: 520px;
+
+    padding: 48px 40px;
+
+    background: #ffffff;
+
+    border-radius: 28px;
+
+    box-shadow:
+        0 20px 60px rgba(80, 60, 100, 0.12);
+
+    text-align: center;
+
+    box-sizing: border-box;
+
+}
+
+
+/* ==========================================================
+   ICON
+========================================================== */
+
+.email-pending-icon {
+
+    width: 100px;
+
+    height: 100px;
+
+    margin: 0 auto 24px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    border-radius: 50%;
+
+    background: #f1e9ff;
+
+    color: #8b5cf6;
+
+}
+
+
+/* ==========================================================
+   HEADER
+========================================================== */
+
+.email-pending-header h1 {
+
+    margin: 0;
+
+    font-size: 30px;
+
+    font-weight: 700;
+
+    color: #302744;
+
+}
+
+
+.email-pending-main-message {
+
+    margin:
+        14px
+        0
+        0;
+
+    font-size: 18px;
+
+    line-height: 1.6;
+
+    font-weight: 600;
+
+    color: #4b3f6b;
+
+}
+
+
+.email-pending-sub-message {
+
+    margin:
+        12px
+        0
+        0;
+
+    font-size: 15px;
+
+    line-height: 1.7;
+
+    color: #777083;
+
+}
+
+
+/* ==========================================================
+   NOTICE
+========================================================== */
+
+.email-pending-notice {
+
+    display: flex;
+
+    align-items: flex-start;
+
+    gap: 14px;
+
+    margin-top: 28px;
+
+    padding: 18px;
+
+    text-align: left;
+
+    border-radius: 16px;
+
+    background: #fff8e8;
+
+    border: 1px solid #f7dfad;
+
+}
+
+
+.email-pending-notice-icon {
+
+    flex-shrink: 0;
+
+    font-size: 25px;
+
+    line-height: 1;
+
+}
+
+
+.email-pending-notice strong {
+
+    display: block;
+
+    margin-bottom: 5px;
+
+    color: #59461f;
+
+    font-size: 14px;
+
+}
+
+
+.email-pending-notice p {
+
+    margin: 0;
+
+    color: #78683f;
+
+    font-size: 13px;
+
+    line-height: 1.6;
+
+}
+
+
+/* ==========================================================
+   LOGIN BUTTON
+========================================================== */
+
+.email-pending-login-button {
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    width: 100%;
+
+    min-height: 50px;
+
+    margin-top: 28px;
+
+    padding: 12px 20px;
+
+    box-sizing: border-box;
+
+    border-radius: 14px;
+
+    background: #8b5cf6;
+
+    color: #ffffff;
+
+    text-decoration: none;
+
+    font-size: 16px;
+
+    font-weight: 600;
+
+    transition:
+        transform 0.2s ease,
+        box-shadow 0.2s ease,
+        background 0.2s ease;
+
+}
+
+
+.email-pending-login-button:hover {
+
+    background: #7c3aed;
+
+    transform: translateY(-1px);
+
+    box-shadow:
+        0 8px 20px rgba(124, 58, 237, 0.22);
+
+}
+
+
+/* ==========================================================
+   FOOTER
+========================================================== */
+
+.email-pending-footer {
+
+    margin:
+        20px
+        0
+        0;
+
+    color: #9993a5;
+
+    font-size: 13px;
+
+    line-height: 1.6;
+
+}
+
+
+/* ==========================================================
+   MOBILE
+========================================================== */
+
+@media (max-width: 600px) {
+
+    .email-pending-page {
+
+        padding: 16px;
+
+    }
+
+
+    .email-pending-card {
+
+        padding: 36px 22px;
+
+        border-radius: 22px;
+
+    }
+
+
+    .email-pending-icon {
+
+        width: 84px;
+
+        height: 84px;
+
+    }
+
+
+    .email-pending-header h1 {
+
+        font-size: 25px;
+
+    }
+
+
+    .email-pending-main-message {
+
+        font-size: 16px;
+
+    }
+
+}

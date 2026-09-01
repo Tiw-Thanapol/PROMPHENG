@@ -1,0 +1,1871 @@
+/* =========================================================
+   ORDERS LIST
+   ========================================================= */
+
+.orders-content {
+    position: relative;
+    width: 100%;
+    min-width: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+
+/* =========================================================
+   TOOLBAR
+   ========================================================= */
+
+.orders-toolbar {
+    position: relative;
+    width: 100%;
+    min-width: 0;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+
+    margin-bottom: 18px;
+}
+
+
+/* =========================================================
+   SECTION TITLE
+   ========================================================= */
+
+.orders-section-title {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+
+    min-width: 0;
+    flex-shrink: 0;
+}
+
+.section-title-icon {
+    width: 42px;
+    height: 42px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    flex-shrink: 0;
+
+    border-radius: 14px;
+
+    color: #9b78b7;
+
+    background:
+        linear-gradient(
+            145deg,
+            #fff7fb 0%,
+            #f2eaff 100%
+        );
+
+    border: 1px solid rgba(183, 145, 211, 0.22);
+
+    box-shadow:
+        0 5px 12px rgba(154, 113, 181, 0.12),
+        inset 0 1px 0 rgba(255, 255, 255, 0.9);
+}
+
+.orders-section-title > div:last-child {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+
+    min-width: 0;
+}
+
+.orders-section-title strong {
+    color: #493b52;
+
+    font-size: 16px;
+    font-weight: 800;
+    line-height: 1.25;
+}
+
+.orders-section-title span {
+    color: #9c91a2;
+
+    font-size: 12px;
+    font-weight: 500;
+
+    white-space: nowrap;
+}
+
+
+/* =========================================================
+   CONTROLS
+   ========================================================= */
+
+.orders-list-controls {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+
+    gap: 9px;
+
+    min-width: 0;
+    flex: 1;
+}
+
+
+/* =========================================================
+   SEARCH
+   ========================================================= */
+
+.orders-search {
+    position: relative;
+
+    width: 260px;
+    height: 42px;
+
+    display: flex;
+    align-items: center;
+
+    flex-shrink: 1;
+
+    padding: 0 13px;
+    gap: 9px;
+
+    border-radius: 14px;
+
+    background: rgba(255, 255, 255, 0.94);
+
+    border: 1px solid rgba(193, 174, 200, 0.28);
+
+    box-shadow:
+        0 4px 12px rgba(100, 75, 105, 0.06),
+        inset 0 1px 0 rgba(255, 255, 255, 0.95);
+
+    transition:
+        border-color 0.18s ease,
+        box-shadow 0.18s ease,
+        background 0.18s ease;
+}
+
+.orders-search:focus-within {
+    background: #ffffff;
+
+    border-color: rgba(174, 128, 196, 0.48);
+
+    box-shadow:
+        0 0 0 3px rgba(196, 158, 214, 0.10),
+        0 5px 15px rgba(100, 75, 105, 0.08);
+}
+
+.orders-search > svg {
+    flex-shrink: 0;
+    color: #aa9dae;
+}
+
+.orders-search input {
+    width: 100%;
+    min-width: 0;
+
+    height: 100%;
+
+    padding: 0;
+
+    border: 0;
+    outline: 0;
+
+    background: transparent;
+
+    color: #514454;
+
+    font-family: inherit;
+    font-size: 12.5px;
+    font-weight: 600;
+}
+
+.orders-search input::placeholder {
+    color: #b8adb9;
+    font-weight: 500;
+}
+
+.orders-search button {
+    width: 25px;
+    height: 25px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    flex-shrink: 0;
+
+    padding: 0;
+
+    border: 0;
+    border-radius: 50%;
+
+    background: #f2ebf4;
+
+    color: #95869a;
+
+    cursor: pointer;
+
+    transition:
+        background 0.15s ease,
+        color 0.15s ease,
+        transform 0.15s ease;
+}
+
+.orders-search button:hover {
+    background: #eadced;
+    color: #795e81;
+
+    transform: scale(1.05);
+}
+
+
+/* =========================================================
+   DATE PICKER
+   ========================================================= */
+
+.orders-date-picker {
+    position: relative;
+
+    flex-shrink: 0;
+
+    z-index: 50;
+}
+
+
+/* =========================================================
+   DATE TRIGGER
+   ========================================================= */
+
+.orders-date-trigger {
+    height: 42px;
+
+    min-width: 145px;
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    gap: 8px;
+
+    padding: 0 14px;
+
+    border-radius: 14px;
+
+    border: 1px solid rgba(193, 174, 200, 0.30);
+
+    background:
+        linear-gradient(
+            145deg,
+            #ffffff 0%,
+            #fbf7fc 100%
+        );
+
+    color: #65576b;
+
+    box-shadow:
+        0 4px 12px rgba(100, 75, 105, 0.06),
+        inset 0 1px 0 rgba(255, 255, 255, 0.95);
+
+    font-family: inherit;
+    font-size: 12px;
+    font-weight: 700;
+
+    cursor: pointer;
+
+    transition:
+        border-color 0.18s ease,
+        box-shadow 0.18s ease,
+        transform 0.15s ease,
+        background 0.18s ease;
+}
+
+.orders-date-trigger:hover {
+    border-color: rgba(177, 134, 196, 0.42);
+
+    background:
+        linear-gradient(
+            145deg,
+            #ffffff 0%,
+            #f7f0fa 100%
+        );
+
+    box-shadow:
+        0 6px 16px rgba(100, 75, 105, 0.10);
+}
+
+.orders-date-trigger:active {
+    transform: translateY(1px);
+}
+
+.orders-date-trigger svg {
+    color: #a47bb5;
+    flex-shrink: 0;
+}
+
+.orders-date-trigger.has-date {
+    color: #765383;
+
+    border-color: rgba(178, 132, 198, 0.36);
+
+    background:
+        linear-gradient(
+            145deg,
+            #fffaff 0%,
+            #f5ecf9 100%
+        );
+}
+
+
+/* =========================================================
+   CALENDAR POPUP
+   ========================================================= */
+
+.orders-calendar {
+    position: absolute;
+
+    top: calc(100% + 12px);
+    right: 0;
+
+    width: 342px;
+    max-width: calc(100vw - 24px);
+
+    padding: 16px;
+
+    box-sizing: border-box;
+
+    border-radius: 22px;
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(255, 255, 255, 0.99) 0%,
+            rgba(251, 246, 253, 0.99) 100%
+        );
+
+    border: 1px solid rgba(191, 164, 201, 0.28);
+
+    box-shadow:
+        0 24px 55px rgba(79, 52, 84, 0.18),
+        0 8px 20px rgba(116, 82, 122, 0.10),
+        inset 0 1px 0 rgba(255, 255, 255, 0.95);
+
+    z-index: 9999;
+
+    animation:
+        ordersCalendarIn 0.18s ease-out both;
+
+    transform-origin: top right;
+}
+
+
+/*
+   Popup arrow
+*/
+
+.orders-calendar::before {
+    content: "";
+
+    position: absolute;
+
+    top: -7px;
+    right: 34px;
+
+    width: 14px;
+    height: 14px;
+
+    background: #ffffff;
+
+    border-left: 1px solid rgba(191, 164, 201, 0.22);
+    border-top: 1px solid rgba(191, 164, 201, 0.22);
+
+    transform: rotate(45deg);
+
+    z-index: -1;
+}
+
+@keyframes ordersCalendarIn {
+    from {
+        opacity: 0;
+        transform: translateY(-6px) scale(0.97);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+
+/* =========================================================
+   CALENDAR TOP
+   ========================================================= */
+
+.orders-calendar-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    margin-bottom: 14px;
+}
+
+.calendar-title {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+
+    color: #55455c;
+
+    font-size: 13px;
+    font-weight: 800;
+}
+
+.calendar-title svg {
+    color: #a179b4;
+}
+
+.calendar-close-btn {
+    width: 30px;
+    height: 30px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 0;
+
+    border: 0;
+    border-radius: 10px;
+
+    background: #f5edf7;
+
+    color: #9b8ca0;
+
+    cursor: pointer;
+
+    transition:
+        background 0.15s ease,
+        color 0.15s ease,
+        transform 0.15s ease;
+}
+
+.calendar-close-btn:hover {
+    background: #ebdff0;
+    color: #75577e;
+
+    transform: rotate(4deg);
+}
+
+
+/* =========================================================
+   MONTH / YEAR SELECTORS
+   ========================================================= */
+
+.orders-calendar-selectors {
+    display: grid;
+
+    grid-template-columns: 34px minmax(0, 1fr) 82px 34px;
+
+    align-items: center;
+
+    gap: 7px;
+
+    margin-bottom: 12px;
+}
+
+.calendar-month-nav {
+    width: 34px;
+    height: 36px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 0;
+
+    border-radius: 11px;
+
+    border: 1px solid rgba(191, 166, 201, 0.24);
+
+    background: #faf6fb;
+
+    color: #8d7394;
+
+    cursor: pointer;
+
+    transition:
+        background 0.15s ease,
+        border-color 0.15s ease,
+        color 0.15s ease,
+        transform 0.15s ease;
+}
+
+.calendar-month-nav:hover:not(:disabled) {
+    background: #f0e5f3;
+
+    border-color: rgba(177, 135, 195, 0.36);
+
+    color: #70527a;
+
+    transform: translateY(-1px);
+}
+
+.calendar-month-nav:active:not(:disabled) {
+    transform: translateY(0);
+}
+
+
+/* =========================================================
+   SELECT WRAP
+   ========================================================= */
+
+.calendar-select-wrap {
+    position: relative;
+
+    width: 100%;
+    min-width: 0;
+}
+
+.calendar-select-wrap select {
+    width: 100%;
+    height: 36px;
+
+    appearance: none;
+    -webkit-appearance: none;
+
+    padding: 0 32px 0 11px;
+
+    border-radius: 11px;
+
+    border: 1px solid rgba(191, 166, 201, 0.28);
+
+    outline: 0;
+
+    background: #faf7fb;
+
+    color: #5f4e65;
+
+    font-family: inherit;
+    font-size: 11.5px;
+    font-weight: 700;
+
+    cursor: pointer;
+
+    transition:
+        border-color 0.15s ease,
+        background 0.15s ease,
+        box-shadow 0.15s ease;
+}
+
+.calendar-select-wrap select:hover {
+    background: #f6eef8;
+
+    border-color: rgba(177, 135, 195, 0.40);
+}
+
+.calendar-select-wrap select:focus {
+    border-color: rgba(174, 128, 196, 0.50);
+
+    box-shadow:
+        0 0 0 3px rgba(190, 148, 207, 0.10);
+}
+
+.calendar-select-icon {
+    position: absolute;
+
+    right: 10px;
+    top: 50%;
+
+    transform: translateY(-50%);
+
+    pointer-events: none;
+
+    color: #9a819f;
+}
+
+
+/* =========================================================
+   SHORTCUTS
+   ========================================================= */
+
+.calendar-shortcuts {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    min-height: 31px;
+
+    margin-bottom: 12px;
+}
+
+.calendar-today-btn,
+.calendar-clear-btn {
+    height: 30px;
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    gap: 5px;
+
+    padding: 0 11px;
+
+    border-radius: 10px;
+
+    font-family: inherit;
+    font-size: 11px;
+    font-weight: 700;
+
+    cursor: pointer;
+
+    transition:
+        background 0.15s ease,
+        border-color 0.15s ease,
+        color 0.15s ease,
+        transform 0.15s ease;
+}
+
+.calendar-today-btn {
+    border: 1px solid rgba(176, 135, 193, 0.28);
+
+    background: #f4ebf7;
+
+    color: #795b82;
+}
+
+.calendar-today-btn:hover {
+    background: #eadcf0;
+
+    border-color: rgba(176, 135, 193, 0.42);
+
+    transform: translateY(-1px);
+}
+
+.calendar-clear-btn {
+    border: 1px solid rgba(215, 179, 192, 0.28);
+
+    background: #fff6f8;
+
+    color: #a07785;
+}
+
+.calendar-clear-btn:hover {
+    background: #fbe9ed;
+
+    border-color: rgba(215, 164, 181, 0.42);
+
+    transform: translateY(-1px);
+}
+
+
+/* =========================================================
+   WEEK DAYS
+   ========================================================= */
+
+.calendar-weekdays {
+    display: grid;
+
+    grid-template-columns: repeat(7, 1fr);
+
+    gap: 4px;
+
+    margin-bottom: 5px;
+}
+
+.calendar-weekdays span {
+    height: 27px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    color: #a597aa;
+
+    font-size: 10px;
+    font-weight: 800;
+}
+
+
+/* =========================================================
+   CALENDAR DAYS
+   ========================================================= */
+
+.calendar-days {
+    display: grid;
+
+    grid-template-columns: repeat(7, 1fr);
+
+    gap: 4px;
+}
+
+.calendar-day {
+    position: relative;
+
+    min-width: 0;
+    height: 53px;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+
+    padding: 5px 2px 3px;
+
+    border-radius: 11px;
+
+    border: 1px solid transparent;
+
+    background: transparent;
+
+    color: #65576a;
+
+    font-family: inherit;
+
+    cursor: pointer;
+
+    transition:
+        background 0.14s ease,
+        border-color 0.14s ease,
+        box-shadow 0.14s ease,
+        transform 0.14s ease;
+}
+
+.calendar-day:not(.empty):not(.future):hover {
+    background: #f6eef8;
+
+    border-color: rgba(181, 143, 197, 0.25);
+
+    transform: translateY(-1px);
+}
+
+.calendar-day.empty {
+    pointer-events: none;
+}
+
+.calendar-day.future {
+    cursor: not-allowed;
+
+    opacity: 0.30;
+}
+
+.calendar-day-number {
+    width: 23px;
+    height: 23px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 8px;
+
+    color: #65576a;
+
+    font-size: 11px;
+    font-weight: 800;
+}
+
+.calendar-day.today .calendar-day-number {
+    background: #f0e2f5;
+
+    color: #805b8d;
+
+    box-shadow:
+        inset 0 0 0 1px rgba(176, 130, 194, 0.18);
+}
+
+.calendar-day.selected {
+    background:
+        linear-gradient(
+            145deg,
+            #eadcf1 0%,
+            #f4eaf7 100%
+        );
+
+    border-color: rgba(169, 124, 188, 0.42);
+
+    box-shadow:
+        0 4px 10px rgba(144, 102, 157, 0.13);
+}
+
+.calendar-day.selected .calendar-day-number {
+    color: #704b7a;
+}
+
+
+/* =========================================================
+   DAILY SALES
+   ========================================================= */
+
+.calendar-day-sales {
+    display: block;
+
+    max-width: 100%;
+
+    margin-top: 2px;
+
+    padding: 0 2px;
+
+    overflow: hidden;
+
+    color: #a06b9f;
+
+    font-size: 7.5px;
+    font-weight: 800;
+
+    line-height: 1.2;
+
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.calendar-day.has-sales:not(.selected) {
+    background: rgba(249, 242, 250, 0.75);
+}
+
+.calendar-day.has-sales:not(.selected)::after {
+    content: "";
+
+    position: absolute;
+
+    bottom: 3px;
+    left: 50%;
+
+    width: 4px;
+    height: 4px;
+
+    border-radius: 50%;
+
+    background: #c08bc3;
+
+    transform: translateX(-50%);
+}
+
+
+/* =========================================================
+   CALENDAR FOOTER
+   ========================================================= */
+
+.orders-calendar-footer {
+    margin-top: 12px;
+    padding-top: 10px;
+
+    border-top: 1px solid rgba(190, 169, 196, 0.18);
+
+    text-align: center;
+
+    color: #aaa0ad;
+
+    font-size: 9.5px;
+    font-weight: 500;
+}
+
+
+/* =========================================================
+   ACTIVE DATE
+   ========================================================= */
+
+.orders-active-date {
+    width: 100%;
+    min-height: 40px;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 12px;
+
+    box-sizing: border-box;
+
+    margin-bottom: 13px;
+    padding: 8px 12px;
+
+    border-radius: 13px;
+
+    background:
+        linear-gradient(
+            90deg,
+            #fbf4fd 0%,
+            #fffafd 100%
+        );
+
+    border: 1px solid rgba(183, 145, 202, 0.22);
+
+    color: #78677d;
+}
+
+.orders-active-date > div {
+    min-width: 0;
+
+    display: flex;
+    align-items: center;
+
+    gap: 7px;
+
+    overflow: hidden;
+}
+
+.orders-active-date svg {
+    flex-shrink: 0;
+    color: #a27bb0;
+}
+
+.orders-active-date span {
+    font-size: 11px;
+    font-weight: 600;
+
+    white-space: nowrap;
+}
+
+.orders-active-date strong {
+    color: #795583;
+
+    font-size: 11px;
+    font-weight: 800;
+
+    white-space: nowrap;
+}
+
+.orders-active-date > button {
+    flex-shrink: 0;
+
+    height: 27px;
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    gap: 4px;
+
+    padding: 0 9px;
+
+    border: 1px solid rgba(207, 170, 188, 0.28);
+
+    border-radius: 9px;
+
+    background: #fff7fa;
+
+    color: #9b7584;
+
+    font-family: inherit;
+    font-size: 10px;
+    font-weight: 700;
+
+    cursor: pointer;
+
+    transition:
+        background 0.15s ease,
+        transform 0.15s ease;
+}
+
+.orders-active-date > button:hover {
+    background: #fcebf0;
+    transform: translateY(-1px);
+}
+
+
+/* =========================================================
+   RESULT INFO
+   ========================================================= */
+
+.orders-result-info {
+    width: 100%;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 12px;
+
+    margin-bottom: 10px;
+
+    color: #a195a5;
+
+    font-size: 11px;
+    font-weight: 600;
+}
+
+.orders-result-info strong {
+    color: #6f5a73;
+
+    font-weight: 800;
+}
+
+.orders-current-sort {
+    display: inline-flex;
+    align-items: center;
+
+    gap: 5px;
+
+    color: #9d8da1;
+
+    white-space: nowrap;
+}
+
+.orders-current-sort svg {
+    color: #b18bb9;
+}
+
+
+/* =========================================================
+   TABLE WRAPPER
+   ========================================================= */
+
+.orders-table-wrapper {
+    position: relative;
+
+    width: 100%;
+    min-width: 0;
+
+    overflow-x: auto;
+    overflow-y: visible;
+
+    border-radius: 18px;
+
+    background: rgba(255, 255, 255, 0.80);
+
+    border: 1px solid rgba(190, 170, 197, 0.20);
+
+    box-shadow:
+        0 7px 20px rgba(91, 65, 96, 0.05);
+}
+
+.orders-table-wrapper::-webkit-scrollbar {
+    height: 7px;
+}
+
+.orders-table-wrapper::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.orders-table-wrapper::-webkit-scrollbar-thumb {
+    border-radius: 99px;
+    background: #ded2e0;
+}
+
+.orders-table-wrapper::-webkit-scrollbar-thumb:hover {
+    background: #cbb9cf;
+}
+
+
+/* =========================================================
+   TABLE
+   ========================================================= */
+
+.orders-table {
+    width: 100%;
+
+    min-width: 900px;
+
+    border-collapse: separate;
+    border-spacing: 0;
+
+    font-size: 11px;
+}
+
+
+/* =========================================================
+   TABLE HEAD
+   ========================================================= */
+
+.orders-table thead th {
+    height: 42px;
+
+    padding: 0 14px;
+
+    text-align: left;
+    vertical-align: middle;
+
+    background:
+        linear-gradient(
+            180deg,
+            #fbf8fc 0%,
+            #f8f3fa 100%
+        );
+
+    border-bottom: 1px solid rgba(190, 170, 197, 0.20);
+
+    color: #958798;
+
+    font-size: 10px;
+    font-weight: 800;
+
+    white-space: nowrap;
+}
+
+.orders-table thead th:first-child {
+    padding-left: 17px;
+
+    border-top-left-radius: 18px;
+}
+
+.orders-table thead th:last-child {
+    padding-right: 17px;
+
+    border-top-right-radius: 18px;
+}
+
+.orders-table-action-header {
+    text-align: center !important;
+}
+
+
+/* =========================================================
+   TABLE BODY
+   ========================================================= */
+
+.orders-table tbody td {
+    height: 66px;
+
+    padding: 8px 14px;
+
+    vertical-align: middle;
+
+    border-bottom: 1px solid rgba(194, 178, 199, 0.14);
+
+    background: rgba(255, 255, 255, 0.72);
+}
+
+.orders-table tbody tr:last-child td {
+    border-bottom: 0;
+}
+
+.orders-table tbody tr:last-child td:first-child {
+    border-bottom-left-radius: 18px;
+}
+
+.orders-table tbody tr:last-child td:last-child {
+    border-bottom-right-radius: 18px;
+}
+
+
+/* =========================================================
+   ROW
+   ========================================================= */
+
+.orders-table-row {
+    cursor: pointer;
+
+    transition:
+        background 0.15s ease,
+        transform 0.15s ease;
+}
+
+.orders-table-row:hover td {
+    background: #fdf9fe;
+}
+
+.orders-table-row:hover .order-id-icon {
+    transform: translateY(-1px);
+}
+
+
+/* =========================================================
+   ORDER ID
+   ========================================================= */
+
+.order-id-cell {
+    display: flex;
+    align-items: center;
+
+    gap: 9px;
+}
+
+.order-id-icon {
+    width: 34px;
+    height: 34px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    flex-shrink: 0;
+
+    border-radius: 11px;
+
+    color: #9c72aa;
+
+    background:
+        linear-gradient(
+            145deg,
+            #fff5fb 0%,
+            #f1e7f7 100%
+        );
+
+    border: 1px solid rgba(183, 145, 202, 0.20);
+
+    transition: transform 0.15s ease;
+}
+
+.order-id-cell > div:last-child {
+    display: flex;
+    flex-direction: column;
+
+    gap: 2px;
+}
+
+.order-id-cell strong {
+    color: #55465b;
+
+    font-size: 11.5px;
+    font-weight: 800;
+}
+
+.order-id-cell span {
+    color: #aaa0ad;
+
+    font-size: 9px;
+    font-weight: 600;
+}
+
+
+/* =========================================================
+   CUSTOMER
+   ========================================================= */
+
+.order-customer-cell {
+    display: flex;
+    flex-direction: column;
+
+    gap: 3px;
+
+    min-width: 130px;
+}
+
+.order-customer-cell strong {
+    max-width: 190px;
+
+    overflow: hidden;
+
+    color: #55475b;
+
+    font-size: 11px;
+    font-weight: 800;
+
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.order-customer-cell span {
+    color: #a79aa9;
+
+    font-size: 9.5px;
+    font-weight: 600;
+
+    white-space: nowrap;
+}
+
+
+/* =========================================================
+   ITEMS
+   ========================================================= */
+
+.order-items-cell {
+    display: flex;
+    align-items: center;
+
+    gap: 5px;
+
+    white-space: nowrap;
+
+    color: #9a899e;
+}
+
+.order-items-cell svg {
+    flex-shrink: 0;
+
+    color: #ae8bb7;
+}
+
+.order-items-cell strong {
+    color: #635467;
+
+    font-size: 11px;
+    font-weight: 800;
+}
+
+.order-items-cell span {
+    font-size: 10px;
+    font-weight: 600;
+}
+
+.order-items-cell small {
+    color: #aaa0ad;
+
+    font-size: 9px;
+    font-weight: 600;
+}
+
+
+/* =========================================================
+   TOTAL
+   ========================================================= */
+
+.order-total-cell strong {
+    color: #72517b;
+
+    font-size: 12px;
+    font-weight: 900;
+
+    white-space: nowrap;
+}
+
+
+/* =========================================================
+   STATUS
+   ========================================================= */
+
+.order-status {
+    min-width: 70px;
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    gap: 5px;
+
+    padding: 5px 9px;
+
+    border-radius: 99px;
+
+    font-size: 9px;
+    font-weight: 800;
+
+    white-space: nowrap;
+}
+
+.order-status-dot {
+    width: 5px;
+    height: 5px;
+
+    flex-shrink: 0;
+
+    border-radius: 50%;
+}
+
+
+/* Completed */
+
+.order-status.completed {
+    background: #f0f8f1;
+    color: #6e9674;
+}
+
+.order-status.completed .order-status-dot {
+    background: #83b18a;
+}
+
+
+/* Pending */
+
+.order-status.pending {
+    background: #fff7e8;
+    color: #aa8654;
+}
+
+.order-status.pending .order-status-dot {
+    background: #d1a45d;
+}
+
+
+/* Cancelled */
+
+.order-status.cancelled {
+    background: #fff0f1;
+    color: #b4777e;
+}
+
+.order-status.cancelled .order-status-dot {
+    background: #cf8992;
+}
+
+
+/* Refunded */
+
+.order-status.refunded {
+    background: #f1effb;
+    color: #8176aa;
+}
+
+.order-status.refunded .order-status-dot {
+    background: #958bc0;
+}
+
+
+/* =========================================================
+   UPDATED
+   ========================================================= */
+
+.order-updated-cell strong {
+    color: #776a7a;
+
+    font-size: 9.5px;
+    font-weight: 700;
+
+    white-space: nowrap;
+}
+
+
+/* =========================================================
+   ACTIONS
+   ========================================================= */
+
+.order-table-actions {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    gap: 5px;
+}
+
+.order-view-btn,
+.order-edit-btn {
+    height: 31px;
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 10px;
+
+    font-family: inherit;
+
+    cursor: pointer;
+
+    transition:
+        background 0.15s ease,
+        border-color 0.15s ease,
+        color 0.15s ease,
+        transform 0.15s ease,
+        box-shadow 0.15s ease;
+}
+
+.order-view-btn {
+    gap: 5px;
+
+    padding: 0 10px;
+
+    border: 1px solid rgba(177, 137, 193, 0.26);
+
+    background: #f8f1fa;
+
+    color: #805d89;
+
+    font-size: 10px;
+    font-weight: 800;
+}
+
+.order-view-btn:hover {
+    background: #eee1f2;
+
+    border-color: rgba(177, 137, 193, 0.40);
+
+    color: #6e4b78;
+
+    box-shadow:
+        0 4px 9px rgba(129, 91, 138, 0.10);
+
+    transform: translateY(-1px);
+}
+
+.order-edit-btn {
+    width: 31px;
+
+    padding: 0;
+
+    border: 1px solid rgba(190, 174, 195, 0.24);
+
+    background: #faf7fb;
+
+    color: #95859b;
+}
+
+.order-edit-btn:hover {
+    background: #f1eaf3;
+
+    border-color: rgba(181, 157, 188, 0.36);
+
+    color: #765c7d;
+
+    transform: translateY(-1px);
+}
+
+
+/* =========================================================
+   EMPTY
+   ========================================================= */
+
+.orders-empty {
+    min-height: 260px;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    padding: 40px 20px;
+
+    box-sizing: border-box;
+
+    text-align: center;
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(255, 255, 255, 0.95) 0%,
+            rgba(251, 246, 253, 0.95) 100%
+        );
+}
+
+.orders-empty-icon {
+    width: 70px;
+    height: 70px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    margin-bottom: 13px;
+
+    border-radius: 22px;
+
+    color: #b092b9;
+
+    background:
+        linear-gradient(
+            145deg,
+            #fff6fb 0%,
+            #f2e8f6 100%
+        );
+
+    border: 1px solid rgba(185, 151, 199, 0.20);
+
+    box-shadow:
+        0 8px 18px rgba(115, 81, 121, 0.08);
+}
+
+.orders-empty strong {
+    margin-bottom: 5px;
+
+    color: #665568;
+
+    font-size: 13px;
+    font-weight: 800;
+}
+
+.orders-empty > span {
+    color: #aaa0ad;
+
+    font-size: 10.5px;
+    font-weight: 500;
+}
+
+
+/* =========================================================
+   RESPONSIVE
+   ========================================================= */
+
+@media (max-width: 1200px) {
+
+    .orders-toolbar {
+        align-items: flex-start;
+    }
+
+    .orders-list-controls {
+        flex-wrap: wrap;
+    }
+
+    .orders-search {
+        width: 230px;
+    }
+
+}
+
+
+@media (max-width: 900px) {
+
+    .orders-toolbar {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .orders-list-controls {
+        width: 100%;
+
+        display: grid;
+
+        grid-template-columns:
+            minmax(180px, 1fr)
+            auto
+            auto;
+
+        justify-content: stretch;
+    }
+
+    .orders-search {
+        width: 100%;
+    }
+
+    .orders-date-picker {
+        justify-self: start;
+    }
+
+}
+
+
+@media (max-width: 700px) {
+
+    .orders-list-controls {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .orders-search {
+        grid-column: 1 / -1;
+    }
+
+    .orders-date-trigger {
+        width: 100%;
+    }
+
+    .orders-date-picker {
+        width: 100%;
+    }
+
+    /*
+       สำคัญ:
+       บนมือถือ popup จะยึดกึ่งกลางหน้าจอ
+       เพื่อไม่ให้ตกขอบขวา
+    */
+
+    .orders-calendar {
+        position: fixed;
+
+        top: 50%;
+        left: 50%;
+        right: auto;
+
+        width: min(342px, calc(100vw - 24px));
+
+        max-width: none;
+
+        transform:
+            translate(-50%, -50%);
+
+        transform-origin: center;
+
+        z-index: 100000;
+    }
+
+    .orders-calendar::before {
+        display: none;
+    }
+
+    @keyframes ordersCalendarIn {
+        from {
+            opacity: 0;
+            transform:
+                translate(-50%, -50%)
+                scale(0.96);
+        }
+
+        to {
+            opacity: 1;
+            transform:
+                translate(-50%, -50%)
+                scale(1);
+        }
+    }
+
+    .orders-active-date {
+        align-items: flex-start;
+    }
+
+    .orders-active-date > div {
+        flex-wrap: wrap;
+    }
+
+}
+
+
+@media (max-width: 480px) {
+
+    .orders-section-title span {
+        display: none;
+    }
+
+    .orders-list-controls {
+        grid-template-columns: 1fr;
+    }
+
+    .orders-search {
+        grid-column: auto;
+    }
+
+    .orders-date-picker {
+        width: 100%;
+    }
+
+    .orders-sort {
+        width: 100%;
+    }
+
+    .orders-active-date {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .orders-active-date > button {
+        align-self: flex-end;
+    }
+
+    .orders-result-info {
+        align-items: flex-start;
+        flex-direction: column;
+
+        gap: 5px;
+    }
+
+    .orders-current-sort {
+        align-self: flex-end;
+    }
+
+    .orders-calendar {
+        padding: 14px;
+
+        border-radius: 20px;
+    }
+
+    .calendar-day {
+        height: 51px;
+    }
+
+}
+
+
+/* =========================================================
+   SORT
+   ========================================================= */
+
+.orders-sort {
+    position: relative;
+
+    height: 42px;
+
+    display: flex;
+    align-items: center;
+
+    flex-shrink: 0;
+
+    gap: 6px;
+
+    padding: 0 10px;
+
+    border-radius: 14px;
+
+    border: 1px solid rgba(193, 174, 200, 0.28);
+
+    background:
+        linear-gradient(
+            145deg,
+            #ffffff 0%,
+            #faf6fb 100%
+        );
+
+    color: #9a8b9e;
+
+    box-shadow:
+        0 4px 12px rgba(100, 75, 105, 0.05);
+}
+
+.orders-sort > svg {
+    flex-shrink: 0;
+
+    color: #a68bac;
+}
+
+.orders-sort > span {
+    font-size: 10px;
+    font-weight: 700;
+
+    white-space: nowrap;
+}
+
+.orders-sort select {
+    appearance: none;
+    -webkit-appearance: none;
+
+    height: 30px;
+
+    min-width: 112px;
+
+    padding: 0 23px 0 4px;
+
+    border: 0;
+    outline: 0;
+
+    background: transparent;
+
+    color: #66566b;
+
+    font-family: inherit;
+    font-size: 10px;
+    font-weight: 800;
+
+    cursor: pointer;
+}
+
+.orders-sort-chevron {
+    position: absolute;
+
+    right: 7px;
+
+    pointer-events: none;
+
+    color: #a697aa;
+}
+
+
+/* =========================================================
+   ACCESSIBILITY
+   ========================================================= */
+
+.orders-date-trigger:focus-visible,
+.calendar-close-btn:focus-visible,
+.calendar-month-nav:focus-visible,
+.calendar-today-btn:focus-visible,
+.calendar-clear-btn:focus-visible,
+.calendar-day:focus-visible,
+.order-view-btn:focus-visible,
+.order-edit-btn:focus-visible {
+    outline: 2px solid rgba(166, 124, 184, 0.45);
+    outline-offset: 2px;
+}
+
+
+/* =========================================================
+   REDUCED MOTION
+   ========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+
+    .orders-calendar {
+        animation: none;
+    }
+
+    .orders-search,
+    .orders-search button,
+    .orders-date-trigger,
+    .calendar-close-btn,
+    .calendar-month-nav,
+    .calendar-select-wrap select,
+    .calendar-today-btn,
+    .calendar-clear-btn,
+    .calendar-day,
+    .order-id-icon,
+    .order-view-btn,
+    .order-edit-btn,
+    .orders-table-row {
+        transition: none;
+    }
+
+}

@@ -1,0 +1,488 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+// ======================================================
+// ACCOUNT
+// ร้าน / หน่วยที่สมัครแพ็คเกจ — เป็น "tenant" หลักของระบบ
+// ทุกตารางข้อมูลธุรกิจผูกกับ accountId ไม่ใช่ userId โดยตรง
+// ======================================================
+
+model Account {
+  id        Int      @id @default(autoincrement())
+  name      String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  users            User[]
+  customers        Customer[]
+  owners           Owner[]
+  consignmentItems ConsignmentItem[]
+  sales            Sale[]
+  expenses         Expense[]
+  subscription     Subscription?
+  invoices         Invoice[]
+}
+
+// ======================================================
+// USER
+// คนที่ login เข้าใช้งาน — สังกัด Account เดียว
+// (ไม่ใส่ @unique บน accountId เพื่อเผื่อรองรับหลาย user ต่อ 1 account ในอนาคต)
+// ======================================================
+
+model User {
+  id                      Int                      @id @default(autoincrement())
+  accountId               Int
+  email                   String                   @unique
+  password                String?
+  name                    String?
+  picture                 String?
+  role                    String                   @default("OWNER")
+  enabled                 Boolean                  @default(false)
+  phoneNumber             String?
+  createdAt               DateTime                 @default(now())
+  updatedAt               DateTime                 @updatedAt
+
+  account                 Account                  @relation(fields: [accountId], references: [id])
+  auditLogs               AuditLog[]
+  emailVerificationTokens EmailVerificationToken[]
+  expenses                Expense[]
+  ownerPayments           OwnerPayment[]
+  registrationCodes       RegistrationCode[]       @relation("RegistrationCodeUsedBy")
+  returns                 Return[]
+  sales                   Sale[]
+  verificationCodes       VerificationCode[]
+  sessions                Session[]
+
+  @@index([accountId])
+}
+
+// ======================================================
+// SERVER-SIDE SESSION
+// ======================================================
+
+model Session {
+  id         String    @id @default(cuid())
+  tokenHash  String    @unique
+  userId     Int
+  expiresAt  DateTime
+  createdAt  DateTime  @default(now())
+  lastUsedAt DateTime?
+  revokedAt  DateTime?
+  ipHash     String?
+  userAgent  String?
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@index([expiresAt])
+  @@index([revokedAt])
+}
+
+// ======================================================
+// CUSTOMER
+// ======================================================
+
+model Customer {
+  id           Int      @id @default(autoincrement())
+  accountId    Int
+  name         String
+  phone        String?
+  address      String?
+  note         String?
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+  customerCode String?
+
+  account Account @relation(fields: [accountId], references: [id])
+  sales   Sale[]
+
+  @@unique([accountId, name, phone, address])
+  @@index([accountId])
+  @@index([name])
+  @@index([phone])
+}
+
+// ======================================================
+// OWNER
+// เจ้าของสินค้าฝากขาย (คนละความหมายกับ Account/User)
+// ======================================================
+
+model Owner {
+  id        Int      @id @default(autoincrement())
+  accountId Int
+  name      String
+  phone     String?
+  note      String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  account  Account           @relation(fields: [accountId], references: [id])
+  items    ConsignmentItem[]
+  payments OwnerPayment[]
+
+  @@index([accountId])
+}
+
+// ======================================================
+// CONSIGNMENT ITEM
+// ======================================================
+
+model ConsignmentItem {
+  id              Int       @id @default(autoincrement())
+  ownerId         Int
+  accountId       Int
+  name            String
+  description     String?
+  quantity        Int       @default(1)
+  costPrice       Decimal   @db.Decimal(10, 2)
+  actualSalePrice Decimal?  @db.Decimal(10, 2)
+  status          String    @default("AVAILABLE")
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+  note            String?
+  purchaseDate    DateTime  @default(now())
+  soldAt          DateTime?
+
+  owner     Owner      @relation(fields: [ownerId], references: [id])
+  account   Account    @relation(fields: [accountId], references: [id])
+  saleItems SaleItem[]
+
+  @@index([accountId])
+  @@index([ownerId])
+  @@index([name])
+  @@index([status])
+  @@index([purchaseDate])
+  @@index([soldAt])
+}
+
+// ======================================================
+// SALE
+// ======================================================
+
+model Sale {
+  id          Int  @id @default(autoincrement())
+  accountId   Int
+  customerId  Int?
+  createdById Int
+
+  totalAmount     Decimal @default(0) @db.Decimal(10, 2)
+  shippingCharged Decimal @default(0) @db.Decimal(10, 2)
+  shippingActual  Decimal @default(0) @db.Decimal(10, 2)
+  discount        Decimal @default(0) @db.Decimal(10, 2)
+
+  status String  @default("COMPLETED")
+  note   String?
+
+  soldAt DateTime?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  account   Account    @relation(fields: [accountId], references: [id])
+  createdBy User       @relation(fields: [createdById], references: [id])
+  customer  Customer?  @relation(fields: [customerId], references: [id])
+  expenses  Expense[]
+  returns   Return[]
+  items     SaleItem[]
+
+  @@index([accountId])
+}
+
+// ======================================================
+// EXPENSE
+// ======================================================
+
+model Expense {
+  id          Int             @id @default(autoincrement())
+  accountId   Int
+  name        String
+  category    ExpenseCategory
+  amount      Decimal         @db.Decimal(10, 2)
+  note        String?
+  saleId      Int?
+  createdById Int
+  createdAt   DateTime        @default(now())
+  updatedAt   DateTime        @updatedAt
+
+  account   Account @relation(fields: [accountId], references: [id])
+  createdBy User    @relation(fields: [createdById], references: [id])
+  sale      Sale?   @relation(fields: [saleId], references: [id])
+
+  @@index([accountId])
+  @@index([saleId])
+  @@index([category])
+}
+
+// ======================================================
+// SALE ITEM
+// ======================================================
+
+model SaleItem {
+  id                Int      @id @default(autoincrement())
+  saleId            Int
+  consignmentItemId Int
+  salePrice         Decimal  @db.Decimal(10, 2)
+  costPriceAtSale   Decimal  @db.Decimal(10, 2)
+  quantity          Int      @default(1)
+  createdAt         DateTime @default(now())
+
+  returns         Return[]
+  consignmentItem ConsignmentItem @relation(fields: [consignmentItemId], references: [id])
+  sale            Sale            @relation(fields: [saleId], references: [id], onDelete: Cascade)
+}
+
+// ======================================================
+// RETURN
+// ======================================================
+
+model Return {
+  id             Int      @id @default(autoincrement())
+  saleId         Int
+  saleItemId     Int
+  refundAmount   Decimal  @db.Decimal(10, 2)
+  refundShipping Decimal  @default(0) @db.Decimal(10, 2)
+  reason         String?
+  note           String?
+  createdById    Int
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+
+  createdBy User     @relation(fields: [createdById], references: [id])
+  sale      Sale     @relation(fields: [saleId], references: [id])
+  saleItem  SaleItem @relation(fields: [saleItemId], references: [id])
+
+  @@index([saleId])
+  @@index([saleItemId])
+  @@index([createdById])
+}
+
+// ======================================================
+// AUDIT LOG
+// ======================================================
+
+model AuditLog {
+  id        Int      @id @default(autoincrement())
+  userId    Int?
+  action    String
+  entity    String
+  entityId  Int?
+  details   String?
+  createdAt DateTime @default(now())
+
+  user User? @relation(fields: [userId], references: [id])
+}
+
+// ======================================================
+// REGISTRATION CODE
+// ======================================================
+
+model RegistrationCode {
+  id            Int       @id @default(autoincrement())
+  code          String    @unique
+  enabled       Boolean   @default(true)
+  used          Boolean   @default(false)
+  usedById      Int?
+  usedAt        DateTime?
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+  assignedEmail String?
+
+  usedBy User? @relation("RegistrationCodeUsedBy", fields: [usedById], references: [id])
+
+  @@index([usedById])
+  @@index([assignedEmail])
+}
+
+// ======================================================
+// EMAIL VERIFICATION TOKEN
+// ======================================================
+
+model EmailVerificationToken {
+  id        Int       @id @default(autoincrement())
+  token     String    @unique
+  userId    Int
+  expiresAt DateTime
+  used      Boolean   @default(false)
+  usedAt    DateTime?
+  createdAt DateTime  @default(now())
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@index([expiresAt])
+}
+
+// ======================================================
+// VERIFICATION CODE
+// ======================================================
+
+model VerificationCode {
+  id          Int                 @id @default(autoincrement())
+  userId      Int
+  purpose     VerificationPurpose
+  codeHash    String
+  expiresAt   DateTime
+  attempts    Int                 @default(0)
+  maxAttempts Int                 @default(5)
+  consumed    Boolean             @default(false)
+  consumedAt  DateTime?
+  requestIp   String?
+  createdAt   DateTime            @default(now())
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId, purpose])
+  @@index([expiresAt])
+}
+
+// ======================================================
+// OWNER PAYMENT
+// ======================================================
+
+model OwnerPayment {
+  id          Int      @id @default(autoincrement())
+  ownerId     Int
+  amount      Decimal  @db.Decimal(10, 2)
+  note        String?
+  paidAt      DateTime @default(now())
+  createdById Int
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  createdBy User  @relation(fields: [createdById], references: [id])
+  owner     Owner @relation(fields: [ownerId], references: [id])
+
+  @@index([ownerId])
+  @@index([createdById])
+  @@index([paidAt])
+}
+
+// ======================================================
+// PLAN
+// นิยามแพ็คเกจ — ยังไม่มีราคาจริง ใส่ค่า default ไว้ก่อน
+// ======================================================
+
+model Plan {
+  id           Int          @id @default(autoincrement())
+  code         String       @unique // เช่น "FREE", "PRO", "BUSINESS"
+  name         String
+  billingCycle BillingCycle
+  price        Decimal      @default(0) @db.Decimal(10, 2)
+  currency     String       @default("THB")
+  maxUsers     Int? // null = ไม่จำกัด
+  isActive     Boolean      @default(true)
+  createdAt    DateTime     @default(now())
+  updatedAt    DateTime     @updatedAt
+
+  subscriptions Subscription[]
+}
+
+// ======================================================
+// SUBSCRIPTION
+// สถานะแพ็คเกจปัจจุบันของแต่ละ Account (1 account = 1 subscription ปัจจุบัน)
+// ======================================================
+
+model Subscription {
+  id                 Int                @id @default(autoincrement())
+  accountId          Int                @unique
+  planId             Int
+  status             SubscriptionStatus @default(TRIALING)
+  currentPeriodStart DateTime           @default(now())
+  currentPeriodEnd   DateTime?
+  cancelAtPeriodEnd  Boolean            @default(false)
+  canceledAt         DateTime?
+  createdAt          DateTime           @default(now())
+  updatedAt          DateTime           @updatedAt
+
+  account  Account   @relation(fields: [accountId], references: [id])
+  plan     Plan      @relation(fields: [planId], references: [id])
+  invoices Invoice[]
+
+  @@index([status])
+  @@index([currentPeriodEnd])
+}
+
+// ======================================================
+// INVOICE
+// ใบแจ้งหนี้ / ประวัติเรียกเก็บเงินแต่ละงวด
+// gateway-agnostic: ไม่ผูกกับ payment provider เจ้าใดเจ้าหนึ่งโดยเฉพาะ
+// ======================================================
+
+model Invoice {
+  id             Int           @id @default(autoincrement())
+  accountId      Int
+  subscriptionId Int
+
+  amount   Decimal       @db.Decimal(10, 2)
+  currency String        @default("THB")
+  status   InvoiceStatus @default(PENDING)
+
+  periodStart DateTime
+  periodEnd   DateTime
+  dueDate     DateTime
+  paidAt      DateTime?
+
+  // เติมทีหลังตอนเลือก payment gateway จริง ไม่ต้องแก้ schema เพิ่ม
+  paymentProvider String? // "omise" / "stripe" / "2c2p" / null
+  paymentMethod   String? // "card" / "promptpay" / "bank_transfer"
+  providerRef     String? // เลขอ้างอิงจาก gateway (charge id ฝั่งเขา)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  account      Account      @relation(fields: [accountId], references: [id])
+  subscription Subscription @relation(fields: [subscriptionId], references: [id])
+
+  @@index([accountId])
+  @@index([subscriptionId])
+  @@index([status])
+  @@index([dueDate])
+}
+
+// ======================================================
+// ENUMS
+// ======================================================
+
+enum VerificationPurpose {
+  PASSWORD_RESET
+  EMAIL_VERIFY
+}
+
+enum ExpenseCategory {
+  SHIPPING_ACTUAL
+  PACKAGING
+  COMMISSION
+  OTHER_SALE_COST
+  RENT
+  SALARY
+  MARKETING
+  UTILITY
+  OTHER_GENERAL
+}
+
+enum BillingCycle {
+  MONTHLY
+  YEARLY
+}
+
+enum SubscriptionStatus {
+  TRIALING
+  ACTIVE
+  PAST_DUE
+  CANCELED
+  EXPIRED
+}
+
+enum InvoiceStatus {
+  PENDING
+  PAID
+  FAILED
+  REFUNDED
+}

@@ -1,0 +1,1885 @@
+/* =========================================================
+   PRODUCTS MODAL
+   PRODUCTS MODAL.CSS
+   =========================================================
+   ใช้ร่วมกับ:
+   - Products.jsx
+   - ProductsModals.jsx
+
+   STYLE:
+   Soft 3D / Clay / Toy / Pastel
+========================================================= */
+
+
+/* =========================================================
+   MODAL OVERLAY
+========================================================= */
+
+.product-modal-overlay {
+
+    position: fixed;
+
+    inset: 0;
+
+    z-index: 1000;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    padding: 25px;
+
+    background: rgba(76, 59, 84, .3);
+
+    backdrop-filter: blur(7px);
+
+    animation: overlayIn .18s ease-out;
+
+}
+
+
+@keyframes overlayIn {
+
+    from {
+
+        opacity: 0;
+
+    }
+
+    to {
+
+        opacity: 1;
+
+    }
+
+}
+
+
+/* =========================================================
+   MODAL
+========================================================= */
+
+.product-modal {
+
+    position: relative;
+
+    width: min(580px, 100%);
+
+    max-height: calc(100vh - 45px);
+
+    padding: 28px;
+
+    overflow-y: auto;
+
+    border: 1px solid rgba(255,255,255,.8);
+
+    border-radius: 27px;
+
+    background:
+        linear-gradient(
+            145deg,
+            #fff,
+            #fcf7ff
+        );
+
+    box-shadow:
+        0 28px 70px rgba(79, 56, 88, .25),
+        inset 0 2px 3px rgba(255,255,255,.95);
+
+    animation: modalIn .2s ease-out;
+
+}
+
+
+.product-modal::-webkit-scrollbar {
+
+    width: 6px;
+
+}
+
+
+.product-modal::-webkit-scrollbar-track {
+
+    background: transparent;
+
+}
+
+
+.product-modal::-webkit-scrollbar-thumb {
+
+    border-radius: 10px;
+
+    background: #d9c9e0;
+
+}
+
+
+.product-modal::-webkit-scrollbar-thumb:hover {
+
+    background: #cbb7d4;
+
+}
+
+
+@keyframes modalIn {
+
+    from {
+
+        opacity: 0;
+
+        transform:
+            translateY(10px)
+            scale(.98);
+
+    }
+
+    to {
+
+        opacity: 1;
+
+        transform:
+            translateY(0)
+            scale(1);
+
+    }
+
+}
+
+
+/* =========================================================
+   MODAL DECOR
+========================================================= */
+
+.modal-cloud {
+
+    position: absolute;
+
+    color: #eee3f4;
+
+    font-size: 34px;
+
+    pointer-events: none;
+
+    user-select: none;
+
+}
+
+
+.cloud-modal-one {
+
+    top: 18px;
+
+    right: 65px;
+
+}
+
+
+.cloud-modal-two {
+
+    top: 53px;
+
+    right: 25px;
+
+    font-size: 22px;
+
+}
+
+
+.modal-sparkle {
+
+    position: absolute;
+
+    color: #d9b5e8;
+
+    pointer-events: none;
+
+    user-select: none;
+
+}
+
+
+.modal-sparkle-one {
+
+    top: 32px;
+
+    right: 145px;
+
+}
+
+
+.modal-sparkle-two {
+
+    top: 82px;
+
+    right: 110px;
+
+}
+
+
+/* =========================================================
+   MODAL CLOSE
+========================================================= */
+
+.modal-close {
+
+    position: absolute;
+
+    top: 18px;
+
+    right: 18px;
+
+    z-index: 2;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    width: 35px;
+
+    height: 35px;
+
+    border: none;
+
+    border-radius: 12px;
+
+    background: #f3edf6;
+
+    color: #8d8192;
+
+    cursor: pointer;
+
+    transition: .15s ease;
+
+}
+
+
+.modal-close:hover {
+
+    background: #ece2f0;
+
+    transform: rotate(3deg);
+
+}
+
+
+.modal-close:disabled {
+
+    opacity: .55;
+
+    cursor: default;
+
+}
+
+
+/* =========================================================
+   MODAL HEADER
+========================================================= */
+
+.modal-header {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 13px;
+
+    margin-bottom: 21px;
+
+    padding-right: 35px;
+
+}
+
+
+.modal-icon-wrap {
+
+    position: relative;
+
+    flex-shrink: 0;
+
+}
+
+
+.modal-icon {
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    width: 53px;
+
+    height: 53px;
+
+    border-radius: 18px;
+
+    color: #9164aa;
+
+    background:
+        linear-gradient(
+            145deg,
+            #f4e5fc,
+            #e9d6f6
+        );
+
+    box-shadow:
+        0 7px 15px rgba(147, 101, 169, .15),
+        inset 0 2px 2px rgba(255,255,255,.8);
+
+}
+
+
+.modal-icon-wrap > span {
+
+    position: absolute;
+
+    right: -8px;
+
+    bottom: -5px;
+
+    font-size: 16px;
+
+}
+
+
+.modal-header h2 {
+
+    margin: 0;
+
+    color: #5c5063;
+
+    font-size: 21px;
+
+    font-weight: 800;
+
+}
+
+
+.modal-header p {
+
+    margin: 4px 0 0;
+
+    color: #a096a8;
+
+    font-size: 12px;
+
+}
+
+
+/* =========================================================
+   ADD MODE SWITCH
+========================================================= */
+
+.add-mode-switch {
+
+    display: flex;
+
+    gap: 6px;
+
+    padding: 4px;
+
+    margin-bottom: 18px;
+
+    border-radius: 14px;
+
+    background: #f6f1f8;
+
+}
+
+
+.add-mode-switch button {
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    flex: 1;
+
+    gap: 6px;
+
+    height: 38px;
+
+    border: none;
+
+    border-radius: 11px;
+
+    background: transparent;
+
+    color: #978b9e;
+
+    font-family: inherit;
+
+    font-size: 12px;
+
+    font-weight: 700;
+
+    cursor: pointer;
+
+    transition: .18s ease;
+
+}
+
+
+.add-mode-switch button:hover {
+
+    color: #76558b;
+
+}
+
+
+.add-mode-switch button.active {
+
+    color: #76558b;
+
+    background: #fff;
+
+    box-shadow:
+        0 4px 10px rgba(104, 77, 119, .09);
+
+}
+
+
+/* =========================================================
+   FORM
+========================================================= */
+
+.product-form {
+
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 15px;
+
+}
+
+
+.form-group {
+
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 7px;
+
+}
+
+
+.form-group label {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 6px;
+
+    color: #716575;
+
+    font-size: 12px;
+
+    font-weight: 750;
+
+}
+
+
+.form-group label svg {
+
+    flex-shrink: 0;
+
+    color: #a87ac0;
+
+}
+
+
+.form-group label small {
+
+    margin-left: 2px;
+
+    color: #afa4b3;
+
+    font-size: 10px;
+
+    font-weight: 500;
+
+}
+
+
+.form-group input,
+.form-group textarea {
+
+    box-sizing: border-box;
+
+    width: 100%;
+
+    border: 1px solid #e7ddeb;
+
+    outline: none;
+
+    border-radius: 13px;
+
+    background: #fff;
+
+    color: #5c5263;
+
+    font-family: inherit;
+
+    font-size: 13px;
+
+    transition:
+        border-color .18s ease,
+        box-shadow .18s ease;
+
+}
+
+
+.form-group input {
+
+    height: 43px;
+
+    padding: 0 13px;
+
+}
+
+
+.form-group textarea {
+
+    padding: 11px 13px;
+
+    resize: vertical;
+
+    line-height: 1.5;
+
+}
+
+
+.form-group input:focus,
+.form-group textarea:focus {
+
+    border-color: #c9a7d9;
+
+    box-shadow:
+        0 0 0 3px rgba(190, 149, 210, .12);
+
+}
+
+
+.form-group input::placeholder,
+.form-group textarea::placeholder {
+
+    color: #b8adbc;
+
+}
+
+
+.form-row {
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(2, minmax(0, 1fr));
+
+    gap: 13px;
+
+}
+
+
+/* =========================================================
+   MONEY INPUT
+========================================================= */
+
+.money-input {
+
+    display: flex;
+
+    align-items: center;
+
+    height: 43px;
+
+    overflow: hidden;
+
+    border: 1px solid #e7ddeb;
+
+    border-radius: 13px;
+
+    background: #fff;
+
+}
+
+
+.money-input:focus-within {
+
+    border-color: #c9a7d9;
+
+    box-shadow:
+        0 0 0 3px rgba(190, 149, 210, .12);
+
+}
+
+
+.money-input > span {
+
+    flex-shrink: 0;
+
+    padding-left: 13px;
+
+    color: #a582b5;
+
+    font-weight: 800;
+
+}
+
+
+.money-input input {
+
+    flex: 1;
+
+    min-width: 0;
+
+    height: 100%;
+
+    border: none;
+
+    box-shadow: none !important;
+
+}
+
+
+/* =========================================================
+   QUANTITY INPUT
+========================================================= */
+
+.quantity-input {
+
+    display: flex;
+
+    align-items: center;
+
+    height: 43px;
+
+    overflow: hidden;
+
+    border: 1px solid #e7ddeb;
+
+    border-radius: 13px;
+
+    background: #fff;
+
+}
+
+
+.quantity-input:focus-within {
+
+    border-color: #c9a7d9;
+
+    box-shadow:
+        0 0 0 3px rgba(190, 149, 210, .12);
+
+}
+
+
+.quantity-input input {
+
+    flex: 1;
+
+    width: 100%;
+
+    min-width: 0;
+
+    height: 100%;
+
+    padding: 0 13px;
+
+    border: none;
+
+    outline: none;
+
+    background: transparent;
+
+    color: #5c5263;
+
+    font-family: inherit;
+
+    font-size: 13px;
+
+}
+
+
+.quantity-input span {
+
+    flex-shrink: 0;
+
+    padding-right: 13px;
+
+    color: #a69ba9;
+
+    font-size: 11px;
+
+}
+
+
+/* =========================================================
+   FORM HINT
+========================================================= */
+
+.form-hint {
+
+    display: flex;
+
+    align-items: flex-start;
+
+    gap: 9px;
+
+    padding: 11px 12px;
+
+    border-radius: 13px;
+
+    background: #f8f1fc;
+
+    color: #816c8d;
+
+}
+
+
+.form-hint span {
+
+    flex-shrink: 0;
+
+    font-size: 16px;
+
+}
+
+
+.form-hint p {
+
+    margin: 1px 0 0;
+
+    font-size: 11px;
+
+    line-height: 1.5;
+
+}
+
+
+/* =========================================================
+   MODAL ACTIONS
+========================================================= */
+
+.modal-actions {
+
+    display: flex;
+
+    justify-content: flex-end;
+
+    gap: 8px;
+
+    margin-top: 4px;
+
+}
+
+
+.cancel-button,
+.save-product-button {
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    gap: 7px;
+
+    min-height: 42px;
+
+    padding: 0 17px;
+
+    border: none;
+
+    border-radius: 13px;
+
+    font-family: inherit;
+
+    font-size: 12px;
+
+    font-weight: 750;
+
+    cursor: pointer;
+
+    transition:
+        transform .18s ease,
+        box-shadow .18s ease,
+        background .18s ease;
+
+}
+
+
+.cancel-button {
+
+    color: #786c7e;
+
+    background: #eee9f1;
+
+}
+
+
+.cancel-button:hover {
+
+    background: #e8e1eb;
+
+}
+
+
+.save-product-button {
+
+    color: #fff;
+
+    background:
+        linear-gradient(
+            145deg,
+            #c098dc,
+            #a875c7
+        );
+
+    box-shadow:
+        0 7px 15px rgba(148, 105, 174, .2),
+        inset 0 2px 2px rgba(255,255,255,.3);
+
+}
+
+
+.save-product-button:hover {
+
+    transform: translateY(-1px);
+
+    box-shadow:
+        0 9px 18px rgba(148, 105, 174, .25),
+        inset 0 2px 2px rgba(255,255,255,.3);
+
+}
+
+
+.cancel-button:disabled,
+.save-product-button:disabled {
+
+    opacity: .55;
+
+    cursor: default;
+
+    transform: none;
+
+}
+
+
+.button-spinner {
+
+    width: 15px;
+
+    height: 15px;
+
+    border: 2px solid rgba(255,255,255,.4);
+
+    border-top-color: #fff;
+
+    border-radius: 50%;
+
+    animation:
+        spin .7s linear infinite;
+
+}
+
+
+/* =========================================================
+   BULK FORM
+========================================================= */
+
+.bulk-form {
+
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 14px;
+
+}
+
+
+.bulk-instruction {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 10px;
+
+    padding: 12px;
+
+    border-radius: 14px;
+
+    background: #f8f1fc;
+
+}
+
+
+.bulk-instruction-icon {
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    flex-shrink: 0;
+
+    width: 39px;
+
+    height: 39px;
+
+    border-radius: 12px;
+
+    color: #966db0;
+
+    background: #eadcf3;
+
+}
+
+
+.bulk-instruction strong {
+
+    color: #685975;
+
+    font-size: 12px;
+
+}
+
+
+.bulk-instruction p {
+
+    margin: 3px 0 0;
+
+    color: #a094a8;
+
+    font-size: 11px;
+
+}
+
+
+.bulk-example {
+
+    padding: 11px 13px;
+
+    border-radius: 13px;
+
+    background: #fff8eb;
+
+}
+
+
+.bulk-example span {
+
+    display: block;
+
+    margin-bottom: 5px;
+
+    color: #b18449;
+
+    font-size: 10px;
+
+    font-weight: 800;
+
+}
+
+
+.bulk-example pre {
+
+    margin: 0;
+
+    color: #876e53;
+
+    font-family: monospace;
+
+    font-size: 11px;
+
+    line-height: 1.6;
+
+    white-space: pre-wrap;
+
+}
+
+
+.bulk-text-group {
+
+    gap: 7px;
+
+}
+
+
+.bulk-textarea {
+
+    min-height: 150px;
+
+    resize: vertical;
+
+    line-height: 1.6;
+
+}
+
+
+.bulk-parse-row {
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    gap: 10px;
+
+}
+
+
+.bulk-parse-row > span {
+
+    color: #9c91a1;
+
+    font-size: 11px;
+
+}
+
+
+.parse-button {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 6px;
+
+    padding: 8px 12px;
+
+    border: none;
+
+    border-radius: 11px;
+
+    color: #795a8d;
+
+    background: #eee3f5;
+
+    font-family: inherit;
+
+    font-size: 11px;
+
+    font-weight: 750;
+
+    cursor: pointer;
+
+    transition: .15s ease;
+
+}
+
+
+.parse-button:hover:not(:disabled) {
+
+    background: #e7d8ef;
+
+    transform: translateY(-1px);
+
+}
+
+
+.parse-button:disabled {
+
+    opacity: .45;
+
+    cursor: default;
+
+}
+
+
+/* =========================================================
+   BULK INVALID
+========================================================= */
+
+.bulk-invalid {
+
+    padding: 11px 13px;
+
+    border: 1px solid #f2d2d8;
+
+    border-radius: 13px;
+
+    background: #fff3f5;
+
+    color: #a46b77;
+
+    font-size: 11px;
+
+    line-height: 1.6;
+
+}
+
+
+.bulk-invalid-title {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 6px;
+
+    margin-bottom: 5px;
+
+    font-weight: 800;
+
+}
+
+
+.bulk-invalid-title svg {
+
+    flex-shrink: 0;
+
+}
+
+
+.bulk-invalid small {
+
+    display: block;
+
+    margin-top: 5px;
+
+    color: #b38d96;
+
+}
+
+
+/* =========================================================
+   BULK PREVIEW
+========================================================= */
+
+.bulk-preview {
+
+    overflow: hidden;
+
+    border: 1px solid #e8ddec;
+
+    border-radius: 15px;
+
+    background: #fff;
+
+}
+
+
+.bulk-preview-header {
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    gap: 10px;
+
+    padding: 11px 13px;
+
+    background: #faf7fc;
+
+}
+
+
+.bulk-preview-header > div {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 8px;
+
+    min-width: 0;
+
+}
+
+
+.bulk-preview-header strong {
+
+    color: #6e5e77;
+
+    font-size: 12px;
+
+}
+
+
+.bulk-preview-header span {
+
+    padding: 3px 7px;
+
+    border-radius: 7px;
+
+    color: #85669a;
+
+    background: #eee3f5;
+
+    font-size: 10px;
+
+    font-weight: 700;
+
+}
+
+
+.bulk-preview-header button {
+
+    flex-shrink: 0;
+
+    border: none;
+
+    color: #a76d79;
+
+    background: transparent;
+
+    font-family: inherit;
+
+    font-size: 10px;
+
+    font-weight: 700;
+
+    cursor: pointer;
+
+}
+
+
+.bulk-preview-header button:hover {
+
+    color: #8e5563;
+
+}
+
+
+/* =========================================================
+   BULK LIST
+========================================================= */
+
+.bulk-list {
+
+    max-height: 190px;
+
+    overflow-y: auto;
+
+}
+
+
+.bulk-list::-webkit-scrollbar {
+
+    width: 5px;
+
+}
+
+
+.bulk-list::-webkit-scrollbar-thumb {
+
+    border-radius: 10px;
+
+    background: #ddd0e3;
+
+}
+
+
+.bulk-item {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 8px;
+
+    padding: 8px 11px;
+
+    border-top: 1px solid #f1ebf3;
+
+}
+
+
+.bulk-number {
+
+    width: 22px;
+
+    flex-shrink: 0;
+
+    color: #b2a7b6;
+
+    font-size: 10px;
+
+    text-align: center;
+
+}
+
+
+.bulk-item-icon {
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    flex-shrink: 0;
+
+    width: 31px;
+
+    height: 31px;
+
+    border-radius: 9px;
+
+    background: #f5edf9;
+
+}
+
+
+.bulk-item-info {
+
+    flex: 1;
+
+    min-width: 0;
+
+}
+
+
+.bulk-item-info strong {
+
+    display: block;
+
+    overflow: hidden;
+
+    color: #665b6c;
+
+    font-size: 11px;
+
+    text-overflow: ellipsis;
+
+    white-space: nowrap;
+
+}
+
+
+.bulk-item-info span {
+
+    display: block;
+
+    margin-top: 2px;
+
+    color: #a49aa8;
+
+    font-size: 10px;
+
+}
+
+
+.bulk-quantity {
+
+    flex-shrink: 0;
+
+}
+
+
+.bulk-quantity label {
+
+    display: block;
+
+    margin-bottom: 3px;
+
+    color: #9a8e9e;
+
+    font-size: 9px;
+
+    text-align: center;
+
+}
+
+
+.bulk-quantity-input {
+
+    display: flex;
+
+    align-items: center;
+
+    height: 31px;
+
+    overflow: hidden;
+
+    border: 1px solid #e7ddeb;
+
+    border-radius: 9px;
+
+    background: #fff;
+
+}
+
+
+.bulk-quantity-input:focus-within {
+
+    border-color: #c9a7d9;
+
+    box-shadow:
+        0 0 0 2px rgba(190, 149, 210, .1);
+
+}
+
+
+.bulk-quantity-input input {
+
+    width: 50px;
+
+    height: 100%;
+
+    padding: 0 7px;
+
+    border: none;
+
+    outline: none;
+
+    background: transparent;
+
+    color: #665b6c;
+
+    font-family: inherit;
+
+    font-size: 11px;
+
+    text-align: center;
+
+}
+
+
+.bulk-quantity-input span {
+
+    padding-right: 7px;
+
+    color: #a69ba9;
+
+    font-size: 9px;
+
+}
+
+
+.bulk-item-total {
+
+    flex-shrink: 0;
+
+    min-width: 70px;
+
+    text-align: right;
+
+}
+
+
+.bulk-item-total small {
+
+    display: block;
+
+    color: #aaa0ad;
+
+    font-size: 9px;
+
+}
+
+
+.bulk-item-total strong {
+
+    display: block;
+
+    margin-top: 2px;
+
+    color: #76588b;
+
+    font-size: 11px;
+
+}
+
+
+.bulk-remove {
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    flex-shrink: 0;
+
+    width: 27px;
+
+    height: 27px;
+
+    border: none;
+
+    border-radius: 8px;
+
+    color: #b67984;
+
+    background: #fff0f2;
+
+    cursor: pointer;
+
+    transition: .15s ease;
+
+}
+
+
+.bulk-remove:hover {
+
+    background: #ffe5e9;
+
+    transform: scale(1.04);
+
+}
+
+
+/* =========================================================
+   BULK TOTAL
+========================================================= */
+
+.bulk-total {
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    gap: 12px;
+
+    padding: 10px 13px;
+
+    border-top: 1px solid #eee7f1;
+
+    background: #faf7fc;
+
+}
+
+
+.bulk-total div {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 7px;
+
+}
+
+
+.bulk-total span {
+
+    color: #918695;
+
+    font-size: 11px;
+
+}
+
+
+.bulk-total strong {
+
+    color: #76588b;
+
+    font-size: 14px;
+
+}
+
+
+/* =========================================================
+   SELL MODAL
+========================================================= */
+
+.sell-modal {
+
+    width: min(470px, 100%);
+
+}
+
+
+.sell-icon {
+
+    color: #b27b38;
+
+    background:
+        linear-gradient(
+            145deg,
+            #fff2d8,
+            #ffe7b6
+        );
+
+}
+
+
+.sell-product-summary {
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(2, minmax(0, 1fr));
+
+    gap: 10px;
+
+    padding: 12px;
+
+    border-radius: 14px;
+
+    background: #faf5fc;
+
+}
+
+
+.sell-product-summary > div {
+
+    padding: 10px 12px;
+
+    border-radius: 11px;
+
+    background: rgba(255,255,255,.8);
+
+    box-shadow:
+        inset 0 1px 2px rgba(255,255,255,.8);
+
+}
+
+
+.sell-product-summary span {
+
+    display: block;
+
+    margin-bottom: 4px;
+
+    color: #9c91a2;
+
+    font-size: 10px;
+
+}
+
+
+.sell-product-summary strong {
+
+    display: block;
+
+    color: #685a70;
+
+    font-size: 14px;
+
+}
+
+
+.sell-hint-cost {
+
+    margin: 0;
+
+    color: #9e939f;
+
+    font-size: 11px;
+
+    line-height: 1.5;
+
+}
+
+
+.sell-hint-cost strong {
+
+    color: #5c9a6b;
+
+}
+
+
+/* =========================================================
+   GENERAL INTERACTION
+========================================================= */
+
+button,
+input,
+textarea {
+
+    -webkit-tap-highlight-color: transparent;
+
+}
+
+
+button:focus-visible,
+input:focus-visible,
+textarea:focus-visible {
+
+    outline: 3px solid rgba(178, 137, 201, .2);
+
+    outline-offset: 2px;
+
+}
+
+
+button:disabled {
+
+    cursor: default;
+
+}
+
+
+/* =========================================================
+   RESPONSIVE — MOBILE
+========================================================= */
+
+@media (max-width: 760px) {
+
+    .product-modal-overlay {
+
+        align-items: flex-start;
+
+        padding: 12px;
+
+        overflow-y: auto;
+
+    }
+
+
+    .product-modal {
+
+        max-height: calc(100vh - 24px);
+
+        padding: 22px 18px;
+
+        border-radius: 22px;
+
+    }
+
+
+    .modal-header h2 {
+
+        font-size: 18px;
+
+    }
+
+
+    .modal-header {
+
+        align-items: flex-start;
+
+    }
+
+
+    .bulk-item {
+
+        flex-wrap: wrap;
+
+    }
+
+
+    .bulk-item-info {
+
+        min-width:
+            calc(100% - 80px);
+
+    }
+
+
+    .bulk-quantity {
+
+        margin-left: 30px;
+
+    }
+
+
+    .bulk-item-total {
+
+        margin-left: auto;
+
+    }
+
+
+}
+
+
+/* =========================================================
+   RESPONSIVE — SMALL MOBILE
+========================================================= */
+
+@media (max-width: 480px) {
+
+    .modal-actions {
+
+        flex-direction: column-reverse;
+
+    }
+
+
+    .modal-actions button {
+
+        width: 100%;
+
+    }
+
+
+    .sell-product-summary {
+
+        grid-template-columns: 1fr;
+
+    }
+
+
+    .bulk-parse-row {
+
+        align-items: stretch;
+
+        flex-direction: column;
+
+    }
+
+
+    .parse-button {
+
+        justify-content: center;
+
+    }
+
+
+    .bulk-total {
+
+        align-items: flex-start;
+
+        flex-direction: column;
+
+        gap: 7px;
+
+    }
+
+
+    .bulk-total div {
+
+        width: 100%;
+
+        justify-content: space-between;
+
+    }
+
+}
+
+
+/* =========================================================
+   REDUCED MOTION
+========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+
+    .product-modal-overlay,
+    .product-modal {
+
+        animation-duration: .01ms !important;
+
+        animation-iteration-count: 1 !important;
+
+        transition-duration: .01ms !important;
+
+    }
+
+    .product-modal {
+
+        transform: none !important;
+
+    }
+
+}

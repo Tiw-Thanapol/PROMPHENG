@@ -1,0 +1,2390 @@
+/* =========================================================
+   ORDERS LIST
+   Soft Pastel / Premium / Rounded UI
+========================================================= */
+
+.orders-content {
+    width: 100%;
+    min-width: 0;
+    color: #4d4554;
+    font-family:
+        "Noto Sans Thai",
+        "Noto Sans",
+        system-ui,
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        sans-serif;
+}
+
+
+/* =========================================================
+   TOOLBAR
+========================================================= */
+
+.orders-toolbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+    margin-bottom: 20px;
+}
+
+.orders-section-title {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    min-width: 190px;
+}
+
+.section-title-icon {
+    width: 42px;
+    height: 42px;
+    flex: 0 0 42px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 14px;
+
+    background:
+        linear-gradient(
+            145deg,
+            #f5ddff 0%,
+            #eadbff 100%
+        );
+
+    color: #9567b8;
+
+    box-shadow:
+        0 5px 12px rgba(160, 120, 190, 0.16),
+        inset 0 1px 0 rgba(255, 255, 255, 0.85);
+}
+
+.orders-section-title > div:last-child {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.orders-section-title strong {
+    font-size: 18px;
+    line-height: 1.25;
+    font-weight: 800;
+    color: #4c4453;
+}
+
+.orders-section-title span {
+    font-size: 13px;
+    line-height: 1.4;
+    color: #9c91a5;
+}
+
+
+/* =========================================================
+   LIST CONTROLS
+========================================================= */
+
+.orders-list-controls {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 10px;
+    min-width: 0;
+}
+
+
+/* =========================================================
+   SEARCH
+========================================================= */
+
+.orders-search {
+    width: 300px;
+    height: 44px;
+
+    display: flex;
+    align-items: center;
+    gap: 9px;
+
+    padding: 0 12px 0 14px;
+
+    border: 1px solid #eee5f1;
+    border-radius: 14px;
+
+    background: rgba(255, 255, 255, 0.94);
+
+    color: #a096aa;
+
+    box-shadow:
+        0 4px 14px rgba(116, 87, 125, 0.06),
+        inset 0 1px 0 rgba(255, 255, 255, 0.95);
+
+    transition:
+        border-color 0.2s ease,
+        box-shadow 0.2s ease,
+        transform 0.2s ease;
+}
+
+.orders-search:focus-within {
+    border-color: #d8b8e7;
+
+    box-shadow:
+        0 0 0 3px rgba(213, 178, 230, 0.14),
+        0 6px 18px rgba(116, 87, 125, 0.08);
+}
+
+.orders-search svg {
+    flex: 0 0 auto;
+}
+
+.orders-search input {
+    width: 100%;
+    min-width: 0;
+
+    border: 0;
+    outline: 0;
+    background: transparent;
+
+    color: #514957;
+
+    font-size: 14px;
+    font-weight: 500;
+}
+
+.orders-search input::placeholder {
+    color: #b2a9b7;
+}
+
+.orders-search button {
+    width: 27px;
+    height: 27px;
+    flex: 0 0 27px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border: 0;
+    border-radius: 50%;
+
+    background: #f4edf6;
+    color: #9b8ca3;
+
+    cursor: pointer;
+
+    transition:
+        background 0.18s ease,
+        color 0.18s ease,
+        transform 0.18s ease;
+}
+
+.orders-search button:hover {
+    background: #eadcf0;
+    color: #7f6789;
+    transform: scale(1.05);
+}
+
+
+/* =========================================================
+   DATE PICKER
+========================================================= */
+
+.orders-date-picker {
+    position: relative;
+}
+
+.orders-date-trigger {
+    height: 44px;
+
+    display: flex;
+    align-items: center;
+    gap: 8px;
+
+    padding: 0 14px;
+
+    border: 1px solid #eee5f1;
+    border-radius: 14px;
+
+    background: #ffffff;
+    color: #746879;
+
+    font-size: 14px;
+    font-weight: 600;
+
+    white-space: nowrap;
+
+    cursor: pointer;
+
+    box-shadow:
+        0 4px 14px rgba(116, 87, 125, 0.05),
+        inset 0 1px 0 rgba(255, 255, 255, 0.95);
+
+    transition:
+        border-color 0.2s ease,
+        background 0.2s ease,
+        box-shadow 0.2s ease,
+        transform 0.2s ease;
+}
+
+.orders-date-trigger:hover {
+    border-color: #dec9e5;
+    background: #fffafe;
+    transform: translateY(-1px);
+}
+
+.orders-date-trigger.has-date {
+    border-color: #d9c0e5;
+    background: #faf5fd;
+    color: #875ca1;
+}
+
+
+/* =========================================================
+   SORT
+========================================================= */
+
+.orders-sort {
+    position: relative;
+
+    height: 44px;
+
+    display: flex;
+    align-items: center;
+    gap: 7px;
+
+    padding: 0 36px 0 13px;
+
+    border: 1px solid #eee5f1;
+    border-radius: 14px;
+
+    background: #ffffff;
+    color: #8c8092;
+
+    font-size: 13px;
+    font-weight: 600;
+
+    white-space: nowrap;
+
+    box-shadow:
+        0 4px 14px rgba(116, 87, 125, 0.05);
+}
+
+.orders-sort > svg:first-child {
+    color: #a383b2;
+}
+
+.orders-sort select {
+    appearance: none;
+    -webkit-appearance: none;
+
+    border: 0;
+    outline: 0;
+
+    background: transparent;
+
+    color: #5d5262;
+
+    font-size: 14px;
+    font-weight: 700;
+
+    cursor: pointer;
+}
+
+.orders-sort-chevron {
+    position: absolute;
+    right: 11px;
+
+    pointer-events: none;
+
+    color: #a999ad;
+}
+
+
+/* =========================================================
+   CALENDAR POPUP
+========================================================= */
+
+.orders-calendar {
+    position: absolute;
+    z-index: 1000;
+
+    top: calc(100% + 10px);
+    right: 0;
+
+    width: 330px;
+
+    padding: 16px;
+
+    border: 1px solid #eee3f1;
+    border-radius: 20px;
+
+    background:
+        linear-gradient(
+            180deg,
+            #ffffff 0%,
+            #fffafd 100%
+        );
+
+    box-shadow:
+        0 22px 50px rgba(86, 59, 96, 0.18),
+        0 5px 15px rgba(86, 59, 96, 0.08);
+
+    animation: ordersCalendarIn 0.18s ease-out;
+}
+
+@keyframes ordersCalendarIn {
+    from {
+        opacity: 0;
+        transform: translateY(-5px) scale(0.98);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+
+/* =========================================================
+   CALENDAR TOP
+========================================================= */
+
+.orders-calendar-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    margin-bottom: 14px;
+}
+
+.calendar-title {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+
+    color: #65576d;
+
+    font-size: 15px;
+    font-weight: 800;
+}
+
+.calendar-title svg {
+    color: #a06db9;
+}
+
+.calendar-close-btn {
+    width: 30px;
+    height: 30px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border: 0;
+    border-radius: 10px;
+
+    background: #f7eff9;
+    color: #9c8ba4;
+
+    cursor: pointer;
+
+    transition:
+        background 0.18s ease,
+        color 0.18s ease;
+}
+
+.calendar-close-btn:hover {
+    background: #eee0f2;
+    color: #765e80;
+}
+
+
+/* =========================================================
+   CALENDAR SELECTORS
+========================================================= */
+
+.orders-calendar-selectors {
+    display: grid;
+    grid-template-columns: 34px minmax(0, 1fr) minmax(0, 0.75fr) 34px;
+    gap: 7px;
+
+    margin-bottom: 12px;
+}
+
+.calendar-month-nav {
+    width: 34px;
+    height: 36px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border: 1px solid #eee3f1;
+    border-radius: 10px;
+
+    background: #ffffff;
+    color: #8d7894;
+
+    cursor: pointer;
+
+    transition:
+        background 0.18s ease,
+        border-color 0.18s ease,
+        transform 0.18s ease;
+}
+
+.calendar-month-nav:hover {
+    background: #faf3fc;
+    border-color: #dfc8e6;
+    transform: translateY(-1px);
+}
+
+.calendar-select-wrap {
+    position: relative;
+    min-width: 0;
+}
+
+.calendar-select-wrap select {
+    width: 100%;
+    height: 36px;
+
+    appearance: none;
+    -webkit-appearance: none;
+
+    padding: 0 28px 0 10px;
+
+    border: 1px solid #eee3f1;
+    border-radius: 10px;
+
+    outline: none;
+
+    background: #ffffff;
+
+    color: #65596b;
+
+    font-size: 13px;
+    font-weight: 700;
+
+    cursor: pointer;
+}
+
+.calendar-select-wrap select:focus {
+    border-color: #d9bce4;
+}
+
+.calendar-select-icon {
+    position: absolute;
+    right: 9px;
+    top: 50%;
+
+    transform: translateY(-50%);
+
+    pointer-events: none;
+
+    color: #a493aa;
+}
+
+
+/* =========================================================
+   CALENDAR SHORTCUTS
+========================================================= */
+
+.calendar-shortcuts {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+
+    margin-bottom: 13px;
+}
+
+.calendar-today-btn,
+.calendar-clear-btn {
+    height: 31px;
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+
+    padding: 0 11px;
+
+    border-radius: 9px;
+
+    font-size: 12px;
+    font-weight: 700;
+
+    cursor: pointer;
+
+    transition:
+        background 0.18s ease,
+        transform 0.18s ease;
+}
+
+.calendar-today-btn {
+    border: 1px solid #e3cdec;
+    background: #f8effb;
+    color: #8e5da2;
+}
+
+.calendar-today-btn:hover {
+    background: #f1e4f6;
+    transform: translateY(-1px);
+}
+
+.calendar-clear-btn {
+    border: 1px solid #f0dfe9;
+    background: #fff6fa;
+    color: #b17b96;
+}
+
+.calendar-clear-btn:hover {
+    background: #fcecf4;
+    transform: translateY(-1px);
+}
+
+
+/* =========================================================
+   CALENDAR MONTH
+========================================================= */
+
+.calendar-current-month {
+    margin-bottom: 10px;
+
+    text-align: center;
+
+    color: #65576d;
+
+    font-size: 14px;
+    font-weight: 800;
+}
+
+
+/* =========================================================
+   CALENDAR WEEKDAYS
+========================================================= */
+
+.calendar-weekdays {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+
+    margin-bottom: 5px;
+}
+
+.calendar-weekdays span {
+    text-align: center;
+
+    color: #aa9dac;
+
+    font-size: 11px;
+    font-weight: 800;
+}
+
+
+/* =========================================================
+   CALENDAR DAYS
+========================================================= */
+
+.calendar-days {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 4px;
+}
+
+.calendar-day {
+    position: relative;
+
+    min-height: 43px;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    padding: 4px 2px;
+
+    border: 1px solid transparent;
+    border-radius: 10px;
+
+    background: transparent;
+
+    color: #62576a;
+
+    cursor: pointer;
+
+    transition:
+        background 0.16s ease,
+        border-color 0.16s ease,
+        transform 0.16s ease;
+}
+
+.calendar-day:hover:not(:disabled) {
+    background: #faf2fc;
+    border-color: #ebd9f0;
+    transform: translateY(-1px);
+}
+
+.calendar-day.empty {
+    pointer-events: none;
+}
+
+.calendar-day.future {
+    opacity: 0.35;
+    cursor: not-allowed;
+}
+
+.calendar-day.today {
+    border-color: #dfc5e7;
+    background: #fbf5fd;
+}
+
+.calendar-day.selected {
+    border-color: #caa4d8;
+
+    background:
+        linear-gradient(
+            145deg,
+            #ead8f1 0%,
+            #e5d2ef 100%
+        );
+
+    color: #765185;
+
+    box-shadow:
+        0 4px 9px rgba(147, 103, 166, 0.12);
+}
+
+.calendar-day-number {
+    font-size: 13px;
+    line-height: 1;
+    font-weight: 800;
+}
+
+.calendar-day-sales {
+    max-width: 100%;
+
+    margin-top: 3px;
+
+    overflow: hidden;
+
+    color: #a06db1;
+
+    font-size: 8px;
+    line-height: 1;
+
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.calendar-day.selected .calendar-day-sales {
+    color: #80518e;
+}
+
+
+/* =========================================================
+   CALENDAR FOOTER
+========================================================= */
+
+.orders-calendar-footer {
+    margin-top: 13px;
+    padding-top: 11px;
+
+    border-top: 1px solid #f0e8f2;
+
+    text-align: center;
+
+    color: #b1a5b5;
+
+    font-size: 11px;
+}
+
+
+/* =========================================================
+   ACTIVE DATE
+========================================================= */
+
+.orders-active-date {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+
+    margin-bottom: 14px;
+    padding: 10px 13px;
+
+    border: 1px solid #eadcf0;
+    border-radius: 13px;
+
+    background: #fcf7fe;
+
+    color: #8a7890;
+
+    font-size: 14px;
+}
+
+.orders-active-date > div {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 7px;
+}
+
+.orders-active-date svg {
+    color: #a06db5;
+}
+
+.orders-active-date strong {
+    color: #765183;
+    font-size: 14px;
+    font-weight: 800;
+}
+
+.orders-active-date button {
+    height: 29px;
+
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+
+    padding: 0 9px;
+
+    border: 1px solid #eadce8;
+    border-radius: 9px;
+
+    background: #ffffff;
+    color: #9b7890;
+
+    font-size: 12px;
+    font-weight: 700;
+
+    cursor: pointer;
+}
+
+.orders-active-date button:hover {
+    background: #fff5fa;
+    border-color: #e4cad9;
+}
+
+
+/* =========================================================
+   RESULT INFO
+========================================================= */
+
+.orders-result-info {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    margin-bottom: 9px;
+
+    color: #978b9d;
+
+    font-size: 14px;
+    font-weight: 500;
+}
+
+.orders-result-info strong {
+    color: #65586b;
+    font-weight: 800;
+}
+
+.orders-current-sort {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+
+    color: #a193a6;
+
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.orders-current-sort svg {
+    color: #aa8cb6;
+}
+
+
+/* =========================================================
+   PAGINATION
+========================================================= */
+
+.orders-pagination {
+    min-height: 43px;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+
+    margin-bottom: 10px;
+    padding: 7px 4px;
+
+    color: #978b9d;
+
+    font-size: 13px;
+}
+
+.orders-pagination-left,
+.orders-pagination-right {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.orders-pagination-left {
+    white-space: nowrap;
+}
+
+.orders-pagination-right {
+    justify-content: flex-end;
+}
+
+.orders-per-page {
+    position: relative;
+}
+
+.orders-per-page select {
+    appearance: none;
+    -webkit-appearance: none;
+
+    width: 62px;
+    height: 32px;
+
+    padding: 0 25px 0 10px;
+
+    border: 1px solid #e9e0ec;
+    border-radius: 9px;
+
+    outline: none;
+
+    background: #ffffff;
+
+    color: #66596d;
+
+    font-size: 13px;
+    font-weight: 700;
+
+    cursor: pointer;
+}
+
+.orders-per-page-icon {
+    position: absolute;
+    right: 7px;
+    top: 50%;
+
+    transform: translateY(-50%);
+
+    pointer-events: none;
+
+    color: #a395a8;
+}
+
+.orders-pagination-range {
+    color: #8d8094;
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.orders-pagination-btn {
+    min-width: 82px;
+    height: 33px;
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+
+    padding: 0 10px;
+
+    border: 1px solid #e9e0ec;
+    border-radius: 10px;
+
+    background: #ffffff;
+    color: #75677b;
+
+    font-size: 13px;
+    font-weight: 700;
+
+    cursor: pointer;
+
+    box-shadow:
+        0 3px 8px rgba(116, 87, 125, 0.04);
+
+    transition:
+        background 0.18s ease,
+        border-color 0.18s ease,
+        transform 0.18s ease,
+        box-shadow 0.18s ease;
+}
+
+.orders-pagination-btn:hover:not(:disabled) {
+    background: #faf4fc;
+    border-color: #dcc7e4;
+
+    transform: translateY(-1px);
+
+    box-shadow:
+        0 5px 12px rgba(116, 87, 125, 0.08);
+}
+
+.orders-pagination-btn:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+}
+
+.orders-pagination-page {
+    min-width: 42px;
+
+    text-align: center;
+
+    color: #75667c;
+
+    font-size: 13px;
+    font-weight: 800;
+}
+
+
+/* =========================================================
+   TABLE WRAPPER
+========================================================= */
+
+.orders-table-wrapper {
+    width: 100%;
+
+    overflow-x: auto;
+    overflow-y: visible;
+
+    border: 1px solid #eee6f0;
+    border-radius: 18px;
+
+    background: #ffffff;
+
+    box-shadow:
+        0 8px 24px rgba(91, 66, 99, 0.06);
+
+    scrollbar-width: thin;
+    scrollbar-color: #ddcfe2 transparent;
+}
+
+.orders-table-wrapper::-webkit-scrollbar {
+    height: 7px;
+}
+
+.orders-table-wrapper::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.orders-table-wrapper::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    background: #ddcfe2;
+}
+
+
+/* =========================================================
+   TABLE
+========================================================= */
+
+.orders-table {
+    width: 100%;
+    min-width: 930px;
+
+    border-collapse: separate;
+    border-spacing: 0;
+}
+
+.orders-table thead th {
+    height: 50px;
+
+    padding: 0 16px;
+
+    border-bottom: 1px solid #eee7f0;
+
+    background:
+        linear-gradient(
+            180deg,
+            #fcf9fd 0%,
+            #faf6fb 100%
+        );
+
+    color: #8c7f91;
+
+    font-size: 13px;
+    font-weight: 800;
+
+    text-align: left;
+
+    white-space: nowrap;
+}
+
+.orders-table thead th:first-child {
+    padding-left: 20px;
+}
+
+.orders-table thead th:last-child {
+    padding-right: 20px;
+}
+
+.orders-table tbody td {
+    height: 72px;
+
+    padding: 10px 16px;
+
+    border-bottom: 1px solid #f1ebf2;
+
+    background: #ffffff;
+
+    font-size: 14px;
+
+    vertical-align: middle;
+}
+
+.orders-table tbody tr:last-child td {
+    border-bottom: 0;
+}
+
+.orders-table-row {
+    cursor: pointer;
+
+    transition:
+        background 0.16s ease,
+        transform 0.16s ease;
+}
+
+.orders-table-row:hover td {
+    background: #fdf9fe;
+}
+
+.orders-table-row:hover .order-id-icon {
+    transform: translateY(-1px);
+    box-shadow:
+        0 5px 11px rgba(155, 111, 174, 0.16);
+}
+
+
+/* =========================================================
+   ORDER ID
+========================================================= */
+
+.order-id-cell {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.order-id-icon {
+    width: 36px;
+    height: 36px;
+    flex: 0 0 36px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 11px;
+
+    background:
+        linear-gradient(
+            145deg,
+            #f4e7fa 0%,
+            #eadcf3 100%
+        );
+
+    color: #9769ad;
+
+    transition:
+        transform 0.18s ease,
+        box-shadow 0.18s ease;
+}
+
+.order-id-cell > div:last-child {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.order-id-cell strong {
+    color: #5a4e61;
+
+    font-size: 15px;
+    font-weight: 800;
+    line-height: 1.2;
+}
+
+.order-id-cell span {
+    color: #b0a5b4;
+
+    font-size: 12px;
+    line-height: 1.2;
+}
+
+
+/* =========================================================
+   CUSTOMER
+========================================================= */
+
+.order-customer-cell {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+
+    max-width: 190px;
+}
+
+.order-customer-cell strong {
+    overflow: hidden;
+
+    color: #5c5262;
+
+    font-size: 15px;
+    font-weight: 750;
+
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.order-customer-cell span {
+    color: #a398a7;
+
+    font-size: 13px;
+    font-weight: 500;
+}
+
+
+/* =========================================================
+   ITEMS
+========================================================= */
+
+.order-items-cell {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+
+    white-space: nowrap;
+}
+
+.order-items-cell > svg {
+    margin-right: 2px;
+    color: #aa88b7;
+}
+
+.order-items-cell strong {
+    color: #66586c;
+
+    font-size: 15px;
+    font-weight: 800;
+}
+
+.order-items-cell span {
+    color: #928694;
+
+    font-size: 13px;
+}
+
+.order-items-cell small {
+    color: #aaa0ad;
+
+    font-size: 12px;
+    font-weight: 500;
+}
+
+
+/* =========================================================
+   TOTAL
+========================================================= */
+
+.order-total-cell {
+    white-space: nowrap;
+}
+
+.order-total-cell strong {
+    color: #65506d;
+
+    font-size: 16px;
+    font-weight: 850;
+}
+
+
+/* =========================================================
+   STATUS
+========================================================= */
+
+.order-status {
+    min-height: 29px;
+
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+
+    padding: 0 10px;
+
+    border-radius: 999px;
+
+    font-size: 13px;
+    font-weight: 750;
+
+    white-space: nowrap;
+}
+
+.order-status-dot {
+    width: 7px;
+    height: 7px;
+
+    flex: 0 0 7px;
+
+    border-radius: 50%;
+
+    background: currentColor;
+}
+
+
+/* Completed */
+
+.order-status.completed {
+    border: 1px solid #dcefe5;
+
+    background: #f0faf4;
+
+    color: #62a07d;
+}
+
+
+/* Pending */
+
+.order-status.pending {
+    border: 1px solid #f2e4c9;
+
+    background: #fff9ed;
+
+    color: #bd9650;
+}
+
+
+/* Cancelled */
+
+.order-status.cancelled {
+    border: 1px solid #f2dce2;
+
+    background: #fff3f6;
+
+    color: #bd7186;
+}
+
+
+/* Refunded */
+
+.order-status.refunded {
+    border: 1px solid #e4ddef;
+
+    background: #f7f3fc;
+
+    color: #9170ac;
+}
+
+
+/* =========================================================
+   UPDATED
+========================================================= */
+
+.order-updated-cell {
+    white-space: nowrap;
+}
+
+.order-updated-cell strong {
+    color: #756978;
+
+    font-size: 13px;
+    font-weight: 600;
+}
+
+
+/* =========================================================
+   ACTION BUTTONS
+========================================================= */
+
+.orders-table-action-header {
+    text-align: right !important;
+}
+
+.order-table-actions {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 7px;
+}
+
+.order-view-btn,
+.order-edit-btn {
+    height: 35px;
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 11px;
+
+    cursor: pointer;
+
+    transition:
+        transform 0.18s ease,
+        box-shadow 0.18s ease,
+        background 0.18s ease,
+        border-color 0.18s ease;
+}
+
+.order-view-btn {
+    gap: 6px;
+
+    padding: 0 12px;
+
+    border: 1px solid #dfcce7;
+
+    background:
+        linear-gradient(
+            145deg,
+            #fbf3fe 0%,
+            #f4e9fa 100%
+        );
+
+    color: #885ba0;
+
+    font-size: 13px;
+    font-weight: 800;
+
+    box-shadow:
+        0 3px 8px rgba(143, 99, 160, 0.08);
+}
+
+.order-view-btn:hover {
+    background:
+        linear-gradient(
+            145deg,
+            #f6eafd 0%,
+            #eddef5 100%
+        );
+
+    border-color: #d3b8dd;
+
+    transform: translateY(-2px);
+
+    box-shadow:
+        0 6px 13px rgba(143, 99, 160, 0.14);
+}
+
+.order-edit-btn {
+    width: 35px;
+    padding: 0;
+
+    border: 1px solid #f0d6e1;
+
+    background:
+        linear-gradient(
+            145deg,
+            #fff8fb 0%,
+            #fff0f5 100%
+        );
+
+    color: #b47b91;
+
+    box-shadow:
+        0 3px 8px rgba(180, 123, 145, 0.06);
+}
+
+.order-edit-btn:hover {
+    background:
+        linear-gradient(
+            145deg,
+            #fff0f5 0%,
+            #ffe7ef 100%
+        );
+
+    border-color: #e5bdce;
+
+    color: #a66880;
+
+    transform: translateY(-2px);
+
+    box-shadow:
+        0 6px 13px rgba(180, 123, 145, 0.12);
+}
+
+.order-view-btn:active,
+.order-edit-btn:active {
+    transform: translateY(0) scale(0.97);
+}
+
+
+/* =========================================================
+   EMPTY STATE
+========================================================= */
+
+.orders-empty {
+    min-height: 330px;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    gap: 7px;
+
+    padding: 45px 20px;
+
+    text-align: center;
+}
+
+.orders-empty-icon {
+    width: 72px;
+    height: 72px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    margin-bottom: 6px;
+
+    border-radius: 22px;
+
+    background:
+        linear-gradient(
+            145deg,
+            #f5e9fa 0%,
+            #eee1f4 100%
+        );
+
+    color: #a587b1;
+
+    box-shadow:
+        0 10px 22px rgba(143, 112, 153, 0.10);
+}
+
+.orders-empty strong {
+    color: #66596d;
+
+    font-size: 17px;
+    font-weight: 800;
+}
+
+.orders-empty span {
+    color: #aaa0ad;
+
+    font-size: 14px;
+}
+
+
+/* =========================================================
+   ORDER DETAIL OVERLAY
+========================================================= */
+
+.order-detail-overlay {
+    position: fixed;
+    z-index: 9999;
+
+    inset: 0;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 24px;
+
+    background: rgba(58, 45, 64, 0.38);
+
+    backdrop-filter: blur(7px);
+    -webkit-backdrop-filter: blur(7px);
+
+    animation: orderOverlayIn 0.18s ease-out;
+}
+
+@keyframes orderOverlayIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+
+/* =========================================================
+   DETAIL MODAL
+========================================================= */
+
+.order-detail-modal {
+    width: min(920px, 100%);
+
+    max-height: min(850px, calc(100vh - 48px));
+
+    display: flex;
+    flex-direction: column;
+
+    overflow: hidden;
+
+    border: 1px solid rgba(235, 220, 239, 0.95);
+    border-radius: 24px;
+
+    background:
+        linear-gradient(
+            180deg,
+            #ffffff 0%,
+            #fffafd 100%
+        );
+
+    box-shadow:
+        0 30px 80px rgba(54, 38, 59, 0.25),
+        0 10px 30px rgba(54, 38, 59, 0.12);
+
+    animation: orderModalIn 0.2s ease-out;
+}
+
+@keyframes orderModalIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px) scale(0.98);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+
+/* =========================================================
+   MODAL HEADER
+========================================================= */
+
+.order-detail-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    padding: 20px 22px;
+
+    border-bottom: 1px solid #f0e7f2;
+
+    background:
+        linear-gradient(
+            135deg,
+            #fffaff 0%,
+            #fdf7ff 100%
+        );
+}
+
+.order-detail-header-left {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.order-detail-icon {
+    width: 46px;
+    height: 46px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 14px;
+
+    background:
+        linear-gradient(
+            145deg,
+            #f1ddf8 0%,
+            #e7d4f0 100%
+        );
+
+    color: #9463a8;
+
+    box-shadow:
+        0 5px 13px rgba(145, 99, 165, 0.12);
+}
+
+.order-detail-header-left > div:last-child {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.order-detail-header-left span {
+    color: #a497aa;
+
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.order-detail-header-left strong {
+    color: #56495e;
+
+    font-size: 20px;
+    font-weight: 850;
+}
+
+.order-detail-close {
+    width: 37px;
+    height: 37px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border: 1px solid #eee2f0;
+    border-radius: 12px;
+
+    background: #ffffff;
+    color: #9c8da2;
+
+    cursor: pointer;
+
+    transition:
+        background 0.18s ease,
+        color 0.18s ease,
+        transform 0.18s ease;
+}
+
+.order-detail-close:hover {
+    background: #fff2f7;
+    color: #aa7188;
+
+    transform: rotate(3deg);
+}
+
+
+/* =========================================================
+   ORDER META
+========================================================= */
+
+.order-detail-meta {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 10px;
+
+    padding: 16px 22px 10px;
+}
+
+.order-detail-meta-card {
+    min-width: 0;
+
+    display: flex;
+    align-items: center;
+    gap: 9px;
+
+    padding: 11px 12px;
+
+    border: 1px solid #eee6f0;
+    border-radius: 14px;
+
+    background: #ffffff;
+}
+
+.order-detail-meta-icon {
+    width: 32px;
+    height: 32px;
+    flex: 0 0 32px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 10px;
+
+    background: #f8f1fa;
+    color: #9a77a6;
+}
+
+.order-detail-meta-card > div:last-child {
+    min-width: 0;
+
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.order-detail-meta-card span {
+    color: #aaa0ad;
+
+    font-size: 11px;
+    font-weight: 600;
+}
+
+.order-detail-meta-card strong {
+    overflow: hidden;
+
+    color: #665a6d;
+
+    font-size: 14px;
+    font-weight: 750;
+
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+
+/* =========================================================
+   DETAIL STATUS
+========================================================= */
+
+.order-detail-status-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    margin: 4px 22px 14px;
+    padding: 12px 14px;
+
+    border: 1px solid #eee5f0;
+    border-radius: 13px;
+
+    background: #fdfafd;
+
+    color: #817487;
+
+    font-size: 14px;
+    font-weight: 600;
+}
+
+
+/* =========================================================
+   DETAIL SECTION
+========================================================= */
+
+.order-detail-section {
+    min-height: 0;
+
+    margin: 0 22px 15px;
+
+    overflow: hidden;
+
+    border: 1px solid #eee5f0;
+    border-radius: 17px;
+
+    background: #ffffff;
+}
+
+.order-detail-section-title {
+    min-height: 48px;
+
+    display: flex;
+    align-items: center;
+    gap: 8px;
+
+    padding: 0 14px;
+
+    border-bottom: 1px solid #f0e8f2;
+
+    background:
+        linear-gradient(
+            180deg,
+            #fdfafd 0%,
+            #fbf7fc 100%
+        );
+}
+
+.order-detail-section-title svg {
+    color: #9a72a7;
+}
+
+.order-detail-section-title strong {
+    color: #62566a;
+
+    font-size: 15px;
+    font-weight: 800;
+}
+
+.order-detail-section-title span {
+    margin-left: 2px;
+
+    color: #aaa0ad;
+
+    font-size: 13px;
+    font-weight: 600;
+}
+
+
+/* =========================================================
+   DETAIL ITEMS
+========================================================= */
+
+.order-detail-items {
+    max-height: 300px;
+
+    overflow-y: auto;
+
+    scrollbar-width: thin;
+    scrollbar-color: #ded1e3 transparent;
+}
+
+.order-detail-items::-webkit-scrollbar {
+    width: 6px;
+}
+
+.order-detail-items::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.order-detail-items::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    background: #ded1e3;
+}
+
+.order-detail-item {
+    display: grid;
+    grid-template-columns: 30px minmax(180px, 1fr) 100px 125px 105px;
+    align-items: center;
+    gap: 12px;
+
+    padding: 12px 14px;
+
+    border-bottom: 1px solid #f3edf4;
+}
+
+.order-detail-item:last-child {
+    border-bottom: 0;
+}
+
+.order-detail-item-number {
+    width: 27px;
+    height: 27px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 9px;
+
+    background: #f7eff9;
+    color: #9674a1;
+
+    font-size: 12px;
+    font-weight: 800;
+}
+
+.order-detail-item-main {
+    min-width: 0;
+
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+}
+
+.order-detail-item-main strong {
+    overflow: hidden;
+
+    color: #5c5262;
+
+    font-size: 15px;
+    font-weight: 750;
+
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.order-detail-item-main span {
+    color: #aaa0ad;
+
+    font-size: 12px;
+}
+
+.order-detail-item-qty,
+.order-detail-item-price,
+.order-detail-item-profit {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.order-detail-item-qty {
+    align-items: center;
+}
+
+.order-detail-item-qty span,
+.order-detail-item-price span,
+.order-detail-item-profit span {
+    color: #aaa0ad;
+
+    font-size: 11px;
+    font-weight: 600;
+}
+
+.order-detail-item-qty strong {
+    color: #675b6c;
+
+    font-size: 15px;
+    font-weight: 800;
+}
+
+.order-detail-item-price {
+    align-items: flex-end;
+}
+
+.order-detail-item-price span {
+    white-space: nowrap;
+}
+
+.order-detail-item-price strong {
+    color: #65576c;
+
+    font-size: 15px;
+    font-weight: 800;
+}
+
+.order-detail-item-profit {
+    align-items: flex-end;
+}
+
+.order-detail-item-profit strong {
+    color: #62a17e;
+
+    font-size: 15px;
+    font-weight: 800;
+}
+
+.order-detail-no-items {
+    padding: 35px 20px;
+
+    text-align: center;
+
+    color: #aaa0ad;
+
+    font-size: 14px;
+}
+
+
+/* =========================================================
+   DETAIL SUMMARY
+========================================================= */
+
+.order-detail-summary {
+    margin: 0 22px 15px;
+    padding: 15px 17px;
+
+    border: 1px solid #eee4f0;
+    border-radius: 16px;
+
+    background:
+        linear-gradient(
+            180deg,
+            #fffaff 0%,
+            #fcf7fd 100%
+        );
+}
+
+.order-summary-line {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    min-height: 29px;
+
+    color: #8b7e91;
+
+    font-size: 14px;
+}
+
+.order-summary-line strong {
+    color: #66596c;
+
+    font-size: 14px;
+    font-weight: 750;
+}
+
+.order-summary-line strong.discount {
+    color: #b47b91;
+}
+
+.order-summary-divider {
+    height: 1px;
+
+    margin: 8px 0;
+
+    background: #eee3f0;
+}
+
+.order-summary-total {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    padding-top: 2px;
+
+    color: #62566a;
+
+    font-size: 15px;
+    font-weight: 800;
+}
+
+.order-summary-total strong {
+    color: #8c5ba1;
+
+    font-size: 20px;
+    font-weight: 900;
+}
+
+
+/* =========================================================
+   DETAIL FOOTER
+========================================================= */
+
+.order-detail-footer {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 9px;
+
+    padding: 14px 22px;
+
+    border-top: 1px solid #f0e7f2;
+
+    background: #fffafd;
+}
+
+.order-detail-footer button {
+    min-height: 38px;
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+
+    padding: 0 15px;
+
+    border-radius: 11px;
+
+    font-size: 14px;
+    font-weight: 800;
+
+    cursor: pointer;
+
+    transition:
+        transform 0.18s ease,
+        background 0.18s ease,
+        box-shadow 0.18s ease;
+}
+
+.order-detail-footer-close {
+    border: 1px solid #e8dfe9;
+
+    background: #ffffff;
+    color: #786b7e;
+}
+
+.order-detail-footer-close:hover {
+    background: #faf5fb;
+    transform: translateY(-1px);
+}
+
+.order-detail-footer-edit {
+    border: 1px solid #d5bbdf;
+
+    background:
+        linear-gradient(
+            145deg,
+            #f4e5fa 0%,
+            #ead8f1 100%
+        );
+
+    color: #815293;
+
+    box-shadow:
+        0 4px 10px rgba(132, 83, 150, 0.10);
+}
+
+.order-detail-footer-edit:hover {
+    background:
+        linear-gradient(
+            145deg,
+            #eedcf5 0%,
+            #e5d1ed 100%
+        );
+
+    transform: translateY(-1px);
+
+    box-shadow:
+        0 6px 14px rgba(132, 83, 150, 0.15);
+}
+
+
+/* =========================================================
+   FOCUS ACCESSIBILITY
+========================================================= */
+
+.orders-search input:focus-visible,
+.orders-date-trigger:focus-visible,
+.orders-sort select:focus-visible,
+.orders-pagination-btn:focus-visible,
+.order-view-btn:focus-visible,
+.order-edit-btn:focus-visible,
+.order-detail-close:focus-visible,
+.order-detail-footer button:focus-visible,
+.calendar-month-nav:focus-visible,
+.calendar-today-btn:focus-visible,
+.calendar-clear-btn:focus-visible,
+.calendar-day:focus-visible {
+    outline: 2px solid #d2b2df;
+    outline-offset: 2px;
+}
+
+
+/* =========================================================
+   RESPONSIVE — TABLET
+========================================================= */
+
+@media (max-width: 1180px) {
+
+    .orders-toolbar {
+        align-items: flex-start;
+        flex-direction: column;
+        gap: 15px;
+    }
+
+    .orders-list-controls {
+        width: 100%;
+        justify-content: flex-start;
+    }
+
+    .orders-search {
+        flex: 1;
+        width: auto;
+    }
+
+}
+
+
+/* =========================================================
+   RESPONSIVE — SMALL TABLET
+========================================================= */
+
+@media (max-width: 850px) {
+
+    .orders-list-controls {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        width: 100%;
+    }
+
+    .orders-search {
+        grid-column: 1 / -1;
+        width: 100%;
+    }
+
+    .orders-date-trigger,
+    .orders-sort {
+        width: 100%;
+    }
+
+    .orders-sort {
+        justify-content: flex-start;
+    }
+
+    .orders-calendar {
+        left: 0;
+        right: auto;
+    }
+
+    .order-detail-meta {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .order-detail-item {
+        grid-template-columns: 30px minmax(150px, 1fr) 80px 110px;
+    }
+
+    .order-detail-item-profit {
+        display: none;
+    }
+
+}
+
+
+/* =========================================================
+   RESPONSIVE — MOBILE
+========================================================= */
+
+@media (max-width: 640px) {
+
+    .orders-toolbar {
+        margin-bottom: 15px;
+    }
+
+    .orders-section-title strong {
+        font-size: 17px;
+    }
+
+    .orders-section-title span {
+        font-size: 12px;
+    }
+
+    .section-title-icon {
+        width: 40px;
+        height: 40px;
+        flex-basis: 40px;
+    }
+
+    .orders-list-controls {
+        grid-template-columns: 1fr;
+        gap: 8px;
+    }
+
+    .orders-search {
+        grid-column: auto;
+    }
+
+    .orders-date-trigger,
+    .orders-sort {
+        width: 100%;
+    }
+
+    .orders-result-info {
+        align-items: flex-start;
+        flex-direction: column;
+        gap: 5px;
+    }
+
+    .orders-pagination {
+        align-items: flex-start;
+        flex-direction: column;
+        gap: 9px;
+    }
+
+    .orders-pagination-left,
+    .orders-pagination-right {
+        width: 100%;
+    }
+
+    .orders-pagination-right {
+        justify-content: space-between;
+    }
+
+    .orders-pagination-btn {
+        min-width: 75px;
+    }
+
+    .orders-calendar {
+        width: min(330px, calc(100vw - 30px));
+
+        left: 50%;
+        right: auto;
+
+        transform: translateX(-50%);
+    }
+
+    .orders-calendar:hover {
+        transform: translateX(-50%);
+    }
+
+    .order-detail-overlay {
+        align-items: flex-end;
+
+        padding: 0;
+    }
+
+    .order-detail-modal {
+        width: 100%;
+        max-height: calc(100vh - 15px);
+
+        border-radius: 24px 24px 0 0;
+    }
+
+    .order-detail-header {
+        padding: 16px;
+    }
+
+    .order-detail-meta {
+        grid-template-columns: 1fr 1fr;
+
+        padding: 12px 16px 8px;
+    }
+
+    .order-detail-status-row {
+        margin-left: 16px;
+        margin-right: 16px;
+    }
+
+    .order-detail-section {
+        margin-left: 16px;
+        margin-right: 16px;
+    }
+
+    .order-detail-summary {
+        margin-left: 16px;
+        margin-right: 16px;
+    }
+
+    .order-detail-footer {
+        padding: 12px 16px;
+    }
+
+}
+
+
+/* =========================================================
+   RESPONSIVE — VERY SMALL MOBILE
+========================================================= */
+
+@media (max-width: 430px) {
+
+    .orders-active-date {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+    .orders-active-date button {
+        align-self: flex-end;
+    }
+
+    .order-detail-meta {
+        grid-template-columns: 1fr;
+    }
+
+    .order-detail-item {
+        grid-template-columns: 28px minmax(0, 1fr);
+        gap: 9px;
+    }
+
+    .order-detail-item-qty,
+    .order-detail-item-price {
+        grid-column: 2;
+        align-items: flex-start;
+
+        padding-top: 3px;
+    }
+
+    .order-detail-item-price {
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+
+        width: 100%;
+    }
+
+    .order-detail-footer {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .order-detail-footer button {
+        width: 100%;
+    }
+
+}
+
+
+/* =========================================================
+   REDUCED MOTION
+========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+
+    .orders-calendar,
+    .order-detail-overlay,
+    .order-detail-modal {
+        animation: none;
+    }
+
+    *,
+    *::before,
+    *::after {
+        transition-duration: 0.01ms !important;
+    }
+
+}

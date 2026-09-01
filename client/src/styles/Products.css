@@ -1,0 +1,918 @@
+/* =========================================================
+   PRODUCTS
+   PRODUCTS.CSS
+   =========================================================
+   ใช้ร่วมกับ:
+   - Products.jsx
+
+   แยก CSS ออกเป็น:
+   - Products.css
+   - ProductsSummary.css
+   - ProductsToolbar.css
+   - ProductsTable.css
+   - ProductsModal.css
+
+   STYLE:
+   Soft 3D / Clay / Toy / Pastel
+========================================================= */
+
+
+/* =========================================================
+   ROOT PAGE
+========================================================= */
+
+.products-page {
+
+    position: relative;
+
+    min-height: 100%;
+
+    padding: 30px;
+
+    overflow: hidden;
+
+    background:
+        linear-gradient(
+            135deg,
+            #fff8fc 0%,
+            #f8f2ff 48%,
+            #fffaf1 100%
+        );
+
+    color: #51475d;
+
+}
+
+
+/* =========================================================
+   BACKGROUND
+========================================================= */
+
+.products-background {
+
+    position: fixed;
+
+    inset: 0;
+
+    z-index: 0;
+
+    overflow: hidden;
+
+    pointer-events: none;
+
+}
+
+
+/* =========================================================
+   SPARKLES
+========================================================= */
+
+.decor-sparkle {
+
+    position: absolute;
+
+    color: #d9b9ee;
+
+    font-size: 25px;
+
+    opacity: .65;
+
+    user-select: none;
+
+}
+
+
+.sparkle-1 {
+
+    top: 11%;
+
+    left: 5%;
+
+}
+
+
+.sparkle-2 {
+
+    top: 27%;
+
+    right: 7%;
+
+}
+
+
+.sparkle-3 {
+
+    bottom: 17%;
+
+    left: 8%;
+
+}
+
+
+.sparkle-4 {
+
+    right: 14%;
+
+    bottom: 8%;
+
+}
+
+
+/* =========================================================
+   CLOUDS
+========================================================= */
+
+.decor-cloud {
+
+    position: absolute;
+
+    width: 160px;
+
+    height: 70px;
+
+    opacity: .55;
+
+}
+
+
+.cloud-1 {
+
+    top: 90px;
+
+    right: 11%;
+
+}
+
+
+.cloud-2 {
+
+    bottom: 110px;
+
+    left: 2%;
+
+    transform: scale(.8);
+
+}
+
+
+.cloud-bubble {
+
+    position: absolute;
+
+    border-radius: 50%;
+
+    background: #fff;
+
+    box-shadow:
+        0 8px 20px rgba(177, 145, 190, .12);
+
+}
+
+
+.bubble-a {
+
+    top: 18px;
+
+    left: 18px;
+
+    width: 55px;
+
+    height: 55px;
+
+}
+
+
+.bubble-b {
+
+    top: 4px;
+
+    left: 52px;
+
+    width: 70px;
+
+    height: 70px;
+
+}
+
+
+.bubble-c {
+
+    top: 22px;
+
+    right: 18px;
+
+    width: 48px;
+
+    height: 48px;
+
+}
+
+
+.cloud-base {
+
+    position: absolute;
+
+    right: 10px;
+
+    bottom: 5px;
+
+    left: 12px;
+
+    height: 35px;
+
+    border-radius: 30px;
+
+    background: #fff;
+
+}
+
+
+/* =========================================================
+   TREES
+========================================================= */
+
+.decor-tree {
+
+    position: absolute;
+
+    width: 100px;
+
+    height: 170px;
+
+    opacity: .22;
+
+}
+
+
+.tree-left {
+
+    bottom: 25px;
+
+    left: 1%;
+
+}
+
+
+.tree-right {
+
+    top: 120px;
+
+    right: 1%;
+
+    transform: scale(.75);
+
+}
+
+
+.tree-crown {
+
+    position: absolute;
+
+    border-radius: 50%;
+
+    background: #c8b4df;
+
+}
+
+
+.crown-one {
+
+    top: 25px;
+
+    left: 10px;
+
+    width: 65px;
+
+    height: 65px;
+
+}
+
+
+.crown-two {
+
+    top: 48px;
+
+    left: 35px;
+
+    width: 75px;
+
+    height: 75px;
+
+}
+
+
+.crown-three {
+
+    top: 72px;
+
+    left: 0;
+
+    width: 55px;
+
+    height: 55px;
+
+}
+
+
+.tree-trunk {
+
+    position: absolute;
+
+    bottom: 0;
+
+    left: 42px;
+
+    width: 18px;
+
+    height: 75px;
+
+    border-radius: 10px;
+
+    background: #c7a98d;
+
+}
+
+
+/* =========================================================
+   FLOWERS
+========================================================= */
+
+.decor-flower {
+
+    position: absolute;
+
+    color: #e7a9c9;
+
+    font-size: 27px;
+
+    opacity: .45;
+
+}
+
+
+.flower-1 {
+
+    bottom: 22%;
+
+    left: 5%;
+
+}
+
+
+.flower-2 {
+
+    right: 5%;
+
+    bottom: 28%;
+
+}
+
+
+/* =========================================================
+   CONTAINER
+========================================================= */
+
+.products-container {
+
+    position: relative;
+
+    z-index: 2;
+
+    width: min(1500px, 100%);
+
+    margin: 0 auto;
+
+}
+
+
+/* =========================================================
+   HEADER
+========================================================= */
+
+.products-header {
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    gap: 25px;
+
+    margin-bottom: 25px;
+
+}
+
+
+.products-title-area {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 16px;
+
+}
+
+
+.products-title-icon {
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    width: 58px;
+
+    height: 58px;
+
+    border-radius: 20px;
+
+    color: #916db2;
+
+    background:
+        linear-gradient(
+            145deg,
+            #f5e8ff,
+            #e8d5fa
+        );
+
+    box-shadow:
+        0 10px 22px rgba(151, 112, 177, .18),
+        inset 0 2px 3px rgba(255,255,255,.85);
+
+}
+
+
+.products-title-line {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 9px;
+
+}
+
+
+.products-title-line h1 {
+
+    margin: 0;
+
+    color: #5b5065;
+
+    font-size: 29px;
+
+    font-weight: 800;
+
+    letter-spacing: -.5px;
+
+}
+
+
+.title-sparkle {
+
+    font-size: 20px;
+
+}
+
+
+.products-header p {
+
+    margin: 6px 0 0;
+
+    color: #91879a;
+
+    font-size: 14px;
+
+}
+
+
+/* =========================================================
+   ADD BUTTON
+========================================================= */
+
+.products-add-button {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 10px;
+
+    padding: 11px 19px 11px 12px;
+
+    border: none;
+
+    border-radius: 18px;
+
+    color: #fff;
+
+    background:
+        linear-gradient(
+            145deg,
+            #c49be1,
+            #a978cc
+        );
+
+    font-family: inherit;
+
+    font-size: 14px;
+
+    font-weight: 700;
+
+    cursor: pointer;
+
+    box-shadow:
+        0 8px 18px rgba(151, 111, 179, .25),
+        inset 0 2px 2px rgba(255,255,255,.35);
+
+    transition:
+        transform .2s ease,
+        box-shadow .2s ease;
+
+}
+
+
+.products-add-button:hover {
+
+    transform: translateY(-2px);
+
+    box-shadow:
+        0 12px 23px rgba(151, 111, 179, .3),
+        inset 0 2px 2px rgba(255,255,255,.35);
+
+}
+
+
+.products-add-button:active {
+
+    transform: translateY(1px);
+
+}
+
+
+.button-icon {
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    width: 33px;
+
+    height: 33px;
+
+    border-radius: 12px;
+
+    background: rgba(255,255,255,.22);
+
+}
+
+
+/* =========================================================
+   ERROR
+========================================================= */
+
+.products-error {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 10px;
+
+    margin-bottom: 18px;
+
+    padding: 13px 16px;
+
+    border: 1px solid #f2c5d2;
+
+    border-radius: 15px;
+
+    background: #fff1f5;
+
+    color: #a15b70;
+
+}
+
+
+.products-error span {
+
+    flex: 1;
+
+}
+
+
+.products-error button {
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    border: none;
+
+    background: transparent;
+
+    color: inherit;
+
+    cursor: pointer;
+
+}
+
+
+/* =========================================================
+   CONTENT
+========================================================= */
+
+.products-content {
+
+    padding: 22px;
+
+    border-radius: 27px;
+
+    background: rgba(255,255,255,.83);
+
+    box-shadow:
+        0 15px 38px rgba(116, 94, 130, .1),
+        inset 0 2px 2px rgba(255,255,255,.95);
+
+    backdrop-filter: blur(12px);
+
+}
+
+
+/* =========================================================
+   TABS
+========================================================= */
+
+.products-tabs {
+
+    display: flex;
+
+    gap: 7px;
+
+    padding: 5px;
+
+    margin-bottom: 18px;
+
+    border-radius: 17px;
+
+    background: #f7f2fa;
+
+}
+
+
+.products-tabs button {
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    flex: 1;
+
+    gap: 8px;
+
+    min-height: 43px;
+
+    border: none;
+
+    border-radius: 13px;
+
+    background: transparent;
+
+    color: #978da0;
+
+    font-family: inherit;
+
+    font-size: 13px;
+
+    font-weight: 700;
+
+    cursor: pointer;
+
+    transition:
+        color .2s ease,
+        background .2s ease,
+        box-shadow .2s ease;
+
+}
+
+
+.products-tabs button:hover {
+
+    color: #765c8a;
+
+}
+
+
+.products-tabs button.active {
+
+    color: #75558e;
+
+    background: #fff;
+
+    box-shadow:
+        0 4px 12px rgba(111, 83, 127, .1);
+
+}
+
+
+.products-tabs button b {
+
+    min-width: 25px;
+
+    padding: 3px 7px;
+
+    border-radius: 9px;
+
+    background: #eee6f3;
+
+    font-size: 11px;
+
+    text-align: center;
+
+}
+
+
+.products-tabs button.active b {
+
+    color: #795b91;
+
+    background: #e7d8f1;
+
+}
+
+
+/* =========================================================
+   GENERAL INTERACTION
+========================================================= */
+
+button,
+input,
+textarea {
+
+    -webkit-tap-highlight-color: transparent;
+
+}
+
+
+button:focus-visible,
+input:focus-visible,
+textarea:focus-visible {
+
+    outline: 3px solid rgba(178, 137, 201, .2);
+
+    outline-offset: 2px;
+
+}
+
+
+button:disabled {
+
+    cursor: default;
+
+}
+
+
+/* =========================================================
+   RESPONSIVE — MOBILE
+========================================================= */
+
+@media (max-width: 760px) {
+
+    .products-page {
+
+        padding: 15px;
+
+    }
+
+
+    .products-header {
+
+        align-items: flex-start;
+
+        flex-direction: column;
+
+    }
+
+
+    .products-add-button {
+
+        width: 100%;
+
+        justify-content: center;
+
+    }
+
+
+    .products-content {
+
+        padding: 13px;
+
+        border-radius: 20px;
+
+    }
+
+
+    .products-tabs {
+
+        overflow-x: auto;
+
+        scrollbar-width: none;
+
+    }
+
+
+    .products-tabs::-webkit-scrollbar {
+
+        display: none;
+
+    }
+
+
+    .products-tabs button {
+
+        flex: 0 0 auto;
+
+        min-width: 145px;
+
+    }
+
+}
+
+
+/* =========================================================
+   RESPONSIVE — SMALL MOBILE
+========================================================= */
+
+@media (max-width: 480px) {
+
+    .products-page {
+
+        padding: 10px;
+
+    }
+
+
+    .products-title-line h1 {
+
+        font-size: 24px;
+
+    }
+
+
+    .products-title-area {
+
+        align-items: flex-start;
+
+    }
+
+
+    .products-title-icon {
+
+        width: 50px;
+
+        height: 50px;
+
+        border-radius: 17px;
+
+    }
+
+
+    .products-title-line {
+
+        align-items: flex-start;
+
+    }
+
+}
+
+
+/* =========================================================
+   REDUCED MOTION
+========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+
+    *,
+    *::before,
+    *::after {
+
+        scroll-behavior: auto !important;
+
+        animation-duration: .01ms !important;
+
+        animation-iteration-count: 1 !important;
+
+        transition-duration: .01ms !important;
+
+    }
+
+}

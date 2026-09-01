@@ -1,0 +1,1446 @@
+/* =========================================================
+   SALE RECORD
+   SIDEBAR DESIGN SYSTEM
+   SPACE CAT / TOY 3D / SOFT CLAY
+
+   Shared Visual Language:
+   Home.jsx
+   Home.css
+
+   Accessibility:
+   - Larger typography
+   - Stronger contrast
+   - Larger click targets
+   - Clear active state
+   ========================================================= */
+
+
+/* =========================================================
+   VARIABLES
+   ========================================================= */
+
+:root {
+
+    --sidebar-night-1: #1b1440;
+    --sidebar-night-2: #2a1f5c;
+    --sidebar-night-3: #3a2a6e;
+    --sidebar-night-4: #4a2f6b;
+
+    --sidebar-lavender-primary: #9671d5;
+    --sidebar-lavender-primary-light: #b79bea;
+    --sidebar-lavender-dark: #6c4fa8;
+
+    --sidebar-lavender-light: #f5edfc;
+
+    --sidebar-lavender-icon-from: #b9a2ff;
+    --sidebar-lavender-icon-to: #7f5fe0;
+
+    --sidebar-star-gold: #ffd37a;
+
+    --sidebar-accent-pink: #ff9ecb;
+    --sidebar-accent-purple: #b587ff;
+
+    --sidebar-card:
+
+        linear-gradient(
+            180deg,
+            rgba(255,255,255,.55),
+            rgba(255,255,255,0) 18%
+        ),
+
+        linear-gradient(
+            150deg,
+            #fffaf3 0%,
+            #f7ecff 55%,
+            #eee0ff 100%
+        );
+
+    --sidebar-text-dark: #40345c;
+    --sidebar-text-muted: #786c8f;
+
+    --sidebar-shadow:
+
+        0 30px 65px rgba(20, 8, 55, .38),
+
+        0 10px 24px rgba(60, 30, 100, .24),
+
+        inset 0 2px 2px rgba(255,255,255,.95),
+
+        inset 0 -6px 14px rgba(160,120,200,.14);
+
+}
+
+
+/* =========================================================
+   SIDEBAR
+   ========================================================= */
+
+.sidebar {
+
+    position: fixed;
+
+    top: 0;
+    left: 0;
+
+    width: 290px;
+    height: 100vh;
+
+    box-sizing: border-box;
+
+    padding: 22px 16px;
+
+    color: #fff;
+
+    background:
+
+        radial-gradient(
+            circle at 85% 8%,
+            rgba(255,232,176,.16),
+            transparent 32%
+        ),
+
+        radial-gradient(
+            circle at 12% 45%,
+            rgba(255,158,203,.10),
+            transparent 38%
+        ),
+
+        radial-gradient(
+            circle at 50% 0%,
+            var(--sidebar-night-3) 0%,
+            transparent 55%
+        ),
+
+        linear-gradient(
+            160deg,
+            var(--sidebar-night-1) 0%,
+            var(--sidebar-night-2) 35%,
+            var(--sidebar-night-3) 65%,
+            var(--sidebar-night-4) 100%
+        );
+
+    border-right:
+        1px solid rgba(255,255,255,.14);
+
+    transform:
+        translateX(-310px);
+
+    transition:
+        transform .35s cubic-bezier(.22,.8,.25,1);
+
+    z-index: 2000;
+
+    overflow: hidden;
+
+    box-shadow:
+
+        12px 0 35px rgba(20,8,55,.32),
+
+        inset -1px 0 rgba(255,255,255,.06);
+
+    font-family:
+        "Playpen Sans Thai",
+        "Baloo 2",
+        sans-serif;
+
+}
+
+
+/* =========================================================
+   STARFIELD
+   ========================================================= */
+
+.sidebar::before,
+.sidebar::after {
+
+    content: "";
+
+    position: absolute;
+
+    inset: 0;
+
+    z-index: 0;
+
+    pointer-events: none;
+
+    background-repeat: repeat;
+
+    background-image:
+
+        radial-gradient(
+            1.6px 1.6px at 10% 10%,
+            #fff,
+            transparent
+        ),
+
+        radial-gradient(
+            1.6px 1.6px at 80% 6%,
+            #fff,
+            transparent
+        ),
+
+        radial-gradient(
+            1.2px 1.2px at 60% 22%,
+            #ffe8b0,
+            transparent
+        ),
+
+        radial-gradient(
+            1.4px 1.4px at 30% 32%,
+            #fff,
+            transparent
+        ),
+
+        radial-gradient(
+            1.2px 1.2px at 90% 28%,
+            #fff,
+            transparent
+        ),
+
+        radial-gradient(
+            1.6px 1.6px at 45% 42%,
+            #ffe8b0,
+            transparent
+        ),
+
+        radial-gradient(
+            1.2px 1.2px at 15% 24%,
+            #fff,
+            transparent
+        ),
+
+        radial-gradient(
+            1.4px 1.4px at 70% 38%,
+            #fff,
+            transparent
+        );
+
+    background-size:
+        290px 290px;
+
+    animation:
+        sidebarTwinkle 4s ease-in-out infinite;
+
+}
+
+
+.sidebar::after {
+
+    background-size:
+        220px 220px;
+
+    background-position:
+        40px 60px;
+
+    animation-duration:
+        3.2s;
+
+    animation-delay:
+        .6s;
+
+    opacity:
+        .65;
+
+}
+
+
+@keyframes sidebarTwinkle {
+
+    0%,
+    100% {
+
+        opacity: .45;
+
+    }
+
+    50% {
+
+        opacity: 1;
+
+    }
+
+}
+
+
+/* =========================================================
+   OPEN
+   ========================================================= */
+
+.sidebar.open {
+
+    transform:
+        translateX(0);
+
+}
+
+
+/* =========================================================
+   SIDEBAR CONTENT
+   ========================================================= */
+
+.sidebar-content {
+
+    position: relative;
+
+    z-index: 10;
+
+    height: calc(100% - 118px);
+
+    overflow-y: auto;
+
+    overflow-x: hidden;
+
+    padding: 2px 2px 20px;
+
+    scrollbar-width: thin;
+
+    scrollbar-color:
+        rgba(255,255,255,.25)
+        transparent;
+
+}
+
+
+/* Webkit scrollbar */
+
+.sidebar-content::-webkit-scrollbar {
+
+    width: 5px;
+
+}
+
+
+.sidebar-content::-webkit-scrollbar-track {
+
+    background:
+        transparent;
+
+}
+
+
+.sidebar-content::-webkit-scrollbar-thumb {
+
+    border-radius: 10px;
+
+    background:
+        rgba(255,255,255,.24);
+
+}
+
+
+/* =========================================================
+   OVERLAY
+   ========================================================= */
+
+.sidebar-overlay {
+
+    position: fixed;
+
+    inset: 0;
+
+    background:
+        rgba(35,20,65,.46);
+
+    backdrop-filter:
+        blur(2px);
+
+    opacity: 0;
+
+    pointer-events: none;
+
+    transition:
+        opacity .3s ease;
+
+    z-index: 1500;
+
+}
+
+
+.sidebar-overlay.show {
+
+    opacity: 1;
+
+    pointer-events: auto;
+
+}
+
+
+/* =========================================================
+   DECORATION LAYER
+   ========================================================= */
+
+.sidebar-decorations {
+
+    position: absolute;
+
+    inset: 0;
+
+    z-index: 1;
+
+    pointer-events: none;
+
+    overflow: hidden;
+
+}
+
+
+/* =========================================================
+   MOON
+   ========================================================= */
+
+.sidebar-moon {
+
+    position: absolute;
+
+    top: 18px;
+
+    right: -34px;
+
+    width: 92px;
+
+    height: 92px;
+
+    filter:
+
+        drop-shadow(
+            0 0 30px rgba(255,236,179,.52)
+        )
+
+        drop-shadow(
+            0 14px 20px rgba(20,10,50,.35)
+        );
+
+    opacity: .9;
+
+    animation:
+        sidebarMoonFloat 7s ease-in-out infinite;
+
+}
+
+
+@keyframes sidebarMoonFloat {
+
+    0%,
+    100% {
+
+        transform:
+            translateY(0);
+
+    }
+
+    50% {
+
+        transform:
+            translateY(-8px);
+
+    }
+
+}
+
+
+/* =========================================================
+   SPACESHIP
+   ========================================================= */
+
+.sidebar-ship {
+
+    position: absolute;
+
+    pointer-events: none;
+
+    filter:
+        drop-shadow(
+            0 12px 16px rgba(20,10,50,.38)
+        );
+
+    opacity: .9;
+
+    animation:
+        sidebarShipDrift 6.5s ease-in-out infinite;
+
+}
+
+
+.sidebar-ship-one {
+
+    width: 72px;
+
+    top: 28%;
+
+    right: -24px;
+
+}
+
+
+.sidebar-ship-two {
+
+    width: 52px;
+
+    bottom: 21%;
+
+    left: -24px;
+
+    opacity: .65;
+
+    animation-duration:
+        8s;
+
+    animation-direction:
+        reverse;
+
+}
+
+
+@keyframes sidebarShipDrift {
+
+    0%,
+    100% {
+
+        transform:
+            translate(0,0)
+            rotate(-6deg);
+
+    }
+
+    50% {
+
+        transform:
+            translate(10px,-12px)
+            rotate(-2deg);
+
+    }
+
+}
+
+
+/* =========================================================
+   STARS
+   ========================================================= */
+
+.sidebar-star {
+
+    position: absolute;
+
+    color:
+        var(--sidebar-star-gold);
+
+    font-size: 20px;
+
+    line-height: 1;
+
+    text-shadow:
+        0 5px 10px rgba(210,160,70,.3);
+
+    user-select: none;
+
+    pointer-events: none;
+
+    animation:
+        sidebarStarSpin 3.6s ease-in-out infinite;
+
+}
+
+
+.sidebar-star-one {
+
+    top: 16%;
+
+    left: 16%;
+
+    font-size: 17px;
+
+}
+
+
+.sidebar-star-two {
+
+    top: 42%;
+
+    right: 17%;
+
+    color:
+        var(--sidebar-accent-pink);
+
+    font-size: 14px;
+
+    animation-delay:
+        .8s;
+
+}
+
+
+.sidebar-star-three {
+
+    bottom: 29%;
+
+    left: 25%;
+
+    color:
+        var(--sidebar-accent-purple);
+
+    font-size: 16px;
+
+    animation-delay:
+        1.6s;
+
+}
+
+
+@keyframes sidebarStarSpin {
+
+    0%,
+    100% {
+
+        transform:
+            rotate(-12deg)
+            scale(1);
+
+        opacity: .65;
+
+    }
+
+    50% {
+
+        transform:
+            rotate(12deg)
+            scale(1.15);
+
+        opacity: 1;
+
+    }
+
+}
+
+
+/* =========================================================
+   CAT ASTRONAUT
+   ========================================================= */
+
+.sidebar-cat {
+
+    position: absolute;
+
+    width: 74px;
+
+    right: -28px;
+
+    bottom: 88px;
+
+    opacity: .8;
+
+    filter:
+        drop-shadow(
+            0 10px 14px rgba(60,30,90,.35)
+        );
+
+    animation:
+        sidebarCatBob 3.4s ease-in-out infinite;
+
+}
+
+
+@keyframes sidebarCatBob {
+
+    0%,
+    100% {
+
+        transform:
+            translateY(0)
+            rotate(-1.5deg);
+
+    }
+
+    50% {
+
+        transform:
+            translateY(-6px)
+            rotate(1.5deg);
+
+    }
+
+}
+
+
+/* =========================================================
+   USER PROFILE
+   ========================================================= */
+
+.sidebar-user {
+
+    position: relative;
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 13px;
+
+    min-height: 78px;
+
+    padding: 12px 13px;
+
+    box-sizing: border-box;
+
+    border-radius: 22px;
+
+    cursor: pointer;
+
+    background:
+
+        linear-gradient(
+            145deg,
+            rgba(255,255,255,.97),
+            rgba(248,240,255,.95)
+        );
+
+    border:
+        1px solid rgba(255,255,255,.95);
+
+    box-shadow:
+
+        0 14px 30px rgba(20,8,55,.25),
+
+        inset 0 2px 2px rgba(255,255,255,.95),
+
+        inset 0 -4px 8px rgba(160,120,200,.10);
+
+    transition:
+
+        transform .2s ease,
+        box-shadow .2s ease;
+
+}
+
+
+.sidebar-user:hover {
+
+    transform:
+        translateY(-2px);
+
+    box-shadow:
+
+        0 18px 34px rgba(20,8,55,.30),
+
+        inset 0 2px 2px rgba(255,255,255,.95),
+
+        inset 0 -4px 8px rgba(160,120,200,.10);
+
+}
+
+
+.sidebar-user:active {
+
+    transform:
+        translateY(1px);
+
+}
+
+
+/* =========================================================
+   AVATAR
+   ========================================================= */
+
+.sidebar-avatar {
+
+    width: 54px;
+
+    height: 54px;
+
+    border-radius: 18px;
+
+    overflow: hidden;
+
+    flex-shrink: 0;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    background:
+
+        linear-gradient(
+            145deg,
+            #c9b5ff,
+            #8d6bd4
+        );
+
+    color: #fff;
+
+    box-shadow:
+
+        0 8px 16px rgba(110,80,210,.28),
+
+        inset 0 3px 3px rgba(255,255,255,.5),
+
+        inset 0 -4px 6px rgba(70,40,140,.18);
+
+}
+
+
+.sidebar-avatar img {
+
+    width: 100%;
+
+    height: 100%;
+
+    object-fit: cover;
+
+}
+
+
+.avatar-default {
+
+    font-size: 27px;
+
+    line-height: 1;
+
+}
+
+
+/* =========================================================
+   USER INFORMATION
+   ========================================================= */
+
+.sidebar-user-info {
+
+    min-width: 0;
+
+    flex: 1;
+
+}
+
+
+.sidebar-user-info h3 {
+
+    margin: 0;
+
+    color:
+        var(--sidebar-text-dark);
+
+    font-size: 17px;
+
+    line-height: 1.35;
+
+    font-weight: 800;
+
+    white-space: nowrap;
+
+    overflow: hidden;
+
+    text-overflow: ellipsis;
+
+}
+
+
+.sidebar-user-info span {
+
+    display: block;
+
+    margin-top: 4px;
+
+    color:
+        var(--sidebar-text-muted);
+
+    font-size: 12px;
+
+    line-height: 1.3;
+
+    font-weight: 600;
+
+}
+
+
+/* =========================================================
+   PROFILE ARROW
+   ========================================================= */
+
+.sidebar-profile-arrow {
+
+    width: 28px;
+
+    height: 28px;
+
+    flex-shrink: 0;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    border-radius: 10px;
+
+    background:
+        #f0e7ff;
+
+    color:
+        var(--sidebar-lavender-primary);
+
+    font-size: 22px;
+
+    font-weight: 800;
+
+    box-shadow:
+
+        inset 0 2px 3px rgba(255,255,255,.9),
+
+        inset 0 -2px 4px rgba(130,100,180,.08);
+
+}
+
+
+/* =========================================================
+   DIVIDER
+   ========================================================= */
+
+.sidebar-divider {
+
+    height: 1px;
+
+    margin: 18px 8px;
+
+    background:
+        rgba(255,255,255,.17);
+
+    box-shadow:
+        0 1px rgba(20,8,55,.12);
+
+}
+
+
+/* =========================================================
+   SECTION TITLE
+   ========================================================= */
+
+.sidebar-section-title {
+
+    padding:
+        0 13px 8px;
+
+    color:
+        rgba(255,255,255,.62);
+
+    font-size: 12px;
+
+    line-height: 1.4;
+
+    font-weight: 800;
+
+    letter-spacing: .6px;
+
+}
+
+
+/* =========================================================
+   MENU
+   ========================================================= */
+
+.sidebar-menu {
+
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 7px;
+
+}
+
+
+/* =========================================================
+   MENU LINK
+   ========================================================= */
+
+.sidebar-link {
+
+    position: relative;
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 14px;
+
+    min-height: 52px;
+
+    box-sizing: border-box;
+
+    padding:
+        10px 14px;
+
+    border-radius: 17px;
+
+    text-decoration: none;
+
+    color:
+        rgba(255,255,255,.88);
+
+    font-size: 16px;
+
+    line-height: 1.35;
+
+    font-weight: 700;
+
+    letter-spacing: .05px;
+
+    transition:
+
+        transform .2s ease,
+        background .2s ease,
+        box-shadow .2s ease,
+        color .2s ease;
+
+}
+
+
+.sidebar-link:hover {
+
+    color: #fff;
+
+    background:
+        rgba(255,255,255,.11);
+
+    transform:
+        translateX(4px);
+
+}
+
+
+.sidebar-link:focus-visible {
+
+    outline:
+        3px solid rgba(255,211,122,.8);
+
+    outline-offset:
+        2px;
+
+}
+
+
+/* =========================================================
+   ACTIVE
+   ========================================================= */
+
+.sidebar-link.active {
+
+    color:
+        var(--sidebar-lavender-dark);
+
+    background:
+
+        linear-gradient(
+            145deg,
+            #fffaf5 0%,
+            #f3e8ff 100%
+        );
+
+    font-weight: 900;
+
+    box-shadow:
+
+        0 12px 22px rgba(20,8,55,.25),
+
+        inset 0 2px 3px rgba(255,255,255,.95),
+
+        inset 0 -4px 7px rgba(160,120,200,.13);
+
+}
+
+
+.sidebar-link.active::before {
+
+    content: "";
+
+    position: absolute;
+
+    left: 5px;
+
+    top: 50%;
+
+    width: 4px;
+
+    height: 26px;
+
+    border-radius: 10px;
+
+    transform:
+        translateY(-50%);
+
+    background:
+        linear-gradient(
+            180deg,
+            #ffb37a,
+            #ff7fa8,
+            #a477e5
+        );
+
+    box-shadow:
+        0 0 8px rgba(255,158,203,.3);
+
+}
+
+
+/* =========================================================
+   ICON
+   ========================================================= */
+
+.sidebar-icon {
+
+    width: 36px;
+
+    height: 36px;
+
+    flex-shrink: 0;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    border-radius: 12px;
+
+    background:
+        rgba(255,255,255,.08);
+
+    font-size: 21px;
+
+    line-height: 1;
+
+    box-shadow:
+        inset 0 1px 2px rgba(255,255,255,.08);
+
+    transition:
+        transform .2s ease,
+        background .2s ease;
+
+}
+
+
+.sidebar-link:hover .sidebar-icon {
+
+    transform:
+        scale(1.08);
+
+    background:
+        rgba(255,255,255,.14);
+
+}
+
+
+.sidebar-link.active .sidebar-icon {
+
+    background:
+        var(--sidebar-lavender-light);
+
+    box-shadow:
+
+        inset 0 2px 3px rgba(255,255,255,.9),
+
+        inset 0 -2px 4px rgba(130,100,180,.08);
+
+}
+
+
+/* =========================================================
+   LINK TEXT
+   ========================================================= */
+
+.sidebar-link-text {
+
+    display: block;
+
+    flex: 1;
+
+    min-width: 0;
+
+}
+
+
+/* =========================================================
+   ACCOUNT LABEL
+   ========================================================= */
+
+.sidebar-menu-label {
+
+    padding:
+        2px 13px 9px;
+
+    color:
+        rgba(255,255,255,.62);
+
+    font-size: 12px;
+
+    line-height: 1.4;
+
+    font-weight: 800;
+
+    letter-spacing: .4px;
+
+}
+
+
+/* =========================================================
+   BOTTOM CARD
+   ========================================================= */
+
+.sidebar-bottom {
+
+    position: absolute;
+
+    z-index: 20;
+
+    left: 16px;
+
+    right: 16px;
+
+    bottom: 17px;
+
+    min-height: 64px;
+
+    box-sizing: border-box;
+
+    padding:
+        11px 13px;
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 11px;
+
+    border-radius: 20px;
+
+    color:
+        var(--sidebar-text-dark);
+
+    background:
+        var(--sidebar-card);
+
+    border:
+        1px solid rgba(255,255,255,.92);
+
+    box-shadow:
+        var(--sidebar-shadow);
+
+    backdrop-filter:
+        blur(10px);
+
+}
+
+
+/* =========================================================
+   BOTTOM ICON
+   ========================================================= */
+
+.sidebar-bottom-icon {
+
+    width: 38px;
+
+    height: 38px;
+
+    flex-shrink: 0;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    border-radius: 13px;
+
+    background:
+        linear-gradient(
+            145deg,
+            #fff5d8,
+            #f8dca4
+        );
+
+    font-size: 18px;
+
+    box-shadow:
+
+        0 7px 13px rgba(180,130,50,.18),
+
+        inset 0 2px 3px rgba(255,255,255,.9);
+
+}
+
+
+/* =========================================================
+   BOTTOM TEXT
+   ========================================================= */
+
+.sidebar-bottom strong {
+
+    display: block;
+
+    color:
+        var(--sidebar-text-dark);
+
+    font-size: 12px;
+
+    line-height: 1.4;
+
+    font-weight: 800;
+
+}
+
+
+.sidebar-bottom span {
+
+    display: block;
+
+    margin-top: 2px;
+
+    color:
+        var(--sidebar-text-muted);
+
+    font-size: 10px;
+
+    line-height: 1.3;
+
+    font-weight: 600;
+
+}
+
+
+/* =========================================================
+   RESPONSIVE
+   ========================================================= */
+
+@media (max-width: 700px) {
+
+    .sidebar {
+
+        width: 285px;
+
+        transform:
+            translateX(-305px);
+
+    }
+
+}
+
+
+/* =========================================================
+   SMALL MOBILE
+   ========================================================= */
+
+@media (max-width: 480px) {
+
+    .sidebar {
+
+        width: 278px;
+
+        padding:
+            18px 13px;
+
+        transform:
+            translateX(-298px);
+
+    }
+
+
+    .sidebar-user {
+
+        min-height: 74px;
+
+    }
+
+
+    .sidebar-avatar {
+
+        width: 52px;
+
+        height: 52px;
+
+    }
+
+
+    .sidebar-user-info h3 {
+
+        font-size: 16px;
+
+    }
+
+
+    .sidebar-link {
+
+        min-height: 51px;
+
+        font-size: 15.5px;
+
+    }
+
+
+    .sidebar-icon {
+
+        width: 35px;
+
+        height: 35px;
+
+        font-size: 20px;
+
+    }
+
+
+    .sidebar-bottom {
+
+        left: 13px;
+
+        right: 13px;
+
+    }
+
+
+    .sidebar-moon {
+
+        width: 76px;
+
+        height: 76px;
+
+        right: -30px;
+
+    }
+
+
+    .sidebar-cat {
+
+        width: 64px;
+
+    }
+
+}
+
+
+/* =========================================================
+   REDUCED MOTION
+   ========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+
+    .sidebar,
+    .sidebar-overlay,
+    .sidebar-link,
+    .sidebar-user,
+    .sidebar-icon {
+
+        transition: none;
+
+    }
+
+
+    .sidebar::before,
+    .sidebar::after,
+    .sidebar-moon,
+    .sidebar-ship,
+    .sidebar-cat,
+    .sidebar-star {
+
+        animation: none;
+
+    }
+
+}

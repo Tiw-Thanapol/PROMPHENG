@@ -1,0 +1,582 @@
+/* =========================================================
+   PRODUCTS TOOLBAR
+   PRODUCTS-TOOLBAR.CSS
+   =========================================================
+   ใช้ร่วมกับ:
+   - ProductsToolbar.jsx
+
+   STYLE:
+   Soft 3D / Clay / Toy / Pastel
+========================================================= */
+
+
+/* =========================================================
+   TOOLBAR
+========================================================= */
+
+.products-toolbar {
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    gap: 12px;
+
+    margin-bottom: 15px;
+
+}
+
+
+/* =========================================================
+   SEARCH
+========================================================= */
+
+.products-search {
+
+    display: flex;
+
+    align-items: center;
+
+    flex: 1;
+
+    gap: 9px;
+
+    max-width: 520px;
+
+    height: 44px;
+
+    padding: 0 14px;
+
+    border: 1px solid #eadfeb;
+
+    border-radius: 15px;
+
+    background: #fff;
+
+    color: #aa9bb3;
+
+    box-shadow:
+        inset 0 2px 5px
+        rgba(111, 81, 129, .04);
+
+}
+
+
+.products-search input {
+
+    flex: 1;
+
+    min-width: 0;
+
+    border: none;
+
+    outline: none;
+
+    background: transparent;
+
+    color: #5a5062;
+
+    font-family: inherit;
+
+    font-size: 13px;
+
+}
+
+
+.products-search input::placeholder {
+
+    color: #b5aaba;
+
+}
+
+
+/* =========================================================
+   CLEAR SEARCH
+========================================================= */
+
+.clear-search {
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    flex-shrink: 0;
+
+    width: 25px;
+
+    height: 25px;
+
+    border: none;
+
+    border-radius: 50%;
+
+    background: #f0eaf3;
+
+    color: #917f9d;
+
+    cursor: pointer;
+
+    transition:
+        background .15s ease,
+        transform .15s ease;
+
+}
+
+
+.clear-search:hover {
+
+    background: #e9e0ed;
+
+    transform: scale(1.04);
+
+}
+
+
+.clear-search:active {
+
+    transform: scale(.96);
+
+}
+
+
+/* =========================================================
+   REFRESH
+========================================================= */
+
+.refresh-button {
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    gap: 7px;
+
+    height: 44px;
+
+    padding: 0 15px;
+
+    border: 1px solid #e6dce9;
+
+    border-radius: 14px;
+
+    background: #fff;
+
+    color: #776c80;
+
+    font-family: inherit;
+
+    font-size: 13px;
+
+    font-weight: 600;
+
+    cursor: pointer;
+
+    transition:
+        background .18s ease,
+        border-color .18s ease,
+        transform .18s ease,
+        box-shadow .18s ease;
+
+}
+
+
+.refresh-button:hover {
+
+    background: #faf6fc;
+
+    border-color: #dacbe1;
+
+    transform: translateY(-1px);
+
+}
+
+
+.refresh-button:active {
+
+    transform: translateY(0);
+
+}
+
+
+.refresh-button:disabled {
+
+    opacity: .55;
+
+    cursor: default;
+
+    transform: none;
+
+}
+
+
+/* =========================================================
+   REFRESH SPINNER
+========================================================= */
+
+.spin {
+
+    animation:
+        spin .8s linear infinite;
+
+}
+
+
+@keyframes spin {
+
+    to {
+
+        transform:
+            rotate(360deg);
+
+    }
+
+}
+
+
+/* =========================================================
+   BULK TOOLBAR
+========================================================= */
+
+.bulk-toolbar {
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    gap: 15px;
+
+    margin-bottom: 13px;
+
+    padding: 11px 14px;
+
+    border: 1px solid #e4d5ee;
+
+    border-radius: 15px;
+
+    background: #f9f4fc;
+
+    box-shadow:
+        inset 0 1px 2px
+        rgba(255,255,255,.7);
+
+}
+
+
+/* =========================================================
+   BULK COUNT
+========================================================= */
+
+.bulk-toolbar-count {
+
+    color: #765a8c;
+
+    font-size: 13px;
+
+    font-weight: 700;
+
+    white-space: nowrap;
+
+}
+
+
+/* =========================================================
+   BULK ACTIONS
+========================================================= */
+
+.bulk-toolbar-actions {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 7px;
+
+    flex-wrap: wrap;
+
+}
+
+
+/* =========================================================
+   BULK BUTTON BASE
+========================================================= */
+
+.bulk-btn {
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    gap: 6px;
+
+    height: 34px;
+
+    padding: 0 11px;
+
+    border: none;
+
+    border-radius: 10px;
+
+    font-family: inherit;
+
+    font-size: 12px;
+
+    font-weight: 700;
+
+    cursor: pointer;
+
+    transition:
+        transform .15s ease,
+        box-shadow .15s ease,
+        background .15s ease;
+
+}
+
+
+.bulk-btn:hover {
+
+    transform:
+        translateY(-1px);
+
+}
+
+
+.bulk-btn:active {
+
+    transform:
+        translateY(0);
+
+}
+
+
+/* =========================================================
+   BULK CANCEL
+========================================================= */
+
+.bulk-btn-cancel {
+
+    color: #8d6b37;
+
+    background: #fff2cf;
+
+}
+
+
+.bulk-btn-cancel:hover {
+
+    background: #ffedbf;
+
+}
+
+
+/* =========================================================
+   BULK DANGER
+========================================================= */
+
+.bulk-btn-danger {
+
+    color: #a85c70;
+
+    background: #ffe2e9;
+
+}
+
+
+.bulk-btn-danger:hover {
+
+    background: #ffd8e1;
+
+}
+
+
+/* =========================================================
+   BULK PLAIN
+========================================================= */
+
+.bulk-btn-plain {
+
+    color: #756a7d;
+
+    background: #eee9f1;
+
+}
+
+
+.bulk-btn-plain:hover {
+
+    background: #e7e0ea;
+
+}
+
+
+/* =========================================================
+   GENERAL INTERACTION
+========================================================= */
+
+button,
+input,
+textarea {
+
+    -webkit-tap-highlight-color: transparent;
+
+}
+
+
+button:focus-visible,
+input:focus-visible,
+textarea:focus-visible {
+
+    outline:
+        3px solid
+        rgba(178, 137, 201, .2);
+
+    outline-offset: 2px;
+
+}
+
+
+button:disabled {
+
+    cursor: default;
+
+}
+
+
+/* =========================================================
+   RESPONSIVE — MOBILE
+========================================================= */
+
+@media (max-width: 760px) {
+
+    .products-toolbar {
+
+        align-items: stretch;
+
+        flex-direction: column;
+
+    }
+
+
+    .products-search {
+
+        max-width: none;
+
+        width: 100%;
+
+        box-sizing: border-box;
+
+    }
+
+
+    .refresh-button {
+
+        width: 100%;
+
+        justify-content: center;
+
+    }
+
+
+    .bulk-toolbar {
+
+        align-items: stretch;
+
+        flex-direction: column;
+
+    }
+
+
+    .bulk-toolbar-count {
+
+        text-align: left;
+
+    }
+
+
+    .bulk-toolbar-actions {
+
+        width: 100%;
+
+        flex-wrap: wrap;
+
+    }
+
+
+    .bulk-btn {
+
+        flex: 1;
+
+        min-width: 100px;
+
+    }
+
+}
+
+
+/* =========================================================
+   RESPONSIVE — SMALL MOBILE
+========================================================= */
+
+@media (max-width: 480px) {
+
+    .bulk-toolbar {
+
+        gap: 10px;
+
+        padding: 10px 11px;
+
+    }
+
+
+    .bulk-toolbar-actions {
+
+        display: grid;
+
+        grid-template-columns:
+            repeat(2, minmax(0, 1fr));
+
+        gap: 6px;
+
+    }
+
+
+    .bulk-btn {
+
+        width: 100%;
+
+        min-width: 0;
+
+    }
+
+}
+
+
+/* =========================================================
+   REDUCED MOTION
+========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+
+    .products-toolbar *,
+    .bulk-toolbar * {
+
+        scroll-behavior: auto !important;
+
+        animation-duration: .01ms !important;
+
+        animation-iteration-count: 1 !important;
+
+        transition-duration: .01ms !important;
+
+    }
+
+}

@@ -1,0 +1,143 @@
+.orders-action-btn.create-sale {
+    position: relative;
+
+    min-width: 190px;
+    min-height: 62px;
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    gap: 10px;
+
+    padding: 0 25px;
+
+    border: none;
+    border-radius: 19px;
+
+    color: #fff;
+
+    background:
+        linear-gradient(
+            135deg,
+            #f6a7ca 0%,
+            #e0a7e9 52%,
+            #cba8eb 100%
+        );
+
+    font-family: inherit;
+
+    font-size: 14px;
+    font-weight: 900;
+
+    line-height: 1;
+
+    cursor: pointer;
+
+    box-shadow:
+        0 6px 0 #c692c2,
+        0 11px 24px rgba(183, 128, 181, 0.22);
+
+    transition:
+        transform 0.15s ease,
+        box-shadow 0.15s ease,
+        filter 0.15s ease;
+}
+
+
+/* Top shine */
+.orders-action-btn.create-sale::before {
+    content: "";
+
+    position: absolute;
+
+    top: 5px;
+    left: 13px;
+    right: 13px;
+
+    height: 14px;
+
+    border-radius: 14px;
+
+    background: rgba(255, 255, 255, 0.18);
+
+    pointer-events: none;
+}
+
+
+/* Decorative sparkle */
+.orders-action-btn.create-sale::after {
+    content: "✦";
+
+    position: absolute;
+
+    top: 7px;
+    right: 12px;
+
+    color: rgba(255, 255, 255, 0.8);
+
+    font-size: 11px;
+
+    pointer-events: none;
+}
+
+
+/* Plus icon */
+.orders-action-btn.create-sale svg {
+    position: relative;
+    z-index: 1;
+
+    width: 27px;
+    height: 27px;
+
+    flex-shrink: 0;
+
+    stroke-width: 3;
+}
+
+
+/* Text */
+.orders-action-btn.create-sale span {
+    position: relative;
+    z-index: 1;
+
+    white-space: nowrap;
+
+    line-height: 1;
+}
+
+
+/* Hover */
+.orders-action-btn.create-sale:hover:not(:disabled) {
+    filter: brightness(1.04);
+
+    transform: translateY(-3px);
+
+    box-shadow:
+        0 9px 0 #c692c2,
+        0 16px 28px rgba(183, 128, 181, 0.26);
+}
+
+
+/* Active */
+.orders-action-btn.create-sale:active:not(:disabled) {
+    transform: translateY(3px);
+
+    box-shadow:
+        0 3px 0 #c692c2,
+        0 7px 15px rgba(183, 128, 181, 0.18);
+}
+
+
+/* Disabled */
+.orders-action-btn.create-sale:disabled {
+    opacity: 0.55;
+
+    cursor: not-allowed;
+
+    transform: none;
+
+    box-shadow:
+        0 4px 0 #d0bdd0,
+        0 7px 14px rgba(160, 130, 160, 0.12);
+}
