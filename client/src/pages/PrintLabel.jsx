@@ -20,7 +20,7 @@ import {
   parseShippingBlob,
   parseBulkOrders,
   normalizeNameTitle,
-} from "../utils/labelParser";
+} from "../utils/Labelparser";
 
 import {
   openLabelPdf,
