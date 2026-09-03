@@ -221,7 +221,7 @@ function Navbar({
 
                     <div className="home-logo-icon">
                         <img
-                            src="PROMPHENG.png"
+                            src="/PROMPHENG.png"
                             alt="PROMPHENG logo"
 
                         />
