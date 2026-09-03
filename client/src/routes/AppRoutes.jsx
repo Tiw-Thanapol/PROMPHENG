@@ -29,6 +29,7 @@ import CookieConsent from "../components/CookieConsent";
 // ======================================================
 
 import Home from "../pages/Home";
+import About from "../pages/About";
 import Login from "../pages/Login";
 import Register from "../pages/Register";
 import RegistrationPending from "../pages/RegistrationPending";
@@ -129,6 +130,19 @@ const router = createBrowserRouter([
 
                 element: (
                     <Home />
+                )
+            },
+
+
+            // ==========================================
+            // ABOUT
+            // ==========================================
+
+            {
+                path: "/about",
+
+                element: (
+                    <About />
                 )
             },
 
