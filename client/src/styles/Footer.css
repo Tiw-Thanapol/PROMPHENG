@@ -80,6 +80,21 @@
 }
 
 
+/* ======================================
+   VERSION
+====================================== */
+
+.app-footer-version {
+
+    color: #a3a3a3;
+
+    font-size: 11px;
+
+    white-space: nowrap;
+
+}
+
+
 @media (max-width: 768px) {
 
     .app-footer-inner {

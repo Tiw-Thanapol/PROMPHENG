@@ -48,6 +48,15 @@ function Footer() {
                 </nav>
 
 
+                {/* ======================================
+                    VERSION
+                ====================================== */}
+
+                <div className="app-footer-version">
+                    v0.1.0-beta
+                </div>
+
+
             </div>
 
         </footer>
