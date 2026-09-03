@@ -220,6 +220,7 @@ model Sale {
 
   @@index([accountId])
   @@index([accountId, orderNo])
+  @@index([accountId, status, createdAt])
 }
 
 // ======================================================
@@ -263,6 +264,9 @@ model SaleItem {
   returns         Return[]
   consignmentItem ConsignmentItem @relation(fields: [consignmentItemId], references: [id])
   sale            Sale            @relation(fields: [saleId], references: [id], onDelete: Cascade)
+
+  @@index([saleId])
+  @@index([consignmentItemId])
 }
 
 // ======================================================

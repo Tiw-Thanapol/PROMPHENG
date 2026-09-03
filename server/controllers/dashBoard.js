@@ -620,28 +620,39 @@ exports.dashboard =
 
 
             // ==================================================
-            // INVENTORY
+            // PARALLEL QUERIES
             //
             // IMPORTANT:
-            // Inventory = สถานะปัจจุบันของร้าน
-            // ไม่กรองตาม period
+            // สามตัวนี้เป็นอิสระต่อกัน (ไม่ใช้ผลลัพธ์ของกันและกัน)
+            // เดิมรันแบบ sequential (await ทีละตัว) ทำให้เวลารวม
+            // เป็นผลบวกของทั้ง 3 query -> เปลี่ยนเป็น Promise.all
+            // ให้รันพร้อมกัน เวลารวมจะเหลือแค่ query ที่ช้าที่สุด
             //
-            // AVAILABLE:
-            // ใช้ ConsignmentItem.quantity
+            // stockItems:
+            // Inventory = สถานะปัจจุบันของร้าน ไม่กรองตาม period
             //
-            // SOLD:
-            // ห้ามใช้ ConsignmentItem.quantity
-            // เพราะ quantity ถูก reset เป็น 0 เมื่อขายหมด
+            // soldSaleItems:
+            // แทนที่การโหลด allCompletedSales ทั้งก้อนแล้ว include
+            // items ซ้อนอีกชั้น (เดิมโหลด Sale -> items ทำให้หนัก)
+            // เปลี่ยนมา query ตรงที่ SaleItem เลย ผ่าน relation filter
+            // sale: { accountId, status: "COMPLETED" }
+            // ซึ่งใช้ index ที่เพิ่มใหม่ (Sale accountId+status+createdAt
+            // และ SaleItem saleId) ช่วยให้ join เร็วขึ้น
+            // ไม่ใช้ dateFilter เพราะ SOLD นับสะสมทั้งหมด ไม่ใช่ตาม period
             //
-            // SOLD จะคำนวณจาก SaleItem.quantity
-            // หลังจากโหลด sales COMPLETED ทั้งหมด
-            //
-            // CANCELLED:
-            // ใช้ ConsignmentItem.quantity ตามข้อมูลปัจจุบัน
+            // sales:
+            // ยอดขายตาม period ที่เลือก ใช้ทำ summary/trend/ranking
+            // เปลี่ยน customer: true -> select เฉพาะ field ที่ใช้จริง
+            // เพื่อลด payload จาก DB
             // ==================================================
 
-            const stockItems =
-                await prisma.consignmentItem.findMany({
+            const [
+                stockItems,
+                soldSaleItems,
+                sales
+            ] = await Promise.all([
+
+                prisma.consignmentItem.findMany({
 
                     where: {
 
@@ -665,8 +676,107 @@ exports.dashboard =
 
                     }
 
+                }),
+
+
+                prisma.saleItem.findMany({
+
+                    where: {
+
+                        sale: {
+
+                            accountId,
+
+                            status:
+                                "COMPLETED"
+
+                        }
+
+                    },
+
+                    select: {
+
+                        quantity: true,
+
+                        costPriceAtSale: true
+
+                    }
+
+                }),
+
+
+                prisma.sale.findMany({
+
+                    where: {
+
+                        accountId,
+
+                        status:
+                            "COMPLETED",
+
+                        ...dateFilter
+
+                    },
+
+                    include: {
+
+                        customer: {
+
+                            select: {
+
+                                id: true,
+
+                                name: true,
+
+                                phone: true
+
+                            }
+
+                        },
+
+                        items: {
+
+                            include: {
+
+                                consignmentItem: {
+
+                                    select: {
+
+                                        id: true,
+
+                                        name: true,
+
+                                        costPrice: true
+
+                                    }
+
+                                }
+
+                            }
+
+                        },
+
+                        expenses: true,
+
+                        returns: true
+
+                    },
+
+                    orderBy: {
+
+                        createdAt:
+                            "asc"
+
+                    }
+
                 })
 
+            ])
+
+
+            // ==================================================
+            // INVENTORY
+            // ==================================================
 
             const investment = {
 
@@ -781,8 +891,7 @@ exports.dashboard =
                     //
                     // ไม่ใช่จำนวนที่ขายไปแล้ว
                     //
-                    // จำนวน SOLD จะคำนวณจาก SaleItem.quantity
-                    // ด้านล่าง
+                    // จำนวน SOLD คำนวณจาก soldSaleItems ด้านล่าง
                     // ==================================================
 
                     case "SOLD":
@@ -814,170 +923,63 @@ exports.dashboard =
             // SOLD INVENTORY
             //
             // IMPORTANT:
-            //
             // Inventory = สถานะปัจจุบันของร้าน
             //
-            // ดังนั้น SOLD ต้องนับจากยอดขาย
-            // COMPLETED ทั้งหมด
+            // ดังนั้น SOLD ต้องนับจากยอดขาย COMPLETED ทั้งหมด
+            // ไม่ใช้ dateFilter เพราะ dateFilter เป็นของ Summary / Graph
             //
-            // ไม่ใช้ dateFilter
-            // เพราะ dateFilter เป็นของ Summary / Graph
-            //
-            // SaleItem.quantity
-            // = จำนวนที่ขายจริง
-            //
-            // ConsignmentItem.quantity
-            // = จำนวนคงเหลือ
+            // soldSaleItems ดึงมาจาก prisma.saleItem ตรงๆ แล้ว
+            // (ดูช่วง PARALLEL QUERIES ด้านบน) ไม่ต้อง loop ผ่าน
+            // sale.items ซ้อนอีกชั้นเหมือนเดิม
             // ==================================================
 
-            const allCompletedSales =
-                await prisma.sale.findMany({
-
-                    where: {
-
-                        accountId,
-
-                        status:
-                            "COMPLETED"
-
-                    },
-
-                    select: {
-
-                        items: {
-
-                            select: {
-
-                                quantity: true,
-
-                                costPriceAtSale: true
-
-                            }
-
-                        }
-
-                    }
-
-                })
-
-
             for (
-                const sale
-                of allCompletedSales
+                const saleItem
+                of soldSaleItems
             ) {
 
-                for (
-                    const saleItem
-                    of sale.items || []
+                const quantity =
+                    Math.max(
+                        0,
+                        Math.floor(
+                            toNumber(
+                                saleItem.quantity
+                            )
+                        )
+                    )
+
+
+                if (
+                    quantity <= 0
                 ) {
 
-                    const quantity =
-                        Math.max(
-                            0,
-                            Math.floor(
-                                toNumber(
-                                    saleItem.quantity
-                                )
-                            )
-                        )
-
-
-                    if (
-                        quantity <= 0
-                    ) {
-
-                        continue
-
-                    }
-
-
-                    const costPrice =
-                        Math.max(
-                            0,
-                            toNumber(
-                                saleItem.costPriceAtSale
-                            )
-                        )
-
-
-                    inventory
-                        .sold
-                        .items +=
-                        quantity
-
-
-                    inventory
-                        .sold
-                        .value +=
-                        costPrice *
-                        quantity
+                    continue
 
                 }
 
+
+                const costPrice =
+                    Math.max(
+                        0,
+                        toNumber(
+                            saleItem.costPriceAtSale
+                        )
+                    )
+
+
+                inventory
+                    .sold
+                    .items +=
+                    quantity
+
+
+                inventory
+                    .sold
+                    .value +=
+                    costPrice *
+                    quantity
+
             }
-
-
-            // ==================================================
-            // SALES
-            //
-            // CRITICAL:
-            // accountId + status + dateFilter
-            // ==================================================
-
-            const sales =
-                await prisma.sale.findMany({
-
-                    where: {
-
-                        accountId,
-
-                        status:
-                            "COMPLETED",
-
-                        ...dateFilter
-
-                    },
-
-                    include: {
-
-                        customer: true,
-
-                        items: {
-
-                            include: {
-
-                                consignmentItem: {
-
-                                    select: {
-
-                                        id: true,
-
-                                        name: true,
-
-                                        costPrice: true
-
-                                    }
-
-                                }
-
-                            }
-
-                        },
-
-                        expenses: true,
-
-                        returns: true
-
-                    },
-
-                    orderBy: {
-
-                        createdAt:
-                            "asc"
-
-                    }
-
-                })
 
 
             // ==================================================
