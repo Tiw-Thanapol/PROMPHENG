@@ -60,6 +60,7 @@ import Settings from "../pages/Settings";
 import CreateSale from "../pages/CreateSale";
 import FinancialOverview from "../pages/FinancialOverview";
 import ProfileSetting from "../pages/ProfileSetting";
+import Support from "../pages/Support";
 
 
 // ======================================================
@@ -147,6 +148,10 @@ const router = createBrowserRouter([
             },
 
 
+            // ==========================================
+            // LOGIN
+            // ==========================================
+
             {
                 path: "/login",
 
@@ -155,6 +160,10 @@ const router = createBrowserRouter([
                 )
             },
 
+
+            // ==========================================
+            // REGISTER
+            // ==========================================
 
             {
                 path: "/register",
@@ -165,6 +174,10 @@ const router = createBrowserRouter([
             },
 
 
+            // ==========================================
+            // REGISTRATION PENDING
+            // ==========================================
+
             {
                 path: "/registration-pending",
 
@@ -174,6 +187,10 @@ const router = createBrowserRouter([
             },
 
 
+            // ==========================================
+            // VERIFY EMAIL
+            // ==========================================
+
             {
                 path: "/verify-email",
 
@@ -182,6 +199,10 @@ const router = createBrowserRouter([
                 )
             },
 
+
+            // ==========================================
+            // FORGOT PASSWORD
+            // ==========================================
 
             {
                 path: "/forgot-password",
@@ -264,11 +285,6 @@ const router = createBrowserRouter([
             // MainLayout
             //       ↓ (Outlet)
             // Sidebar / Navbar / หน้า Content
-            //
-            // ProtectRouteUser และ MainLayout ไม่รับ
-            // prop `element` — ทั้งคู่ทำงานผ่าน
-            // <Outlet /> ของตัวเองเท่านั้น จึงต้อง
-            // ซ้อน (nest) เป็น children แทนการส่ง prop
             // ==========================================
 
             {
@@ -402,6 +418,22 @@ const router = createBrowserRouter([
                                 element: (
                                     <Manage />
                                 )
+                            },
+
+
+                            // ======================================
+                            // SUPPORT / BETA FEEDBACK
+                            //
+                            // ติดต่อฝ่ายสนับสนุน
+                            // แจ้งปัญหา / เสนอฟีเจอร์ / ข้อเสนอแนะ
+                            // ======================================
+
+                            {
+                                path: "/support",
+
+                                element: (
+                                    <Support />
+                                )
                             }
 
                         ]
@@ -421,10 +453,6 @@ const router = createBrowserRouter([
             // AdminLayout
             //       ↓ (Outlet)
             // Sidebar / Navbar / หน้า Content
-            //
-            // เช่นเดียวกับ USER APPLICATION —
-            // ProtectRouteAdmin ไม่รับ prop `element`
-            // จึงต้อง nest AdminLayout เป็น children
             // ==========================================
 
             {
@@ -553,7 +581,6 @@ const router = createBrowserRouter([
             // ==========================================
             // NOT FOUND
             //
-            // เดิมมีอยู่ใน App.jsx
             // Path ที่ไม่ตรงกับ route ใดเลย
             // จะ redirect กลับหน้าแรก
             // ==========================================

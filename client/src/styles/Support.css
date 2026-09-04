@@ -1,0 +1,630 @@
+/* ======================================================
+   SUPPORT PAGE
+====================================================== */
+
+.support-page {
+
+    width: 100%;
+
+    max-width: 1000px;
+
+    margin: 0 auto;
+
+    padding: 32px 24px 48px;
+
+    box-sizing: border-box;
+
+}
+
+
+/* ======================================================
+   HEADER
+====================================================== */
+
+.support-header {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 18px;
+
+    margin-bottom: 24px;
+
+}
+
+
+.support-header-icon {
+
+    width: 58px;
+
+    height: 58px;
+
+    border-radius: 18px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    flex-shrink: 0;
+
+    background:
+        linear-gradient(
+            135deg,
+            #eee8ff,
+            #ffeaf6
+        );
+
+    color: #8068dc;
+
+    box-shadow:
+        0 8px 20px
+        rgba(130, 100, 190, 0.12);
+
+}
+
+
+.support-header h1 {
+
+    margin: 0 0 5px;
+
+    font-size: 28px;
+
+    font-weight: 700;
+
+}
+
+
+.support-header p {
+
+    margin: 0;
+
+    color: #888;
+
+    font-size: 14px;
+
+}
+
+
+/* ======================================================
+   CARD
+====================================================== */
+
+.support-card {
+
+    background: rgba(
+        255,
+        255,
+        255,
+        0.94
+    );
+
+    border: 1px solid #eee8f5;
+
+    border-radius: 24px;
+
+    padding: 28px;
+
+    box-shadow:
+        0 12px 35px
+        rgba(80, 60, 120, 0.08);
+
+}
+
+
+/* ======================================================
+   SECTION
+====================================================== */
+
+.support-section {
+
+    margin-bottom: 28px;
+
+}
+
+
+.support-section h2 {
+
+    margin: 0 0 16px;
+
+    font-size: 17px;
+
+    font-weight: 700;
+
+}
+
+
+.support-section label {
+
+    display: block;
+
+    margin-bottom: 10px;
+
+    font-size: 15px;
+
+    font-weight: 700;
+
+}
+
+
+/* ======================================================
+   FEEDBACK TYPES
+====================================================== */
+
+.feedback-types {
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(
+            3,
+            minmax(0, 1fr)
+        );
+
+    gap: 12px;
+
+}
+
+
+.feedback-type {
+
+    display: flex;
+
+    align-items: flex-start;
+
+    gap: 12px;
+
+    width: 100%;
+
+    min-height: 100px;
+
+    padding: 16px;
+
+    border: 2px solid #eeeaf5;
+
+    border-radius: 18px;
+
+    background: #fff;
+
+    color: #444;
+
+    text-align: left;
+
+    cursor: pointer;
+
+    transition:
+        border-color 0.2s ease,
+        transform 0.2s ease,
+        box-shadow 0.2s ease,
+        background 0.2s ease;
+
+}
+
+
+.feedback-type:hover {
+
+    transform:
+        translateY(-2px);
+
+    box-shadow:
+        0 8px 20px
+        rgba(100, 80, 140, 0.08);
+
+}
+
+
+.feedback-type.active {
+
+    border-color: #a78bfa;
+
+    background:
+        linear-gradient(
+            135deg,
+            #faf8ff,
+            #fff7fc
+        );
+
+    box-shadow:
+        0 8px 22px
+        rgba(130, 100, 190, 0.12);
+
+}
+
+
+.feedback-type-icon {
+
+    width: 40px;
+
+    height: 40px;
+
+    border-radius: 13px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    flex-shrink: 0;
+
+    background: #f3efff;
+
+    color: #8068dc;
+
+}
+
+
+.feedback-type-content {
+
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 5px;
+
+}
+
+
+.feedback-type-content strong {
+
+    font-size: 14px;
+
+}
+
+
+.feedback-type-content small {
+
+    color: #999;
+
+    line-height: 1.45;
+
+    font-size: 12px;
+
+}
+
+
+/* ======================================================
+   TEXTAREA
+====================================================== */
+
+.support-section textarea {
+
+    width: 100%;
+
+    min-height: 190px;
+
+    resize: vertical;
+
+    box-sizing: border-box;
+
+    border:
+        2px solid #eeeaf5;
+
+    border-radius: 16px;
+
+    padding: 16px;
+
+    outline: none;
+
+    background: #fff;
+
+    color: #333;
+
+    font-family: inherit;
+
+    font-size: 14px;
+
+    line-height: 1.6;
+
+    transition:
+        border-color 0.2s ease,
+        box-shadow 0.2s ease;
+
+}
+
+
+.support-section textarea:focus {
+
+    border-color: #a78bfa;
+
+    box-shadow:
+        0 0 0 4px
+        rgba(167, 139, 250, 0.1);
+
+}
+
+
+.support-section textarea::placeholder {
+
+    color: #b4afbd;
+
+}
+
+
+.support-section textarea:disabled {
+
+    opacity: 0.65;
+
+}
+
+
+/* ======================================================
+   COUNTER
+====================================================== */
+
+.support-counter {
+
+    text-align: right;
+
+    margin-top: 7px;
+
+    color: #aaa;
+
+    font-size: 12px;
+
+}
+
+
+/* ======================================================
+   ERROR
+====================================================== */
+
+.support-error {
+
+    margin-bottom: 20px;
+
+    padding: 13px 16px;
+
+    border-radius: 13px;
+
+    background: #fff1f3;
+
+    border: 1px solid #ffd5dc;
+
+    color: #d75b70;
+
+    font-size: 14px;
+
+}
+
+
+/* ======================================================
+   FOOTER
+====================================================== */
+
+.support-footer {
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    gap: 16px;
+
+    padding-top: 20px;
+
+    border-top:
+        1px solid #eeeaf5;
+
+}
+
+
+.support-footer > span {
+
+    color: #aaa;
+
+    font-size: 12px;
+
+}
+
+
+/* ======================================================
+   SUBMIT
+====================================================== */
+
+.support-submit {
+
+    display: inline-flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    gap: 8px;
+
+    min-height: 44px;
+
+    padding: 0 22px;
+
+    border: none;
+
+    border-radius: 14px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #9b87f5,
+            #d28bcf
+        );
+
+    color: #fff;
+
+    font-family: inherit;
+
+    font-size: 14px;
+
+    font-weight: 700;
+
+    cursor: pointer;
+
+    box-shadow:
+        0 7px 18px
+        rgba(140, 110, 200, 0.22);
+
+    transition:
+        transform 0.2s ease,
+        box-shadow 0.2s ease,
+        opacity 0.2s ease;
+
+}
+
+
+.support-submit:hover {
+
+    transform:
+        translateY(-2px);
+
+    box-shadow:
+        0 10px 24px
+        rgba(140, 110, 200, 0.28);
+
+}
+
+
+.support-submit:disabled {
+
+    opacity: 0.6;
+
+    cursor: not-allowed;
+
+    transform: none;
+
+}
+
+
+/* ======================================================
+   SUCCESS
+====================================================== */
+
+.support-success {
+
+    min-height: 400px;
+
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: center;
+
+    justify-content: center;
+
+    text-align: center;
+
+}
+
+
+.support-success-icon {
+
+    width: 90px;
+
+    height: 90px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    border-radius: 50%;
+
+    background: #edf9f2;
+
+    color: #58b982;
+
+    margin-bottom: 20px;
+
+}
+
+
+.support-success h1 {
+
+    margin: 0 0 12px;
+
+    font-size: 26px;
+
+}
+
+
+.support-success p {
+
+    margin: 0 0 26px;
+
+    color: #888;
+
+    line-height: 1.8;
+
+}
+
+
+/* ======================================================
+   MOBILE
+====================================================== */
+
+@media (
+    max-width: 700px
+) {
+
+    .support-page {
+
+        padding:
+            20px 14px 32px;
+
+    }
+
+
+    .support-header h1 {
+
+        font-size: 23px;
+
+    }
+
+
+    .support-card {
+
+        padding: 20px;
+
+        border-radius: 20px;
+
+    }
+
+
+    .feedback-types {
+
+        grid-template-columns: 1fr;
+
+    }
+
+
+    .feedback-type {
+
+        min-height: auto;
+
+    }
+
+
+    .support-footer {
+
+        flex-direction: column;
+
+        align-items: stretch;
+
+    }
+
+
+    .support-footer > span {
+
+        text-align: center;
+
+    }
+
+
+    .support-submit {
+
+        width: 100%;
+
+    }
+
+}

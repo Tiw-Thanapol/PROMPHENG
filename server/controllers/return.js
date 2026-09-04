@@ -2,15 +2,84 @@ const prisma = require('../config/prisma')
 
 
 // ======================================================
+// HELPERS
+// ======================================================
+
+function getAccountId(req) {
+
+    const accountId =
+        Number(req.user?.accountId)
+
+    if (
+        !Number.isInteger(accountId) ||
+        accountId <= 0
+    ) {
+
+        return null
+    }
+
+    return accountId
+}
+
+
+function getUserId(req) {
+
+    const userId =
+        Number(req.user?.id)
+
+    if (
+        !Number.isInteger(userId) ||
+        userId <= 0
+    ) {
+
+        return null
+    }
+
+    return userId
+}
+
+
+// ======================================================
 // CREATE RETURN
 // POST /api/returns/:saleItemId
 //
 // คืนสินค้ารายชิ้นจาก Sale
+//
+// SECURITY:
+// SaleItem ไม่มี accountId โดยตรง
+// จึงต้อง scope ผ่าน Sale.accountId
 // ======================================================
 
 exports.create = async (req, res) => {
 
     try {
+
+        // ==================================================
+        // ACCOUNT ISOLATION
+        // ==================================================
+
+        const accountId =
+            getAccountId(req)
+
+        const userId =
+            getUserId(req)
+
+
+        if (!accountId) {
+
+            return res.status(401).json({
+                message: 'Unauthorized'
+            })
+        }
+
+
+        if (!userId) {
+
+            return res.status(401).json({
+                message: 'Invalid user'
+            })
+        }
+
 
         const saleItemId =
             Number(req.params.saleItemId)
@@ -20,7 +89,10 @@ exports.create = async (req, res) => {
         // VALIDATE ID
         // ==================================================
 
-        if (Number.isNaN(saleItemId)) {
+        if (
+            !Number.isInteger(saleItemId) ||
+            saleItemId <= 0
+        ) {
 
             return res.status(400).json({
                 message: 'Invalid sale item id'
@@ -42,13 +114,25 @@ exports.create = async (req, res) => {
 
         // ==================================================
         // GET SALE ITEM
+        //
+        // CRITICAL ACCOUNT ISOLATION
+        //
+        // SaleItem ไม่มี accountId
+        // จึงตรวจผ่าน sale.accountId
         // ==================================================
 
         const saleItem =
-            await prisma.saleItem.findUnique({
+            await prisma.saleItem.findFirst({
 
                 where: {
-                    id: saleItemId
+
+                    id:
+                        saleItemId,
+
+                    sale: {
+
+                        accountId
+                    }
                 },
 
                 include: {
@@ -226,6 +310,9 @@ exports.create = async (req, res) => {
 
                     // --------------------------------------
                     // CHANGE STOCK STATUS
+                    //
+                    // SaleItem ผ่าน account isolation
+                    // มาแล้วด้านบน
                     // --------------------------------------
 
                     const updatedStock =
@@ -237,7 +324,9 @@ exports.create = async (req, res) => {
                                     saleItem.consignmentItemId,
 
                                 status:
-                                    'SOLD'
+                                    'SOLD',
+
+                                accountId
                             },
 
                             data: {
@@ -294,7 +383,7 @@ exports.create = async (req, res) => {
                                         : null,
 
                                 createdById:
-                                    req.user.id
+                                    userId
                             },
 
                             include: {
@@ -323,8 +412,7 @@ exports.create = async (req, res) => {
 
                         data: {
 
-                            userId:
-                                req.user.id,
+                            userId,
 
                             action:
                                 'CREATE',
@@ -480,7 +568,7 @@ exports.create = async (req, res) => {
         }
 
 
-        res.status(500).json({
+        return res.status(500).json({
 
             message:
                 'Server Error'
@@ -493,11 +581,30 @@ exports.create = async (req, res) => {
 // ======================================================
 // GET RETURN HISTORY BY SALE
 // GET /api/returns/sale/:saleId
+//
+// SECURITY:
+// Sale ต้องอยู่ใน Account เดียวกับผู้เรียก
 // ======================================================
 
 exports.listBySale = async (req, res) => {
 
     try {
+
+        // ==================================================
+        // ACCOUNT ISOLATION
+        // ==================================================
+
+        const accountId =
+            getAccountId(req)
+
+
+        if (!accountId) {
+
+            return res.status(401).json({
+                message: 'Unauthorized'
+            })
+        }
+
 
         const saleId =
             Number(req.params.saleId)
@@ -507,7 +614,10 @@ exports.listBySale = async (req, res) => {
         // VALIDATE ID
         // ==================================================
 
-        if (Number.isNaN(saleId)) {
+        if (
+            !Number.isInteger(saleId) ||
+            saleId <= 0
+        ) {
 
             return res.status(400).json({
 
@@ -519,13 +629,19 @@ exports.listBySale = async (req, res) => {
 
         // ==================================================
         // CHECK SALE
+        //
+        // CRITICAL ACCOUNT ISOLATION
         // ==================================================
 
         const sale =
-            await prisma.sale.findUnique({
+            await prisma.sale.findFirst({
 
                 where: {
-                    id: saleId
+
+                    id:
+                        saleId,
+
+                    accountId
                 }
             })
 
@@ -542,6 +658,9 @@ exports.listBySale = async (req, res) => {
 
         // ==================================================
         // GET RETURN RECORDS
+        //
+        // Sale ถูกตรวจ accountId แล้ว
+        // จึงสามารถใช้ saleId ต่อได้
         // ==================================================
 
         const returns =
@@ -686,7 +805,7 @@ exports.listBySale = async (req, res) => {
         // RESPONSE
         // ==================================================
 
-        res.json({
+        return res.json({
 
             saleId,
 
@@ -705,7 +824,7 @@ exports.listBySale = async (req, res) => {
 
         console.log(err)
 
-        res.status(500).json({
+        return res.status(500).json({
 
             message:
                 'Server Error'

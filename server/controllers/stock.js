@@ -1195,10 +1195,7 @@ exports.create = async (req, res) => {
         return res.status(500).json({
 
             message:
-                'Server Error',
-
-            error:
-                err.message
+                'Server Error'
 
         })
 
@@ -1387,10 +1384,7 @@ exports.list = async (req, res) => {
         return res.status(500).json({
 
             message:
-                'Server Error',
-
-            error:
-                err.message
+                'Server Error'
 
         })
 
@@ -1838,10 +1832,7 @@ exports.summary = async (req, res) => {
         return res.status(500).json({
 
             message:
-                'Server Error',
-
-            error:
-                err.message
+                'Server Error'
 
         })
 
@@ -2203,10 +2194,7 @@ exports.read = async (req, res) => {
         return res.status(500).json({
 
             message:
-                'Server Error',
-
-            error:
-                err.message
+                'Server Error'
 
         })
 
@@ -2931,10 +2919,7 @@ exports.update = async (req, res) => {
         return res.status(500).json({
 
             message:
-                'Server Error',
-
-            error:
-                err.message
+                'Server Error'
 
         })
 
@@ -3140,10 +3125,7 @@ exports.remove = async (req, res) => {
         return res.status(500).json({
 
             message:
-                'Server Error',
-
-            error:
-                err.message
+                'Server Error'
 
         })
 

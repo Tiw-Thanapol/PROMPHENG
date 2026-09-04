@@ -1116,7 +1116,7 @@ exports.create = async (req, res) => {
 
 
         return res.status(500).json({
-            message: err.message || "Server Error"
+            message: "Server Error"
         })
 
     }
@@ -1402,7 +1402,7 @@ exports.list = async (req, res) => {
         console.error("LIST SALES ERROR:", err)
 
         return res.status(500).json({
-            message: err.message || "Server Error"
+            message: "Server Error"
         })
 
     }
@@ -1582,7 +1582,7 @@ exports.read = async (req, res) => {
         console.error("READ SALE ERROR:", err)
 
         return res.status(500).json({
-            message: err.message || "Server Error"
+            message: "Server Error"
         })
 
     }

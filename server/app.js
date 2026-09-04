@@ -166,9 +166,32 @@ app.use(
 // ======================================================
 // GLOBAL ERROR HANDLER
 // ======================================================
+//
+// สำคัญสำหรับ Production / Beta
+//
+// หลักการ:
+//
+// 1. Log error จริงไว้ที่ Server
+// 2. ห้ามส่ง stack trace ให้ Client
+// 3. ห้ามส่ง Prisma / Database error ให้ Client
+// 4. ห้ามส่ง file path หรือข้อมูลภายในระบบ
+// 5. Development ยังเห็น err.message ได้
+// 6. Production ใช้ข้อความกลาง
+//
+// หมายเหตุ:
+// Controller ที่ catch error แล้วส่ง response เอง
+// จะไม่เข้ามาที่ Handler ตัวนี้
+//
+// ดังนั้น controller ที่ส่ง err.message / error
+// ออกมาเอง ต้องแก้แยกอีกครั้ง
+//
 
 app.use(
     (err, req, res, next) => {
+
+        // --------------------------------------------------
+        // SERVER LOG
+        // --------------------------------------------------
 
         console.error(
             "GLOBAL SERVER ERROR:",
@@ -176,21 +199,92 @@ app.use(
         )
 
 
+        // --------------------------------------------------
+        // HEADERS ALREADY SENT
+        // --------------------------------------------------
+
         if (res.headersSent) {
             return next(err)
         }
 
 
-        res.status(
-            err.status || 500
-        ).json({
+        // --------------------------------------------------
+        // STATUS CODE
+        // --------------------------------------------------
+        //
+        // ป้องกัน err.status ที่ผิดรูปแบบ
+        // เช่น 0, 200, 999 หรือ string แปลก ๆ
+        //
+
+        const status =
+            Number.isInteger(err?.status) &&
+            err.status >= 400 &&
+            err.status < 600
+                ? err.status
+                : 500
+
+
+        // --------------------------------------------------
+        // ENVIRONMENT
+        // --------------------------------------------------
+
+        const isProduction =
+            process.env.NODE_ENV === "production"
+
+
+        // --------------------------------------------------
+        // RESPONSE MESSAGE
+        // --------------------------------------------------
+
+        let message
+
+
+        if (isProduction) {
+
+            // ----------------------------------------------
+            // PRODUCTION
+            // ----------------------------------------------
+            //
+            // ไม่เปิดเผยรายละเอียดภายใน Server
+            //
+
+            if (status === 404) {
+
+                message =
+                    "ไม่พบข้อมูลหรือหน้าที่ต้องการ"
+
+            } else {
+
+                message =
+                    "เกิดข้อผิดพลาดภายในระบบ กรุณาลองใหม่อีกครั้ง"
+
+            }
+
+        } else {
+
+            // ----------------------------------------------
+            // DEVELOPMENT
+            // ----------------------------------------------
+            //
+            // ช่วยให้ Developer debug ได้
+            //
+
+            message =
+                err?.message ||
+                "Internal Server Error"
+
+        }
+
+
+        // --------------------------------------------------
+        // RESPONSE
+        // --------------------------------------------------
+
+        res.status(status).json({
 
             success: false,
 
-            message:
-                process.env.NODE_ENV === "production"
-                    ? "Internal Server Error"
-                    : err.message
+            message
 
         })
 

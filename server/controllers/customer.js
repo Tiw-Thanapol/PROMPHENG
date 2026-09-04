@@ -36,6 +36,7 @@ function money(value) {
     return Number(
         num(value).toFixed(2)
     )
+
 }
 
 
@@ -103,19 +104,21 @@ function getCustomerNumber(customerCode) {
 }
 
 
-// ------------------------------------------------------
-// Require Account
-// ------------------------------------------------------
+// ======================================================
+// REQUIRE ACCOUNT
+// ======================================================
 //
 // ทุก endpoint ในไฟล์นี้ต้องมี req.user.accountId
 // เพื่อป้องกันข้อมูลข้าม account
 //
-// ------------------------------------------------------
+// ======================================================
 
 function requireAccountId(req, res) {
 
     const accountId =
-        req.user?.accountId
+        Number(
+            req.user?.accountId
+        )
 
 
     if (
@@ -402,57 +405,61 @@ exports.create = async (req, res) => {
                     // AUDIT
                     // ======================================
 
-                    try {
+                    if (req.user?.id) {
 
-                        await tx.auditLog.create({
+                        try {
 
-                            data: {
+                            await tx.auditLog.create({
 
-                                userId:
-                                    req.user?.id || null,
+                                data: {
 
-                                action:
-                                    "CREATE",
+                                    userId:
+                                        req.user.id,
 
-                                entity:
-                                    "Customer",
+                                    action:
+                                        "CREATE",
 
-                                entityId:
-                                    created.id,
+                                    entity:
+                                        "Customer",
 
-                                details:
-                                    JSON.stringify({
+                                    entityId:
+                                        created.id,
 
-                                        customerNumber:
-                                            nextCustomerNumber,
+                                    details:
+                                        JSON.stringify({
 
-                                        customerCode:
-                                            created.customerCode,
+                                            customerNumber:
+                                                nextCustomerNumber,
 
-                                        name:
-                                            created.name,
+                                            customerCode:
+                                                created.customerCode,
 
-                                        phone:
-                                            created.phone,
+                                            name:
+                                                created.name,
 
-                                        address:
-                                            created.address,
+                                            phone:
+                                                created.phone,
 
-                                        note:
-                                            created.note
+                                            address:
+                                                created.address,
 
-                                    })
+                                            note:
+                                                created.note
 
-                            }
+                                        })
 
-                        })
+                                }
 
-                    } catch (auditError) {
+                            })
 
-                        console.error(
-                            "CUSTOMER CREATE AUDIT ERROR:",
-                            auditError
-                        )
+                        } catch (auditError) {
+
+                            console.error(
+                                "CUSTOMER CREATE AUDIT ERROR:",
+                                auditError
+                            )
+
+                        }
 
                     }
 
@@ -523,35 +530,45 @@ exports.list = async (req, res) => {
 
                         {
                             name: {
+
                                 contains:
                                     search,
 
                                 mode:
                                     "insensitive"
+
                             }
+
                         },
 
                         {
                             phone: {
+
                                 contains:
                                     search,
 
                                 mode:
                                     "insensitive"
+
                             }
+
                         },
 
                         {
                             customerCode: {
+
                                 contains:
                                     search,
 
                                 mode:
                                     "insensitive"
+
                             }
+
                         }
 
                     ]
+
                 }
                 : {})
 
@@ -648,6 +665,7 @@ exports.read = async (req, res) => {
                 where: {
 
                     id,
+
                     accountId
 
                 },
@@ -733,12 +751,17 @@ exports.update = async (req, res) => {
         }
 
 
+        // ==================================================
+        // GET OLD CUSTOMER
+        // ==================================================
+
         const oldCustomer =
             await prisma.customer.findFirst({
 
                 where: {
 
                     id,
+
                     accountId
 
                 }
@@ -858,6 +881,7 @@ exports.update = async (req, res) => {
                 where: {
 
                     id,
+
                     accountId
 
                 },
@@ -893,12 +917,17 @@ exports.update = async (req, res) => {
         }
 
 
+        // ==================================================
+        // GET UPDATED CUSTOMER
+        // ==================================================
+
         const customer =
             await prisma.customer.findFirst({
 
                 where: {
 
                     id,
+
                     accountId
 
                 },
@@ -907,6 +936,18 @@ exports.update = async (req, res) => {
                     customerSelect
 
             })
+
+
+        if (!customer) {
+
+            return res.status(404).json({
+
+                message:
+                    "Customer not found"
+
+            })
+
+        }
 
 
         // ==================================================
@@ -1056,12 +1097,17 @@ exports.remove = async (req, res) => {
         }
 
 
+        // ==================================================
+        // GET CUSTOMER
+        // ==================================================
+
         const customer =
             await prisma.customer.findFirst({
 
                 where: {
 
                     id,
+
                     accountId
 
                 },
@@ -1096,6 +1142,10 @@ exports.remove = async (req, res) => {
         }
 
 
+        // ==================================================
+        // PREVENT DELETE IF HAS SALES
+        // ==================================================
+
         if (
             customer._count.sales > 0
         ) {
@@ -1113,19 +1163,34 @@ exports.remove = async (req, res) => {
         }
 
 
+        // ==================================================
+        // DELETE + AUDIT
+        // ==================================================
+
         await prisma.$transaction(
             async tx => {
 
-                await tx.customer.deleteMany({
+                const deleteResult =
+                    await tx.customer.deleteMany({
 
-                    where: {
+                        where: {
 
-                        id,
-                        accountId
+                            id,
 
-                    }
+                            accountId
 
-                })
+                        }
+
+                    })
+
+
+                if (deleteResult.count === 0) {
+
+                    throw new Error(
+                        "CUSTOMER_NOT_FOUND"
+                    )
+
+                }
 
 
                 // ==========================================
@@ -1203,8 +1268,23 @@ exports.remove = async (req, res) => {
         console.error(
             "DELETE CUSTOMER ERROR:",
             error
-
         )
+
+
+        if (
+            error?.message ===
+            "CUSTOMER_NOT_FOUND"
+        ) {
+
+            return res.status(404).json({
+
+                message:
+                    "Customer not found"
+
+            })
+
+        }
+
 
         return res.status(500).json({
 
@@ -1264,6 +1344,7 @@ async (req, res) => {
                 where: {
 
                     id,
+
                     accountId
 
                 },
@@ -1311,6 +1392,11 @@ async (req, res) => {
 
         // ==================================================
         // SALES HISTORY
+        //
+        // IMPORTANT:
+        //
+        // ทั้ง customerId และ accountId
+        // ต้องตรงกับ account ปัจจุบัน
         // ==================================================
 
         const sales =
@@ -1423,7 +1509,9 @@ async (req, res) => {
 
 
                         const unitSalePrice =
-                            money(item.salePrice)
+                            money(
+                                item.salePrice
+                            )
 
 
                         const lineTotal =

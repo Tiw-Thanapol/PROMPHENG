@@ -56,16 +56,45 @@ function isValidDate(value) {
 //
 // createdAt DESC
 //
-// ใช้สำหรับ:
-// - Audit Log page
-// - ERP / POS history
-// - ตรวจสอบว่าใครทำอะไร
-// - Product History ในอนาคต
+// SECURITY:
+//
+// Audit Logs ถูกจำกัดให้อยู่ภายใน Account
+// ของผู้ที่กำลัง Login เท่านั้น
+//
+// ไม่สามารถ:
+// - อ่าน Log ของ Account อื่น
+// - ใช้ userId ของ Account อื่นเพื่อดึง Log
+// - ใช้ entityId เพื่อข้าม Account
+//
 // ======================================================
 
 exports.getAuditLogs = async (req, res) => {
 
     try {
+
+        // ==================================================
+        // AUTH / ACCOUNT CONTEXT
+        // ==================================================
+
+        const accountId =
+            Number(
+                req.user?.accountId
+            )
+
+
+        if (
+            !isPositiveInteger(accountId)
+        ) {
+
+            return res.status(403).json({
+
+                message:
+                    "Access denied"
+
+            })
+
+        }
+
 
         const {
             action,
@@ -79,9 +108,26 @@ exports.getAuditLogs = async (req, res) => {
 
         // ==================================================
         // WHERE
+        //
+        // IMPORTANT:
+        //
+        // AuditLog ไม่มี accountId โดยตรง
+        //
+        // จึง scope ผ่าน User.accountId
+        //
+        // ทำให้ Log ของ User ใน Account อื่น
+        // ไม่สามารถถูกอ่านได้
         // ==================================================
 
-        const where = {}
+        const where = {
+
+            user: {
+
+                accountId
+
+            }
+
+        }
 
 
         // ==================================================
@@ -153,6 +199,15 @@ exports.getAuditLogs = async (req, res) => {
 
             }
 
+
+            // ------------------------------------------------
+            // NOTE:
+            //
+            // where.user.accountId ยังถูกล็อกไว้แล้ว
+            //
+            // ดังนั้นแม้ Client จะส่ง userId ของ Account อื่น
+            // Prisma จะไม่คืนข้อมูลของ User นั้น
+            // ------------------------------------------------
 
             where.userId =
                 Number(userId)
@@ -289,7 +344,7 @@ exports.getAuditLogs = async (req, res) => {
         //
         // details ถูกเก็บเป็น JSON string
         //
-        // ตรงนี้พยายาม parse ให้ frontend
+        // พยายาม parse ให้ frontend
         // ใช้งานง่ายขึ้น
         //
         // ถ้าเป็นข้อมูลเก่า / JSON เสีย
@@ -363,7 +418,6 @@ exports.getAuditLogs = async (req, res) => {
         return res.status(500).json({
 
             message:
-                err.message ||
                 "Server Error"
 
         })
@@ -377,12 +431,42 @@ exports.getAuditLogs = async (req, res) => {
 // GET SINGLE AUDIT LOG
 // GET /api/audit-logs/:id
 //
-// ใช้สำหรับเปิดรายละเอียด Log รายการเดียว
+// SECURITY:
+//
+// ต้องเป็น Audit Log ของ User
+// ที่อยู่ใน Account เดียวกับผู้เรียก
+//
+// ป้องกัน IDOR / BOLA
+//
 // ======================================================
 
 exports.getAuditLog = async (req, res) => {
 
     try {
+
+        // ==================================================
+        // AUTH / ACCOUNT CONTEXT
+        // ==================================================
+
+        const accountId =
+            Number(
+                req.user?.accountId
+            )
+
+
+        if (
+            !isPositiveInteger(accountId)
+        ) {
+
+            return res.status(403).json({
+
+                message:
+                    "Access denied"
+
+            })
+
+        }
+
 
         const id =
             Number(
@@ -410,14 +494,31 @@ exports.getAuditLog = async (req, res) => {
 
         // ==================================================
         // GET LOG
+        //
+        // IMPORTANT:
+        //
+        // ใช้ findFirst แทน findUnique
+        //
+        // เพราะต้องตรวจทั้ง:
+        //
+        // auditLog.id
+        // +
+        // user.accountId
+        //
         // ==================================================
 
         const log =
-            await prisma.auditLog.findUnique({
+            await prisma.auditLog.findFirst({
 
                 where: {
 
-                    id
+                    id,
+
+                    user: {
+
+                        accountId
+
+                    }
 
                 },
 
@@ -453,6 +554,13 @@ exports.getAuditLog = async (req, res) => {
 
         // ==================================================
         // NOT FOUND
+        //
+        // รวมกรณี:
+        //
+        // - ไม่มี Log
+        // - Log เป็นของ Account อื่น
+        //
+        // เพื่อไม่เปิดเผยว่าข้อมูลของ Account อื่นมีอยู่
         // ==================================================
 
         if (!log) {
@@ -523,7 +631,6 @@ exports.getAuditLog = async (req, res) => {
         return res.status(500).json({
 
             message:
-                err.message ||
                 "Server Error"
 
         })

@@ -1,5 +1,6 @@
 const prisma = require("../config/prisma");
 
+
 // ======================================================
 // HELPERS
 // ======================================================
@@ -8,6 +9,7 @@ function toNumber(value) {
     return Number(Number(value || 0).toFixed(2));
 }
 
+
 function clean(value) {
     if (value === undefined || value === null) {
         return null;
@@ -15,6 +17,7 @@ function clean(value) {
 
     return String(value).trim() || null;
 }
+
 
 function isValidPrice(value) {
     if (
@@ -30,15 +33,48 @@ function isValidPrice(value) {
     return Number.isFinite(number) && number >= 0;
 }
 
+
+function parseId(value) {
+    const id = Number(value);
+
+    if (
+        !Number.isInteger(id) ||
+        id <= 0
+    ) {
+        return null;
+    }
+
+    return id;
+}
+
+
+function getAccountId(req) {
+    const accountId =
+        Number(req.user?.accountId);
+
+    if (
+        !Number.isInteger(accountId) ||
+        accountId <= 0
+    ) {
+        return null;
+    }
+
+    return accountId;
+}
+
+
 function serializeProduct(product) {
     return {
         ...product,
 
-        costPrice: toNumber(product.costPrice),
+        costPrice:
+            toNumber(product.costPrice),
 
         actualSalePrice:
             product.actualSalePrice !== null
-                ? toNumber(product.actualSalePrice)
+                ? toNumber(
+                    product.actualSalePrice
+                )
                 : null,
 
         profit:
@@ -51,19 +87,35 @@ function serializeProduct(product) {
     };
 }
 
+
 // ======================================================
 // CREATE PRODUCT
 // POST /api/product
 //
-// Current business logic:
 // Product = สินค้าของร้านเอง
 //
-// ownerId ยังอยู่ใน DB เพื่อรองรับระบบฝากขายในอนาคต
-// แต่ Client ห้ามกำหนด ownerId เอง
+// ownerId ไม่รับจาก Client
+// ใช้ Owner compatibility record ของ account นี้
 // ======================================================
 
 exports.create = async (req, res) => {
+
     try {
+
+        const accountId =
+            getAccountId(req);
+
+
+        if (!accountId) {
+
+            return res.status(403).json({
+                message:
+                    "ไม่พบ account ของผู้ใช้งาน"
+            });
+
+        }
+
+
         const {
             name,
             description,
@@ -73,6 +125,7 @@ exports.create = async (req, res) => {
             purchaseDate
         } = req.body;
 
+
         // ==================================================
         // NAME
         // ==================================================
@@ -81,86 +134,139 @@ exports.create = async (req, res) => {
             typeof name !== "string" ||
             !name.trim()
         ) {
+
             return res.status(400).json({
-                message: "กรุณาระบุชื่อสินค้า"
+                message:
+                    "กรุณาระบุชื่อสินค้า"
             });
+
         }
+
 
         // ==================================================
         // COST PRICE
         // ==================================================
 
         if (!isValidPrice(costPrice)) {
+
             return res.status(400).json({
-                message: "กรุณาระบุต้นทุนสินค้าให้ถูกต้อง"
+                message:
+                    "กรุณาระบุต้นทุนสินค้าให้ถูกต้อง"
             });
+
         }
 
-        const cost = Number(costPrice);
+
+        const cost =
+            Number(costPrice);
+
 
         // ==================================================
         // SALE PRICE
-        //
-        // สามารถ null ได้ เพราะสินค้าอาจยังไม่ได้ขาย
         // ==================================================
 
         let salePriceValue = null;
+
 
         if (
             actualSalePrice !== undefined &&
             actualSalePrice !== null &&
             actualSalePrice !== ""
         ) {
-            if (!isValidPrice(actualSalePrice)) {
+
+            if (
+                !isValidPrice(
+                    actualSalePrice
+                )
+            ) {
+
                 return res.status(400).json({
-                    message: "ราคาขายไม่ถูกต้อง"
+                    message:
+                        "ราคาขายไม่ถูกต้อง"
                 });
+
             }
 
-            salePriceValue = Number(actualSalePrice);
+
+            salePriceValue =
+                Number(actualSalePrice);
+
         }
+
 
         // ==================================================
         // PURCHASE DATE
         // ==================================================
 
-        let purchaseDateValue = new Date();
+        let purchaseDateValue =
+            new Date();
 
-        if (purchaseDate !== undefined) {
-            const date = new Date(purchaseDate);
 
-            if (Number.isNaN(date.getTime())) {
+        if (
+            purchaseDate !== undefined
+        ) {
+
+            const date =
+                new Date(purchaseDate);
+
+
+            if (
+                Number.isNaN(
+                    date.getTime()
+                )
+            ) {
+
                 return res.status(400).json({
-                    message: "วันที่ซื้อไม่ถูกต้อง"
+                    message:
+                        "วันที่ซื้อไม่ถูกต้อง"
                 });
+
             }
 
-            purchaseDateValue = date;
+
+            purchaseDateValue =
+                date;
+
         }
+
 
         // ==================================================
         // OWNER COMPATIBILITY
         //
-        // ปัจจุบันร้านมี User เดียว
+        // สำคัญ:
+        // ต้องหา Owner ภายใน account เดียวกันเท่านั้น
         //
-        // ownerId เป็น field ที่ DB บังคับ
-        // จึงใช้ Owner record ของร้านเป็น internal record
-        //
-        // ห้ามรับ ownerId จาก req.body
+        // ห้ามใช้ findFirst() แบบไม่มี accountId
         // ==================================================
 
-        const owner = await prisma.owner.findFirst({
-            orderBy: {
-                id: "asc"
-            }
-        });
+        const owner =
+            await prisma.owner.findFirst({
+
+                where: {
+
+                    accountId
+
+                },
+
+                orderBy: {
+
+                    id:
+                        "asc"
+
+                }
+
+            });
+
 
         if (!owner) {
+
             return res.status(500).json({
                 message:
                     "ยังไม่มี Owner compatibility record ในระบบ"
             });
+
         }
+
 
         // ==================================================
         // CREATE PRODUCT
@@ -168,89 +274,137 @@ exports.create = async (req, res) => {
 
         const product =
             await prisma.consignmentItem.create({
-                data: {
-                    ownerId: owner.id,
 
-                    name: name.trim(),
+                data: {
+
+                    accountId,
+
+                    ownerId:
+                        owner.id,
+
+                    name:
+                        name.trim(),
 
                     description:
                         clean(description),
 
-                    costPrice: cost,
+                    costPrice:
+                        cost,
 
                     actualSalePrice:
                         salePriceValue,
 
-                    status: "AVAILABLE",
+                    status:
+                        "AVAILABLE",
 
                     purchaseDate:
                         purchaseDateValue,
 
-                    soldAt: null,
+                    soldAt:
+                        null,
 
-                    note: clean(note)
+                    note:
+                        clean(note)
+
                 }
+
             });
+
 
         // ==================================================
         // AUDIT LOG
         // ==================================================
 
         if (req.user?.id) {
+
             await prisma.auditLog.create({
+
                 data: {
-                    userId: req.user.id,
 
-                    action: "CREATE",
+                    userId:
+                        req.user.id,
 
-                    entity: "Product",
+                    action:
+                        "CREATE",
 
-                    entityId: product.id,
+                    entity:
+                        "Product",
 
-                    details: JSON.stringify({
-                        id: product.id,
-                        name: product.name,
-                        description: product.description,
-                        costPrice:
-                            toNumber(product.costPrice),
-                        actualSalePrice:
-                            product.actualSalePrice !== null
-                                ? toNumber(
-                                    product.actualSalePrice
-                                )
-                                : null,
-                        status: product.status,
-                        purchaseDate:
-                            product.purchaseDate,
-                        note: product.note
-                    })
+                    entityId:
+                        product.id,
+
+                    details:
+                        JSON.stringify({
+
+                            id:
+                                product.id,
+
+                            name:
+                                product.name,
+
+                            description:
+                                product.description,
+
+                            costPrice:
+                                toNumber(
+                                    product.costPrice
+                                ),
+
+                            actualSalePrice:
+                                product.actualSalePrice !== null
+                                    ? toNumber(
+                                        product.actualSalePrice
+                                    )
+                                    : null,
+
+                            status:
+                                product.status,
+
+                            purchaseDate:
+                                product.purchaseDate,
+
+                            note:
+                                product.note
+
+                        })
+
                 }
+
             });
+
         }
+
 
         // ==================================================
         // RESPONSE
         // ==================================================
 
         return res.status(201).json({
-            message: "เพิ่มสินค้าสำเร็จ",
+
+            message:
+                "เพิ่มสินค้าสำเร็จ",
 
             product:
                 serializeProduct(product)
+
         });
 
     } catch (err) {
+
         console.error(
             "Create Product Error:",
             err
         );
 
         return res.status(500).json({
-            message: "ไม่สามารถเพิ่มสินค้าได้",
-            error: err.message
+            message:
+                "ไม่สามารถเพิ่มสินค้าได้"
         });
+
     }
+
 };
+
 
 // ======================================================
 // LIST PRODUCTS
@@ -258,66 +412,130 @@ exports.create = async (req, res) => {
 // ======================================================
 
 exports.list = async (req, res) => {
+
     try {
+
+        const accountId =
+            getAccountId(req);
+
+
+        if (!accountId) {
+
+            return res.status(403).json({
+                message:
+                    "ไม่พบ account ของผู้ใช้งาน"
+            });
+
+        }
+
+
         const {
             search,
             status
         } = req.query;
 
-        const where = {};
 
+        // ==================================================
+        // IMPORTANT
+        //
+        // accountId ต้องอยู่ใน root where เสมอ
+        // ==================================================
+
+        const where = {
+
+            accountId
+
+        };
+
+
+        // ==================================================
         // SEARCH
+        // ==================================================
 
         if (
             search &&
             search.trim()
         ) {
+
             where.name = {
-                contains: search.trim(),
-                mode: "insensitive"
+
+                contains:
+                    search.trim(),
+
+                mode:
+                    "insensitive"
+
             };
+
         }
 
+
+        // ==================================================
         // STATUS
+        // ==================================================
 
         if (status) {
+
             const allowedStatus = [
                 "AVAILABLE",
                 "SOLD",
                 "CANCELLED"
             ];
 
-            if (!allowedStatus.includes(status)) {
+
+            if (
+                !allowedStatus.includes(
+                    status
+                )
+            ) {
+
                 return res.status(400).json({
                     message:
                         "สถานะสินค้าไม่ถูกต้อง"
                 });
+
             }
 
-            where.status = status;
+
+            where.status =
+                status;
+
         }
 
+
+        // ==================================================
         // GET PRODUCTS
+        // ==================================================
 
         const products =
             await prisma.consignmentItem.findMany({
+
                 where,
 
                 orderBy: {
-                    createdAt: "desc"
+
+                    createdAt:
+                        "desc"
+
                 }
+
             });
 
+
         return res.json({
-            count: products.length,
+
+            count:
+                products.length,
 
             products:
                 products.map(
                     serializeProduct
                 )
+
         });
 
     } catch (err) {
+
         console.error(
             "List Products Error:",
             err
@@ -325,13 +543,13 @@ exports.list = async (req, res) => {
 
         return res.status(500).json({
             message:
-                "ไม่สามารถโหลดสินค้าได้",
-
-            error:
-                err.message
+                "ไม่สามารถโหลดสินค้าได้"
         });
+
     }
+
 };
+
 
 // ======================================================
 // READ PRODUCT
@@ -339,58 +557,121 @@ exports.list = async (req, res) => {
 // ======================================================
 
 exports.read = async (req, res) => {
-    try {
-        const id =
-            Number(req.params.id);
 
-        if (
-            !Number.isInteger(id) ||
-            id <= 0
-        ) {
+    try {
+
+        const accountId =
+            getAccountId(req);
+
+
+        if (!accountId) {
+
+            return res.status(403).json({
+                message:
+                    "ไม่พบ account ของผู้ใช้งาน"
+            });
+
+        }
+
+
+        const id =
+            parseId(
+                req.params.id
+            );
+
+
+        if (!id) {
+
             return res.status(400).json({
                 message:
                     "รหัสสินค้าไม่ถูกต้อง"
             });
+
         }
 
+
+        // ==================================================
+        // ACCOUNT SCOPED
+        // ==================================================
+
         const product =
-            await prisma.consignmentItem.findUnique({
+            await prisma.consignmentItem.findFirst({
+
                 where: {
-                    id
+
+                    id,
+
+                    accountId
+
                 },
 
                 include: {
+
                     saleItems: {
-                        include: {
+
+                        where: {
+
                             sale: {
-                                include: {
-                                    customer: true
-                                }
+
+                                accountId
+
                             }
+
+                        },
+
+                        include: {
+
+                            sale: {
+
+                                include: {
+
+                                    customer:
+                                        true
+
+                                }
+
+                            }
+
                         },
 
                         orderBy: {
-                            createdAt: "desc"
+
+                            createdAt:
+                                "desc"
+
                         }
+
                     }
+
                 }
+
             });
 
+
         if (!product) {
+
             return res.status(404).json({
                 message:
                     "ไม่พบสินค้า"
             });
+
         }
+
+
+        // ==================================================
+        // SALE HISTORY
+        // ==================================================
 
         const saleHistory =
             product.saleItems.map(
                 saleItem => ({
+
                     saleItemId:
                         saleItem.id,
 
                     saleId:
-                        saleItem.sale?.id ?? null,
+                        saleItem.sale?.id ??
+                        null,
 
                     salePrice:
                         toNumber(
@@ -404,6 +685,7 @@ exports.read = async (req, res) => {
                     customer:
                         saleItem.sale?.customer
                             ? {
+
                                 id:
                                     saleItem.sale.customer.id,
 
@@ -412,24 +694,34 @@ exports.read = async (req, res) => {
 
                                 phone:
                                     saleItem.sale.customer.phone
+
                             }
                             : null,
 
                     soldAt:
                         saleItem.sale?.createdAt ??
                         null
+
                 })
             );
 
+
         return res.json({
+
             product: {
-                ...serializeProduct(product),
+
+                ...serializeProduct(
+                    product
+                ),
 
                 saleHistory
+
             }
+
         });
 
     } catch (err) {
+
         console.error(
             "Read Product Error:",
             err
@@ -437,52 +729,80 @@ exports.read = async (req, res) => {
 
         return res.status(500).json({
             message:
-                "ไม่สามารถโหลดข้อมูลสินค้าได้",
-
-            error:
-                err.message
+                "ไม่สามารถโหลดข้อมูลสินค้าได้"
         });
+
     }
+
 };
+
 
 // ======================================================
 // UPDATE PRODUCT
 // PUT /api/product/:id
-//
-// แก้ข้อมูลสินค้า
-//
-// ไม่ควรใช้ endpoint นี้เพื่อสร้างการขาย
-// การขายต้องผ่าน Sale
 // ======================================================
 
 exports.update = async (req, res) => {
-    try {
-        const id =
-            Number(req.params.id);
 
-        if (
-            !Number.isInteger(id) ||
-            id <= 0
-        ) {
+    try {
+
+        const accountId =
+            getAccountId(req);
+
+
+        if (!accountId) {
+
+            return res.status(403).json({
+                message:
+                    "ไม่พบ account ของผู้ใช้งาน"
+            });
+
+        }
+
+
+        const id =
+            parseId(
+                req.params.id
+            );
+
+
+        if (!id) {
+
             return res.status(400).json({
                 message:
                     "รหัสสินค้าไม่ถูกต้อง"
             });
+
         }
 
+
+        // ==================================================
+        // GET EXISTING PRODUCT
+        // ==================================================
+
         const existing =
-            await prisma.consignmentItem.findUnique({
+            await prisma.consignmentItem.findFirst({
+
                 where: {
-                    id
+
+                    id,
+
+                    accountId
+
                 }
+
             });
 
+
         if (!existing) {
+
             return res.status(404).json({
                 message:
                     "ไม่พบสินค้า"
             });
+
         }
+
 
         const {
             name,
@@ -493,147 +813,286 @@ exports.update = async (req, res) => {
             note
         } = req.body;
 
+
         const data = {};
 
+
+        // ==================================================
         // NAME
+        // ==================================================
 
         if (name !== undefined) {
+
             if (
                 typeof name !== "string" ||
                 !name.trim()
             ) {
+
                 return res.status(400).json({
                     message:
                         "ชื่อสินค้าไม่สามารถว่างได้"
                 });
+
             }
+
 
             data.name =
                 name.trim();
+
         }
 
-        // DESCRIPTION
 
-        if (description !== undefined) {
+        // ==================================================
+        // DESCRIPTION
+        // ==================================================
+
+        if (
+            description !== undefined
+        ) {
+
             data.description =
                 clean(description);
+
         }
 
-        // COST
 
-        if (costPrice !== undefined) {
-            if (!isValidPrice(costPrice)) {
+        // ==================================================
+        // COST
+        // ==================================================
+
+        if (
+            costPrice !== undefined
+        ) {
+
+            if (
+                !isValidPrice(
+                    costPrice
+                )
+            ) {
+
                 return res.status(400).json({
                     message:
                         "ต้นทุนสินค้าไม่ถูกต้อง"
                 });
+
             }
+
 
             data.costPrice =
                 Number(costPrice);
+
         }
 
-        // SALE PRICE
 
-        if (actualSalePrice !== undefined) {
+        // ==================================================
+        // SALE PRICE
+        // ==================================================
+
+        if (
+            actualSalePrice !== undefined
+        ) {
+
             if (
                 actualSalePrice === null ||
                 actualSalePrice === ""
             ) {
-                data.actualSalePrice = null;
+
+                data.actualSalePrice =
+                    null;
+
             } else {
+
                 if (
                     !isValidPrice(
                         actualSalePrice
                     )
                 ) {
+
                     return res.status(400).json({
                         message:
                             "ราคาขายไม่ถูกต้อง"
                     });
+
                 }
+
 
                 data.actualSalePrice =
                     Number(actualSalePrice);
+
             }
+
         }
 
-        // PURCHASE DATE
 
-        if (purchaseDate !== undefined) {
+        // ==================================================
+        // PURCHASE DATE
+        // ==================================================
+
+        if (
+            purchaseDate !== undefined
+        ) {
+
             const date =
-                new Date(purchaseDate);
+                new Date(
+                    purchaseDate
+                );
+
 
             if (
                 Number.isNaN(
                     date.getTime()
                 )
             ) {
+
                 return res.status(400).json({
                     message:
                         "วันที่ซื้อไม่ถูกต้อง"
                 });
+
             }
+
 
             data.purchaseDate =
                 date;
+
         }
 
-        // NOTE
 
-        if (note !== undefined) {
+        // ==================================================
+        // NOTE
+        // ==================================================
+
+        if (
+            note !== undefined
+        ) {
+
             data.note =
                 clean(note);
+
         }
 
-        // UPDATE
 
-        const product =
-            await prisma.consignmentItem.update({
+        // ==================================================
+        // UPDATE
+        //
+        // ใช้ updateMany เพื่อให้ mutation
+        // มี account isolation ด้วย
+        // ==================================================
+
+        const updateResult =
+            await prisma.consignmentItem.updateMany({
+
                 where: {
-                    id
+
+                    id,
+
+                    accountId
+
                 },
 
                 data
+
             });
 
-        // AUDIT
 
-        if (req.user?.id) {
-            await prisma.auditLog.create({
-                data: {
-                    userId: req.user.id,
+        if (
+            updateResult.count !== 1
+        ) {
 
-                    action: "UPDATE",
-
-                    entity: "Product",
-
-                    entityId: product.id,
-
-                    details: JSON.stringify({
-                        before:
-                            serializeProduct(
-                                existing
-                            ),
-
-                        after:
-                            serializeProduct(
-                                product
-                            )
-                    })
-                }
+            return res.status(404).json({
+                message:
+                    "ไม่พบสินค้า"
             });
+
         }
 
+
+        // ==================================================
+        // GET UPDATED PRODUCT
+        // ==================================================
+
+        const product =
+            await prisma.consignmentItem.findFirst({
+
+                where: {
+
+                    id,
+
+                    accountId
+
+                }
+
+            });
+
+
+        if (!product) {
+
+            return res.status(404).json({
+                message:
+                    "ไม่พบสินค้า"
+            });
+
+        }
+
+
+        // ==================================================
+        // AUDIT
+        // ==================================================
+
+        if (req.user?.id) {
+
+            await prisma.auditLog.create({
+
+                data: {
+
+                    userId:
+                        req.user.id,
+
+                    action:
+                        "UPDATE",
+
+                    entity:
+                        "Product",
+
+                    entityId:
+                        product.id,
+
+                    details:
+                        JSON.stringify({
+
+                            before:
+                                serializeProduct(
+                                    existing
+                                ),
+
+                            after:
+                                serializeProduct(
+                                    product
+                                )
+
+                        })
+
+                }
+
+            });
+
+        }
+
+
         return res.json({
+
             message:
                 "แก้ไขสินค้าสำเร็จ",
 
             product:
-                serializeProduct(product)
+                serializeProduct(
+                    product
+                )
+
         });
 
     } catch (err) {
+
         console.error(
             "Update Product Error:",
             err
@@ -641,13 +1100,13 @@ exports.update = async (req, res) => {
 
         return res.status(500).json({
             message:
-                "ไม่สามารถแก้ไขสินค้าได้",
-
-            error:
-                err.message
+                "ไม่สามารถแก้ไขสินค้าได้"
         });
+
     }
+
 };
+
 
 // ======================================================
 // DELETE PRODUCT
@@ -655,64 +1114,159 @@ exports.update = async (req, res) => {
 // ======================================================
 
 exports.remove = async (req, res) => {
-    try {
-        const id =
-            Number(req.params.id);
 
-        if (
-            !Number.isInteger(id) ||
-            id <= 0
-        ) {
+    try {
+
+        const accountId =
+            getAccountId(req);
+
+
+        if (!accountId) {
+
+            return res.status(403).json({
+                message:
+                    "ไม่พบ account ของผู้ใช้งาน"
+            });
+
+        }
+
+
+        const id =
+            parseId(
+                req.params.id
+            );
+
+
+        if (!id) {
+
             return res.status(400).json({
                 message:
                     "รหัสสินค้าไม่ถูกต้อง"
             });
+
         }
 
+
+        // ==================================================
+        // GET PRODUCT
+        // ==================================================
+
         const product =
-            await prisma.consignmentItem.findUnique({
+            await prisma.consignmentItem.findFirst({
+
                 where: {
-                    id
+
+                    id,
+
+                    accountId
+
                 },
 
                 include: {
-                    saleItems: true
+
+                    saleItems: {
+
+                        where: {
+
+                            sale: {
+
+                                accountId
+
+                            }
+
+                        }
+
+                    }
+
                 }
+
             });
 
+
         if (!product) {
+
             return res.status(404).json({
                 message:
                     "ไม่พบสินค้า"
             });
+
         }
 
-        if (product.status === "SOLD") {
+
+        // ==================================================
+        // SOLD CHECK
+        // ==================================================
+
+        if (
+            product.status === "SOLD"
+        ) {
+
             return res.status(400).json({
                 message:
                     "ไม่สามารถลบสินค้าที่ขายแล้วได้"
             });
+
         }
 
-        if (product.saleItems.length > 0) {
+
+        // ==================================================
+        // SALE HISTORY CHECK
+        // ==================================================
+
+        if (
+            product.saleItems.length > 0
+        ) {
+
             return res.status(400).json({
                 message:
                     "ไม่สามารถลบสินค้าที่มีประวัติการขายได้"
             });
+
         }
+
+
+        // ==================================================
+        // DELETE
+        // ==================================================
 
         await prisma.$transaction(
             async tx => {
 
-                await tx.consignmentItem.delete({
-                    where: {
-                        id
-                    }
-                });
+                const deleteResult =
+                    await tx.consignmentItem.deleteMany({
+
+                        where: {
+
+                            id,
+
+                            accountId
+
+                        }
+
+                    });
+
+
+                if (
+                    deleteResult.count !== 1
+                ) {
+
+                    throw new Error(
+                        "PRODUCT_NOT_FOUND"
+                    );
+
+                }
+
+
+                // ==================================================
+                // AUDIT
+                // ==================================================
 
                 if (req.user?.id) {
+
                     await tx.auditLog.create({
+
                         data: {
+
                             userId:
                                 req.user.id,
 
@@ -727,6 +1281,7 @@ exports.remove = async (req, res) => {
 
                             details:
                                 JSON.stringify({
+
                                     id:
                                         product.id,
 
@@ -747,92 +1302,176 @@ exports.remove = async (req, res) => {
 
                                     status:
                                         product.status
+
                                 })
+
                         }
+
                     });
+
                 }
+
             }
         );
 
+
         return res.json({
+
             message:
                 "ลบสินค้าสำเร็จ"
+
         });
 
     } catch (err) {
+
         console.error(
             "Delete Product Error:",
             err
         );
 
+
+        if (
+            err?.message ===
+            "PRODUCT_NOT_FOUND"
+        ) {
+
+            return res.status(404).json({
+                message:
+                    "ไม่พบสินค้า"
+            });
+
+        }
+
+
         return res.status(500).json({
             message:
-                "ไม่สามารถลบสินค้าได้",
-
-            error:
-                err.message
+                "ไม่สามารถลบสินค้าได้"
         });
+
     }
+
 };
+
 
 // ======================================================
 // SEARCH / FILTER
 // POST /api/products/search
 // ======================================================
 
-exports.searchFilters = async (req, res) => {
+exports.searchFilters = async (
+    req,
+    res
+) => {
+
     try {
+
+        const accountId =
+            getAccountId(req);
+
+
+        if (!accountId) {
+
+            return res.status(403).json({
+                message:
+                    "ไม่พบ account ของผู้ใช้งาน"
+            });
+
+        }
+
+
         const {
             query,
             status
         } = req.body;
 
-        const where = {};
+
+        // ==================================================
+        // IMPORTANT
+        // ==================================================
+
+        const where = {
+
+            accountId
+
+        };
+
+
+        // ==================================================
+        // SEARCH
+        // ==================================================
 
         if (
             query &&
             query.trim()
         ) {
+
             where.name = {
+
                 contains:
                     query.trim(),
 
                 mode:
                     "insensitive"
+
             };
+
         }
 
+
+        // ==================================================
+        // STATUS
+        // ==================================================
+
         if (status) {
+
             const allowedStatus = [
                 "AVAILABLE",
                 "SOLD",
                 "CANCELLED"
             ];
 
+
             if (
-                !allowedStatus.includes(status)
+                !allowedStatus.includes(
+                    status
+                )
             ) {
+
                 return res.status(400).json({
                     message:
                         "สถานะสินค้าไม่ถูกต้อง"
                 });
+
             }
+
 
             where.status =
                 status;
+
         }
+
+
+        // ==================================================
+        // SEARCH PRODUCTS
+        // ==================================================
 
         const products =
             await prisma.consignmentItem.findMany({
+
                 where,
 
                 orderBy: {
+
                     createdAt:
                         "desc"
+
                 }
+
             });
 
+
         return res.json({
+
             count:
                 products.length,
 
@@ -840,9 +1479,11 @@ exports.searchFilters = async (req, res) => {
                 products.map(
                     serializeProduct
                 )
+
         });
 
     } catch (err) {
+
         console.error(
             "Search Products Error:",
             err
@@ -850,10 +1491,9 @@ exports.searchFilters = async (req, res) => {
 
         return res.status(500).json({
             message:
-                "ไม่สามารถค้นหาสินค้าได้",
-
-            error:
-                err.message
+                "ไม่สามารถค้นหาสินค้าได้"
         });
+
     }
+
 };

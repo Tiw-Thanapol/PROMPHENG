@@ -53,6 +53,30 @@ exports.getProductHistory = async (req, res) => {
     try {
 
         // ==================================================
+        // ACCOUNT
+        // ==================================================
+
+        const accountId =
+            Number(
+                req.user?.accountId
+            )
+
+
+        if (
+            !isPositiveInteger(accountId)
+        ) {
+
+            return res.status(403).json({
+
+                message:
+                    "Access denied"
+
+            })
+
+        }
+
+
+        // ==================================================
         // PRODUCT ID
         // ==================================================
 
@@ -78,15 +102,23 @@ exports.getProductHistory = async (req, res) => {
 
         // ==================================================
         // GET PRODUCT
+        //
+        // IMPORTANT:
+        //
+        // ต้อง scope ด้วย accountId
+        // เพื่อป้องกัน User จาก Account อื่น
+        // เข้าถึง Product History ผ่าน ID โดยตรง
         // ==================================================
 
         const product =
-            await prisma.consignmentItem.findUnique({
+            await prisma.consignmentItem.findFirst({
 
                 where: {
 
                     id:
-                        productId
+                        productId,
+
+                    accountId
 
                 },
 
@@ -175,7 +207,7 @@ exports.getProductHistory = async (req, res) => {
         // row 3 = quantity 1
         //
         // แต่ยังใช้ saleItemId / saleId เดิม
-        // ==================================================
+        // ======================================================
 
         const salesHistory =
             product.saleItems.flatMap(
@@ -474,6 +506,11 @@ exports.getProductHistory = async (req, res) => {
         //
         // entity = Sale
         // entityId = Sale ID
+        //
+        // IMPORTANT:
+        //
+        // Scope ผ่าน user.accountId
+        // เพื่อไม่ดึง AuditLog ของ Account อื่น
         // ==================================================
 
         const saleIds =
@@ -506,6 +543,12 @@ exports.getProductHistory = async (req, res) => {
 
                             in:
                                 saleIds
+
+                        },
+
+                        user: {
+
+                            accountId
 
                         }
 
@@ -782,7 +825,6 @@ exports.getProductHistory = async (req, res) => {
         return res.status(500).json({
 
             message:
-                err.message ||
                 "Server Error"
 
         })

@@ -1,0 +1,681 @@
+/* =========================================================
+   BETA NOTICE
+========================================================= */
+
+.beta-notice-overlay {
+
+    position: fixed;
+
+    inset: 0;
+
+    z-index: 9999;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    padding: 20px;
+
+    background:
+        rgba(55, 39, 68, .42);
+
+    backdrop-filter:
+        blur(7px);
+
+    -webkit-backdrop-filter:
+        blur(7px);
+
+    animation:
+        beta-overlay-in .22s ease;
+
+}
+
+
+@keyframes beta-overlay-in {
+
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+
+}
+
+
+/* =========================================================
+   MODAL
+========================================================= */
+
+.beta-notice-modal {
+
+    position: relative;
+
+    width: min(
+        100%,
+        520px
+    );
+
+    max-height: calc(
+        100vh - 40px
+    );
+
+    overflow-y: auto;
+
+    border:
+        1px solid
+        rgba(255,255,255,.8);
+
+    border-radius: 30px;
+
+    background:
+        linear-gradient(
+            145deg,
+            #fffaff 0%,
+            #fff7fc 48%,
+            #f8f1ff 100%
+        );
+
+    box-shadow:
+        0 30px 80px
+        rgba(72, 49, 87, .28),
+
+        0 8px 24px
+        rgba(111, 81, 129, .12),
+
+        inset 0 1px 0
+        rgba(255,255,255,.9);
+
+    animation:
+        beta-modal-in .3s
+        cubic-bezier(.2,.8,.2,1);
+
+}
+
+
+@keyframes beta-modal-in {
+
+    from {
+
+        opacity: 0;
+
+        transform:
+            translateY(18px)
+            scale(.96);
+
+    }
+
+    to {
+
+        opacity: 1;
+
+        transform:
+            translateY(0)
+            scale(1);
+
+    }
+
+}
+
+
+/* =========================================================
+   CLOSE
+========================================================= */
+
+.beta-notice-close {
+
+    position: absolute;
+
+    top: 16px;
+
+    right: 16px;
+
+    z-index: 2;
+
+    width: 38px;
+
+    height: 38px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    padding: 0;
+
+    border:
+        1px solid
+        #eadfeb;
+
+    border-radius: 50%;
+
+    background:
+        rgba(255,255,255,.78);
+
+    color: #89778f;
+
+    cursor: pointer;
+
+    transition:
+        transform .18s ease,
+        background .18s ease,
+        box-shadow .18s ease;
+
+}
+
+
+.beta-notice-close:hover {
+
+    transform:
+        rotate(5deg)
+        scale(1.05);
+
+    background: #fff;
+
+    box-shadow:
+        0 5px 14px
+        rgba(111,83,127,.12);
+
+}
+
+
+/* =========================================================
+   ICON
+========================================================= */
+
+.beta-notice-icon {
+
+    position: relative;
+
+    width: 92px;
+
+    height: 92px;
+
+    margin: 34px auto 16px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+}
+
+
+.beta-notice-icon-main {
+
+    width: 76px;
+
+    height: 76px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    border-radius: 25px;
+
+    background:
+        linear-gradient(
+            145deg,
+            #eadcff,
+            #f7dcef
+        );
+
+    color: #765b92;
+
+    box-shadow:
+        0 12px 25px
+        rgba(145,108,173,.18),
+
+        inset 0 2px 0
+        rgba(255,255,255,.8);
+
+    transform:
+        rotate(-4deg);
+
+}
+
+
+.beta-notice-sparkle {
+
+    position: absolute;
+
+    color: #b58bd1;
+
+    font-weight: 800;
+
+}
+
+
+.sparkle-one {
+
+    top: 3px;
+
+    right: 3px;
+
+    font-size: 22px;
+
+}
+
+
+.sparkle-two {
+
+    bottom: 3px;
+
+    left: 4px;
+
+    font-size: 17px;
+
+}
+
+
+/* =========================================================
+   VERSION
+========================================================= */
+
+.beta-notice-version {
+
+    width: fit-content;
+
+    margin: 0 auto 12px;
+
+    padding: 7px 13px;
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 6px;
+
+    border:
+        1px solid
+        #e4d4ee;
+
+    border-radius: 999px;
+
+    background:
+        #f5edfa;
+
+    color: #795b91;
+
+    font-size: 12px;
+
+    font-weight: 800;
+
+    letter-spacing: .2px;
+
+}
+
+
+/* =========================================================
+   CONTENT
+========================================================= */
+
+.beta-notice-content {
+
+    padding:
+        0 34px;
+
+    color: #6b5d70;
+
+    font-size: 14px;
+
+    line-height: 1.75;
+
+}
+
+
+.beta-notice-content h2 {
+
+    margin:
+        0 0 7px;
+
+    color: #57465f;
+
+    text-align: center;
+
+    font-size: 24px;
+
+    line-height: 1.35;
+
+    font-weight: 800;
+
+}
+
+
+.beta-notice-lead {
+
+    margin:
+        0 0 5px;
+
+    text-align: center;
+
+    color: #856c91;
+
+    font-size: 15px;
+
+    font-weight: 700;
+
+}
+
+
+.beta-notice-content > p:not(.beta-notice-lead):not(.beta-notice-thanks) {
+
+    margin:
+        0 0 18px;
+
+    text-align: center;
+
+}
+
+
+.beta-notice-content strong {
+
+    color: #795b91;
+
+}
+
+
+/* =========================================================
+   INFO
+========================================================= */
+
+.beta-notice-info {
+
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 10px;
+
+    padding: 14px;
+
+    border:
+        1px solid
+        #eee1f3;
+
+    border-radius: 20px;
+
+    background:
+        rgba(255,255,255,.66);
+
+}
+
+
+.beta-notice-info-item {
+
+    display: flex;
+
+    align-items: flex-start;
+
+    gap: 11px;
+
+    padding: 9px;
+
+    border-radius: 14px;
+
+}
+
+
+.beta-notice-info-icon {
+
+    flex-shrink: 0;
+
+    width: 34px;
+
+    height: 34px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    border-radius: 11px;
+
+    background:
+        #f4eafa;
+
+    font-size: 17px;
+
+}
+
+
+.beta-notice-info-item div {
+
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 1px;
+
+}
+
+
+.beta-notice-info-item strong {
+
+    color: #64536b;
+
+    font-size: 13px;
+
+    line-height: 1.4;
+
+}
+
+
+.beta-notice-info-item span {
+
+    color: #93859a;
+
+    font-size: 12px;
+
+    line-height: 1.5;
+
+}
+
+
+/* =========================================================
+   THANKS
+========================================================= */
+
+.beta-notice-thanks {
+
+    margin:
+        18px 0 0;
+
+    text-align: center;
+
+    color: #927c99;
+
+    font-size: 12px;
+
+}
+
+
+/* =========================================================
+   ACTION
+========================================================= */
+
+.beta-notice-actions {
+
+    padding:
+        22px 34px 12px;
+
+}
+
+
+.beta-notice-button {
+
+    width: 100%;
+
+    min-height: 50px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    gap: 8px;
+
+    border: none;
+
+    border-radius: 16px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #a98be8,
+            #c89adf
+        );
+
+    color: white;
+
+    font-family: inherit;
+
+    font-size: 14px;
+
+    font-weight: 800;
+
+    cursor: pointer;
+
+    box-shadow:
+        0 8px 20px
+        rgba(139,105,180,.22),
+
+        inset 0 1px 0
+        rgba(255,255,255,.25);
+
+    transition:
+        transform .18s ease,
+        box-shadow .18s ease;
+
+}
+
+
+.beta-notice-button:hover {
+
+    transform:
+        translateY(-2px);
+
+    box-shadow:
+        0 12px 26px
+        rgba(139,105,180,.28);
+
+}
+
+
+.beta-notice-button:active {
+
+    transform:
+        translateY(1px);
+
+}
+
+
+/* =========================================================
+   FOOTER
+========================================================= */
+
+.beta-notice-footer {
+
+    padding:
+        4px 20px 22px;
+
+    text-align: center;
+
+    color: #b2a4b8;
+
+    font-size: 11px;
+
+}
+
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media (max-width: 600px) {
+
+    .beta-notice-overlay {
+
+        padding: 12px;
+
+        align-items: center;
+
+    }
+
+
+    .beta-notice-modal {
+
+        border-radius: 25px;
+
+        max-height:
+            calc(100vh - 24px);
+
+    }
+
+
+    .beta-notice-icon {
+
+        margin-top: 27px;
+
+        transform: scale(.9);
+
+    }
+
+
+    .beta-notice-content {
+
+        padding:
+            0 22px;
+
+        font-size: 13px;
+
+    }
+
+
+    .beta-notice-content h2 {
+
+        font-size: 21px;
+
+    }
+
+
+    .beta-notice-actions {
+
+        padding:
+            18px 22px 10px;
+
+    }
+
+}
+
+
+/* =========================================================
+   REDUCED MOTION
+========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+
+    .beta-notice-overlay,
+    .beta-notice-modal {
+
+        animation: none;
+
+    }
+
+    .beta-notice-close,
+    .beta-notice-button {
+
+        transition: none;
+
+    }
+
+}
